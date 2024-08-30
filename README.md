@@ -2,4 +2,4 @@
 **welcome to CHIK Chok IDE**
 
 ## About
-   ![app icon ](مسیر/به/عکس.jpg)
+   ![app icon ](Chik-Chok/android (1).png)
