@@ -2,204 +2,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chik Chok | Programming Snippets</title>
+  <title>Chik Chok | AI Code Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <style>
-    :root {
-      --bg-color: #f5f5f5;
-      --text-color: #2c3e50;
-      --card-bg: #fff;
-      --toast-bg: #27ae60;
-      --code-bg: #272822;
+    .dark-mode {
+      background-color: #1f2937;
+      color: white;
     }
-    body.dark {
-      --bg-color: #1e1e1e;
-      --text-color: #ecf0f1;
-      --card-bg: #2b2b2b;
-      --toast-bg: #2ecc71;
-      --code-bg: #1d1f21;
-    }body {
-  font-family: Arial, sans-serif;
-  background-color: var(--bg-color);
-  margin: 0;
-  padding: 20px;
-  text-align: center;
-  color: var(--text-color);
-  transition: background 0.3s, color 0.3s;
-}
-
-h1 {
-  margin-bottom: 20px;
-}
-
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto 20px;
-  padding: 0 10px;
-}
-
-.search-box {
-  padding: 8px;
-  width: 100%;
-  max-width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.toggle-dark {
-  padding: 8px 12px;
-  border: none;
-  background: #3498db;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.code-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.code-card {
-  background-color: var(--card-bg);
-  padding: 20px;
-  width: 90%;
-  max-width: 600px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  position: relative;
-  transition: transform 0.2s;
-  text-align: left;
-}
-
-.code-card:hover {
-  transform: translateY(-5px);
-}
-
-.code-title {
-  margin-top: 0;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-pre {
-  background-color: var(--code-bg);
-  color: #f8f8f2;
-  padding: 15px;
-  border-radius: 5px;
-  overflow-x: auto;
-  font-family: 'Courier New', monospace;
-  font-size: 14px;
-  margin: 10px 0 0;
-  position: relative;
-}
-
-.copy-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #34495e;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 8px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--toast-bg);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  z-index: 1000;
-  display: none;
-  animation: fadeIn 0.3s, fadeOut 0.3s 2s forwards;
-}
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-
-footer {
-  margin-top: 40px;
-  padding: 20px;
-  color: #7f8c8d;
-  font-size: 14px;
-}
-
+    .card-dark {
+      background-color: #374151;
+    }
   </style>
 </head>
-<body>
-  <div class="top-bar">
-    <input type="text" class="search-box" placeholder="Search snippets..." oninput="filterSnippets(this.value)">
-    <button class="toggle-dark" onclick="toggleDarkMode()">Toggle Theme</button>
-  </div>  <h1>Chik Chok | Kotlin, Java & XML Snippets</h1>  <div class="code-container" id="snippetContainer">
-    <!-- Snippets injected from JS -->
-  </div>  <div id="toast" class="toast">Code copied to clipboard!</div>  <footer>
-    <p>© 2025 Chik Chok | All rights reserved</p>
-  </footer>  <script>
-    const snippets = [
-      {
-        title: "Kotlin: RecyclerView Adapter",
-        lang: "kotlin",
-        code: `class UserAdapter(private val users: List<User>) :\n    RecyclerView.Adapter<UserAdapter.UserViewHolder>() {\n\n    class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {\n        val name: TextView = view.findViewById(R.id.name)\n        val email: TextView = view.findViewById(R.id.email)\n    }\n\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {\n        val view = LayoutInflater.from(parent.context)\n            .inflate(R.layout.item_user, parent, false)\n        return UserViewHolder(view)\n    }\n\n    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {\n        val user = users[position]\n        holder.name.text = user.name\n        holder.email.text = user.email\n    }\n\n    override fun getItemCount() = users.size\n}`
-      },
-      // Add more snippets here from existing ones...
-    ];
+<body class="transition duration-300 ease-in-out bg-gray-100 text-gray-900">
+  <div class="max-w-4xl mx-auto p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold">Chik Chok | AI Code Generator</h1>
+      <button onclick="toggleTheme()" class="px-4 py-2 bg-indigo-600 text-white rounded shadow hover:bg-indigo-700">Toggle Theme</button>
+    </div><!-- Code Generator Form -->
+<div class="bg-white rounded-xl shadow p-6 mb-8 dark:card-dark">
+  <h2 class="text-xl font-semibold mb-4">Generate Kotlin/Java Code</h2>
+  <textarea id="userPrompt" class="w-full p-3 border rounded mb-4 dark:bg-gray-800 dark:text-white" rows="4" placeholder="مثلاً: یه کلاس بساز که کاربر رو با ایمیل و رمز ثبت‌نام کنه"></textarea>
+  <button onclick="generateCode()" class="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700">Generate</button>
+</div>
 
-    function renderSnippets(filter = "") {
-      const container = document.getElementById("snippetContainer");
-      container.innerHTML = "";
-      snippets.filter(s => s.title.toLowerCase().includes(filter.toLowerCase())).forEach(snippet => {
-        const card = document.createElement("div");
-        card.className = "code-card";
+<!-- Code Output -->
+<div id="codeOutput" class="space-y-6"></div>
 
-        const title = document.createElement("h2");
-        title.className = "code-title";
-        title.textContent = snippet.title;
+<!-- Toast Notification -->
+<div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-2 rounded shadow-lg hidden z-50">Copied to clipboard!</div>
 
-        const pre = document.createElement("pre");
-        pre.textContent = snippet.code;
+<!-- Footer -->
+<footer class="text-center mt-10 text-gray-500 text-sm">
+  &copy; 2025 Chik Chok | All rights reserved
+</footer>
 
-        const copyBtn = document.createElement("button");
-        copyBtn.textContent = "Copy";
-        copyBtn.className = "copy-btn";
-        copyBtn.onclick = () => copyText(snippet.code);
-
-        card.appendChild(title);
-        card.appendChild(copyBtn);
-        card.appendChild(pre);
-        container.appendChild(card);
-      });
+  </div>  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
     }
 
-    function copyText(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        const toast = document.getElementById("toast");
-        toast.style.display = "block";
-        setTimeout(() => toast.style.display = "none", 2000);
-      });
+    function showToast() {
+      const toast = document.getElementById("toast");
+      toast.classList.remove("hidden");
+      setTimeout(() => toast.classList.add("hidden"), 2000);
     }
 
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark");
+    function copyToClipboard(code) {
+      navigator.clipboard.writeText(code).then(showToast);
     }
 
-    function filterSnippets(value) {
-      renderSnippets(value);
-    }
+    function generateCode() {
+      const prompt = document.getElementById("userPrompt").value.trim();
+      if (!prompt) return alert("متن درخواست را وارد کن!");
 
-    // Load initially
-    renderSnippets();
+      // Simple fake local AI simulation (for local test only)
+      const exampleCode = `// You asked: ${prompt}
+class User(val email: String, val password: String) {
+    fun register() {
+        println("User registered with email: $email")
+    }
+}`;
+
+      const output = document.getElementById("codeOutput");
+      const card = document.createElement("div");
+      card.className = "bg-white dark:card-dark p-6 rounded-lg shadow";
+
+      const pre = document.createElement("pre");
+      pre.className = "overflow-auto bg-gray-900 text-green-200 p-4 rounded relative";
+      pre.innerText = exampleCode;
+      pre.onclick = () => copyToClipboard(exampleCode);
+
+      const title = document.createElement("h3");
+      title.className = "text-lg font-bold mb-2";
+      title.innerText = `Generated Kotlin/Java Code`;
+
+      card.appendChild(title);
+      card.appendChild(pre);
+      output.prepend(card);
+    }
   </script></body>
 </html>
