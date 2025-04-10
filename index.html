@@ -1,70 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chik Chok | AI Code Generator</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <style>
-    .dark-mode {
-      background-color: #1f2937;
-      color: white;
-    }
-    .card-dark {
-      background-color: #374151;
-    }
-    .gradient-bg {
-      background: linear-gradient(to right, #667eea, #764ba2);
+    body {
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
     }
     .glass-card {
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+    }
+    h1, h2, h3 {
+      color: #ffffff;
+    }
+    .neon-btn {
+      background-color: #00ffab;
+      color: #000;
+      border: none;
+      font-weight: bold;
+      border-radius: 8px;
+      padding: 10px 16px;
+      box-shadow: 0 0 10px #00ffab, 0 0 20px #00ffab40;
+      transition: all 0.3s ease;
+    }
+    .neon-btn:hover {
+      background-color: #0affc9;
+      transform: scale(1.05);
+    }
+    textarea, select, input {
+      background-color: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 0.5rem;
+    }
+    pre {
+      background-color: #121212;
+      color: #00ffab;
+      padding: 1rem;
+      border-radius: 12px;
+      white-space: pre-wrap;
+    }
+    #toast {
+      background-color: #00ffab;
+      color: #000;
+      font-weight: bold;
     }
   </style>
 </head>
-<body class="transition duration-300 ease-in-out gradient-bg min-h-screen text-white">
-  <div class="max-w-5xl mx-auto p-6">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-4xl font-extrabold drop-shadow-xl">Chik Chok | AI Code Generator</h1>
-      <button onclick="toggleTheme()" class="px-4 py-2 bg-white text-indigo-700 rounded-full shadow-lg hover:scale-105 transition">Toggle Theme</button>
-    </div>
+<body>
+  <div class="max-w-4xl mx-auto p-6">
+    <h1 class="text-4xl font-bold mb-8">Chik Chok | AI Code Generator</h1>
 
-    <!-- Animation -->
-    <div class="flex justify-center mb-8">
-      <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json" background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
-    </div>
-
-    <!-- Code Generator -->
-    <div class="glass-card rounded-xl shadow-xl p-6 mb-10">
-      <h2 class="text-2xl font-semibold mb-4">Generate Code</h2>
-      <select id="languageSelect" class="mb-4 p-2 bg-white bg-opacity-10 text-white rounded">
+    <div class="glass-card p-6 mb-6">
+      <h2 class="text-2xl mb-4">کد دلخواهت رو بساز</h2>
+      <select id="languageSelect" class="mb-4 w-full">
         <option value="java">Java</option>
         <option value="kotlin">Kotlin</option>
         <option value="xml">XML</option>
       </select>
-      <textarea id="userPrompt" class="w-full p-4 border-none rounded mb-4 bg-white bg-opacity-10 text-white placeholder-gray-300" rows="4" placeholder="مثلاً: ثبت‌نام کاربر یا نمایش پیام"></textarea>
-      <button onclick="generateCode()" class="bg-green-500 hover:bg-green-400 px-6 py-2 text-white font-bold rounded-lg shadow-md transition-all">Generate</button>
+      <textarea id="userPrompt" rows="3" class="w-full mb-4" placeholder="مثلاً: یه کلاس برای لاگین بساز"></textarea>
+      <button onclick="generateCode()" class="neon-btn w-full">Generate</button>
     </div>
 
-    <!-- Output -->
-    <div id="codeOutput" class="space-y-8"></div>
+    <div id="codeOutput" class="space-y-6"></div>
 
-    <!-- Toast -->
-    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-2 rounded shadow-lg hidden z-50">Copied to clipboard!</div>
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded hidden z-50">Copied to clipboard!</div>
 
-    <!-- Footer -->
     <footer class="text-center mt-20 text-white text-sm opacity-70">
       © 2025 Chik Chok | All rights reserved
     </footer>
   </div>
 
   <script>
-    function toggleTheme() {
-      document.body.classList.toggle("dark-mode");
-    }
-
     function showToast() {
       const toast = document.getElementById("toast");
       toast.classList.remove("hidden");
@@ -76,129 +92,73 @@
     }
 
     function downloadCode(code, language) {
-      const blob = new Blob([code], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `chikchok_code.${language === "xml" ? "xml" : "txt"}`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-
-    function fakeCodeGenerator(prompt, language) {
-      const responses = {
-        java: {
-          "ثبت‌نام کاربر": `
-public class User {
-  private String email;
-  private String password;
-
-  public User(String email, String password) {
-    this.email = email;
-    this.password = password;
-  }
-
-  public void register() {
-    System.out.println("User registered with email: " + email);
-  }
-}
-          `,
-          "نمایش پیام": `
-public class HelloWorld {
-  public static void main(String[] args) {
-    System.out.println("سلام دنیا!");
-  }
-}
-          `
-        },
-        kotlin: {
-          "ثبت‌نام کاربر": `
-data class User(val email: String, val password: String)
-
-fun registerUser(user: User) {
-  println("User registered: ${'$'}{user.email}")
-}
-          `,
-          "نمایش پیام": `
-fun main() {
-  println("سلام دنیا!")
-}
-          `
-        },
-        xml: {
-          "ثبت‌نام کاربر": `
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-
-  <EditText
-    android:hint="ایمیل"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-
-  <EditText
-    android:hint="رمز عبور"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="textPassword" />
-</LinearLayout>
-          `,
-          "نمایش پیام": `
-<TextView
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:text="سلام دنیا!" />
-          `
-        }
-      };
-
-      const keys = Object.keys(responses[language]);
-      for (const key of keys) {
-        if (prompt.includes(key)) return responses[language][key];
-      }
-      return "// متاسفیم، نمی‌توانیم این درخواست را پاسخ دهیم.";
+      const blob = new Blob([code], { type: 'text/plain' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `generated-code.${language === 'xml' ? 'xml' : language === 'kotlin' ? 'kt' : 'java'}`;
+      link.click();
     }
 
     function generateCode() {
       const language = document.getElementById("languageSelect").value;
       const promptText = document.getElementById("userPrompt").value.trim();
-      if (!promptText) return alert("لطفاً درخواست را وارد کنید.");
 
-      const generatedCode = fakeCodeGenerator(promptText, language);
+      if (!promptText) {
+        alert("لطفاً توضیحی وارد کن");
+        return;
+      }
+
+      let sampleCode = `// متاسفیم، نمی‌توانیم این درخواست را پاسخ دهیم.`;
+
+      if (language === "java") {
+        sampleCode = `public class HelloWorld {
+  public static void main(String[] args) {
+    System.out.println("سلام دنیا!");
+  }
+}`;
+      } else if (language === "kotlin") {
+        sampleCode = `fun main() {
+  println("سلام دنیا!")
+}`;
+      } else if (language === "xml") {
+        sampleCode = `<TextView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:text="سلام دنیا!" />`;
+      }
+
       const output = document.getElementById("codeOutput");
-
       const card = document.createElement("div");
-      card.className = "glass-card p-6 rounded-2xl shadow-xl border border-white/20 relative";
+      card.className = "glass-card p-4";
 
       const title = document.createElement("h3");
-      title.className = "text-xl font-bold mb-3";
-      title.innerText = `Generated ${language.charAt(0).toUpperCase() + language.slice(1)} Code`;
+      title.className = "text-lg font-bold mb-2";
+      title.textContent = `Generated ${language.charAt(0).toUpperCase() + language.slice(1)} Code`;
 
       const pre = document.createElement("pre");
-      pre.className = "overflow-auto bg-black/80 text-green-300 p-4 rounded-xl font-mono whitespace-pre-wrap mb-4";
-      pre.innerText = generatedCode;
+      pre.textContent = sampleCode;
+      pre.onclick = () => copyToClipboard(sampleCode);
 
-      const btnContainer = document.createElement("div");
-      btnContainer.className = "flex gap-4";
+      const btns = document.createElement("div");
+      btns.className = "flex gap-4 mt-4";
 
       const copyBtn = document.createElement("button");
-      copyBtn.innerText = "Copy";
-      copyBtn.className = "bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2 rounded-lg transition font-bold";
-      copyBtn.onclick = () => copyToClipboard(generatedCode);
+      copyBtn.textContent = "Copy";
+      copyBtn.className = "neon-btn";
+      copyBtn.onclick = () => copyToClipboard(sampleCode);
 
       const downloadBtn = document.createElement("button");
-      downloadBtn.innerText = "Download";
-      downloadBtn.className = "bg-emerald-500 hover:bg-emerald-400 text-white px-4 py-2 rounded-lg transition font-bold";
-      downloadBtn.onclick = () => downloadCode(generatedCode, language);
+      downloadBtn.textContent = "Download";
+      downloadBtn.className = "neon-btn";
+      downloadBtn.onclick = () => downloadCode(sampleCode, language);
 
-      btnContainer.appendChild(copyBtn);
-      btnContainer.appendChild(downloadBtn);
+      btns.appendChild(copyBtn);
+      btns.appendChild(downloadBtn);
 
       card.appendChild(title);
       card.appendChild(pre);
-      card.appendChild(btnContainer);
+      card.appendChild(btns);
+
       output.prepend(card);
     }
   </script>
