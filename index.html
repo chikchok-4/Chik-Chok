@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chik Chok | AI Code Generator</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -25,6 +25,7 @@
   </style>
 </head>
 <body class="transition duration-300 ease-in-out gradient-bg min-h-screen text-white">
+
   <div class="max-w-5xl mx-auto p-6">
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-4xl font-extrabold drop-shadow-xl">Chik Chok | AI Code Generator</h1>
@@ -65,6 +66,14 @@
   <script type="module">
     import { Configuration, OpenAIApi } from 'https://cdn.jsdelivr.net/npm/openai@latest/dist/index.js';
 
+    // Auto dark mode based on system time
+    window.addEventListener("DOMContentLoaded", () => {
+      const hour = new Date().getHours();
+      if (hour >= 19 || hour < 6) {
+        document.body.classList.add("dark-mode");
+      }
+    });
+
     function toggleTheme() {
       document.body.classList.toggle('dark-mode');
     }
@@ -77,6 +86,16 @@
 
     function copyToClipboard(code) {
       navigator.clipboard.writeText(code).then(showToast);
+    }
+
+    function downloadCode(code, language) {
+      const blob = new Blob([code], { type: 'text/plain' });
+      const a = document.createElement('a');
+      const fileExt = language === 'java' ? '.java' : language === 'kotlin' ? '.kt' : '.xml';
+      a.href = URL.createObjectURL(blob);
+      a.download = `chikchok_code${fileExt}`;
+      a.click();
+      URL.revokeObjectURL(a.href);
     }
 
     async function generateCode() {
@@ -100,26 +119,43 @@
             { role: "user", content: `Generate ${language} code for: ${promptText}` }
           ],
           temperature: 0.5,
-          max_tokens: 500 // افزایش تعداد توکن‌ها برای کدهای پیچیده‌تر
+          max_tokens: 500
         });
 
         const generatedCode = completion.data.choices[0].message.content.trim();
-
         const output = document.getElementById("codeOutput");
+
         const card = document.createElement("div");
-        card.className = "glass-card p-6 rounded-xl shadow-xl relative";
+        card.className = "glass-card p-6 rounded-2xl shadow-xl border border-white/20 relative";
+
+        const title = document.createElement("h3");
+        title.className = "text-xl font-bold mb-3";
+        title.innerText = `Generated ${language.charAt(0).toUpperCase() + language.slice(1)} Code`;
 
         const pre = document.createElement("pre");
-        pre.className = "overflow-auto bg-black bg-opacity-80 text-green-200 p-4 rounded-xl font-mono whitespace-pre-wrap";
+        pre.className = "overflow-auto bg-black/80 text-green-300 p-4 rounded-xl font-mono whitespace-pre-wrap mb-4";
         pre.innerText = generatedCode;
         pre.onclick = () => copyToClipboard(generatedCode);
 
-        const title = document.createElement("h3");
-        title.className = "text-lg font-bold mb-2";
-        title.innerText = `Generated ${language.charAt(0).toUpperCase() + language.slice(1)} Code`;
+        const btnContainer = document.createElement("div");
+        btnContainer.className = "flex gap-4";
+
+        const copyBtn = document.createElement("button");
+        copyBtn.innerText = "Copy";
+        copyBtn.className = "bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2 rounded-lg transition font-bold";
+        copyBtn.onclick = () => copyToClipboard(generatedCode);
+
+        const downloadBtn = document.createElement("button");
+        downloadBtn.innerText = "Download";
+        downloadBtn.className = "bg-emerald-500 hover:bg-emerald-400 text-white px-4 py-2 rounded-lg transition font-bold";
+        downloadBtn.onclick = () => downloadCode(generatedCode, language);
+
+        btnContainer.appendChild(copyBtn);
+        btnContainer.appendChild(downloadBtn);
 
         card.appendChild(title);
         card.appendChild(pre);
+        card.appendChild(btnContainer);
         output.prepend(card);
       } catch (error) {
         alert("Error generating code: " + error.message);
