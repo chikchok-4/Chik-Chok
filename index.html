@@ -1,169 +1,111 @@
-<html lang="en" class="mdui-theme-dark">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chik Chok IDE</title>
-    <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
-    <script src="https://unpkg.com/mdui@2/mdui.global.js">
-</script><!-- Filled -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"><!-- Outlined -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"><!-- Rounded -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"><!-- Sharp -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet"><!-- Two Tone -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Two+Tone" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/space-grotesk" rel="stylesheet">
- <link href="https://fonts.cdnfonts.com/css/dt-getai-grotesk-display" rel="stylesheet">
-    <style>
-        html{
-        font-family: 'Space Grotesk', sans-serif;
-}
-html:root{
-        --mdui-color-primary: 219 198 111;
-        --mdui-color-surface-tint: 219 198 111;
-        --mdui-color-on-primary: 57 48 0;
-        --mdui-color-primary-container: 83 70 0;
-        --mdui-color-on-primary-container: 248 226 135;
-        --mdui-color-secondary: 209 198 161;
-        --mdui-color-on-secondary: 54 48 22;
-        --mdui-color-secondary-container: 78 71 42;
-        --mdui-color-on-secondary-container: 238 226 188;
-        --mdui-color-tertiary: 169 208 179;
-        --mdui-color-on-tertiary: 20 55 35;
-        --mdui-color-tertiary-container: 43 78 56;
-        --mdui-color-on-tertiary-container: 197 236 206;
-        --mdui-color-error: 255 180 171;
-        --mdui-color-on-error: 105 0 5;
-        --mdui-color-error-container: 147 0 10;
-        --mdui-color-on-error-container: 255 218 214;
-        --mdui-color-background: 21 19 11;
-        --mdui-color-on-background: 232 226 212;
-        --mdui-color-surface: 21 19 11;
-        --mdui-color-on-surface: 232 226 212;
-        --mdui-color-surface-variant: 75 71 57;
-        --mdui-color-on-surface-variant: 205 198 180;
-        --mdui-color-outline: 150 144 128;
-        --mdui-color-outline-variant: 75 71 57;
-        --mdui-color-shadow: 0 0 0;
-        --mdui-color-scrim: 0 0 0;
-        --mdui-color-inverse-surface: 232 226 212;
-        --mdui-color-inverse-on-surface: 51 48 39;
-        --mdui-color-inverse-primary: 109 94 15;
-        --mdui-color-primary-fixed: 248 226 135;
-        --mdui-color-on-primary-fixed: 33 27 0;
-        --mdui-color-primary-fixed-dim: 219 198 111;
-        --mdui-color-on-primary-fixed-variant: 83 70 0;
-        --mdui-color-secondary-fixed: 238 226 188;
-        --mdui-color-on-secondary-fixed: 33 27 4;
-        --mdui-color-secondary-fixed-dim: 209 198 161;
-        --mdui-color-on-secondary-fixed-variant: 78 71 42;
-        --mdui-color-tertiary-fixed: 197 236 206;
-        --mdui-color-on-tertiary-fixed: 0 33 16;
-        --mdui-color-tertiary-fixed-dim: 169 208 179;
-        --mdui-color-on-tertiary-fixed-variant: 43 78 56;
-        --mdui-color-surface-dim: 21 19 11;
-        --mdui-color-surface-bright: 60 57 48;
-        --mdui-color-surface-container-lowest: 16 14 7;
-        --mdui-color-surface-container-low: 30 27 19;
-        --mdui-color-surface-container: 34 32 23;
-        --mdui-color-surface-container-high: 45 42 33;
-        --mdui-color-surface-container-highest: 56 53 43;
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>سایت من با انیمیشن</title>
+  <style>
+    body {
+      font-family: Tahoma, sans-serif;
+      background-color: #f5f5f5;
+      text-align: center;
+      padding: 40px;
+      direction: rtl;
+      animation: fadeIn 2s ease-in-out;
+    }
 
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      animation: slideDown 1s ease-in-out;
+    }
 
-}
-.Content{
-        padding : 20px ;
-}
-</style>
-  </head>
-  <body>
-    <header>
-      <mdui-top-app-bar style="position: relative; ">
-        <img src="ghosticon.png" width="40px" height="40px">
-        <div style="flex-grow: 1"></div>
-                <mdui-dropdown>
-        <mdui-button-icon slot="trigger" icon="more_vert"></mdui-button-icon>
-                 <mdui-menu>
-    <mdui-menu-item onclick="window.open('https://github.com/HanzoDev1375/Ghostide')">Github Repository</mdui-menu-item>
-    <mdui-menu-item onclick="window.open('https://t.me/Ghostwebide')">Telegram Channel</mdui-menu-item>
-  </mdui-menu>
-  </mdui-dropdown>
-      </mdui-top-app-bar>
-    </header>
-    <div class="Content">
-      <div id="headertext" style="text-align :center ">
-        <h1 style="text-align :center; ">Chik Chok IDE the everything app</h1>
-        <p style="text-align :center ;">Chik Chok IDE (Aka: Chik Chok Web IDE) is everything IDE, it has multiple support of programming languages and a lot of fun</p><mdui-button icon="download" oncli[...]
-          Download
-        </mdui-button>
-      </div>
-      <div id="imgmock" style="text-align :center; ">
-        <img src="screen1.png" height="458px" width="251px" style=" object-fit :scale-down; ">
-      </div>
-      <h1 style="text-align :center ">Features</h1>
-      <hr width="120px" style=" margin-bottom :20px; ">
-      <div style="text-align :center ">
-        <img src="oss.png" width="102px" height="102px">
-        <h1 style="margin-top :-1px;" >Open Source</h1>
-                <p style="margin-top : -1px; ">This app is completely Open Source You can visit the source code up on the website</p>
-      </div>
-          <div style="text-align :center ">
-        <img src="secure.png" width="102px" height="102px">
-        <h1 style="margin-top :-1px;" >Secure</h1>
-                <p style="margin-top : -1px; ">This app is completely Free and secure it encrypted to make any user happy and safe</p>
-      </div>
-          <div style="text-align :center ">
-        <img src="speed.png" width="102px" height="102px">
-        <h1 style="margin-top :-1px;" >Performance</h1>
-                <p style="margin-top : -1px; ">The App is smooth and speedy to any android arm8 device to make user experience more powerful</p>
-      </div>
-          <div style="text-align :center ">
-        <img src="power.png" width="102px" height="102px">
-        <h1 style="margin-top :-1px;" >Powerful</h1>
-                <p style="margin-top : -1px; ">The app has a lot of programming language support such as Kotlin, Java, SQL, etc... You can see the full list of languages down below</p>
-      </div>
-          <img src="shot1.png" width="320.5px" height="350.5px">
-          <h1 style="text-align :center ">What's special</h1>
-      <hr width="120px" style=" margin-bottom :20px; ">
-          <div style=" text-align :center; ">
-      <mdui-card variant="outlined" style="width: 250px;height: 170px; padding :20px;  margin :10px; margin-top :65px; margin-bottom :65px; rotate : 7deg;"><h2 style="font-family: 'DT Getai Grotesk D[...]
-           <mdui-card variant="outlined" style="width: 250px;height: 160px; padding :20px;  margin :10px; margin-bottom :65px; rotate : -7deg;"><h3 style="font-family: 'DT Getai Grotesk Display', san[...]
-php executor,
-java executor,
-Sass and Scss executor</h4></mdui-card>
- <mdui-card variant="outlined" style="width: 250px;height: 140px; padding :20px;  margin :10px; margin-bottom :65px;  rotate : 7deg;"><h2 style="font-family: 'DT Getai Grotesk Display', sans-serif;[...]
-<img src="shot2.png" width="320.5px" height="350.5px">
-<h1 style="text-align :center ">Supported Languages</h1>
-  <hr width="120px" style=" margin-bottom :20px; ">
-              <div style="display :flex; flex :grid; justify-content :space-between;  ">
-                          <mdui-fab extended>Java</mdui-fab>
-                          <mdui-fab extended>Kotlin</mdui-fab>
-                          <mdui-fab extended>Python</mdui-fab>
-                          <mdui-fab extended>Web</mdui-fab>
-                          </div>
-                          <div style="display :flex; flex :grid; justify-content :space-between; margin-top :15px;  ">
-                          <mdui-fab extended>Ruby</mdui-fab>
-                          <mdui-fab extended>Shell</mdui-fab>
-                          <mdui-fab extended>C++</mdui-fab>
-                          <mdui-fab extended>C</mdui-fab>
+    p {
+      font-size: 18px;
+      color: #555;
+      animation: fadeIn 2.5s ease-in-out;
+    }
 
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.3s, background-color 0.3s;
+    }
 
+    button:hover {
+      background-color: #2980b9;
+      transform: scale(1.1);
+    }
 
-                          </div>
-                          <div style="display :flex; flex :grid; justify-content :space-between; margin-top :15px;  ">
-                          <mdui-fab extended>C#</mdui-fab>
-                          <mdui-fab extended>Sass</mdui-fab>
-                          <mdui-fab extended>Scss</mdui-fab>
-                          <mdui-fab extended>SQL</mdui-fab>
+    input {
+      padding: 8px;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      animation: fadeIn 2s;
+    }
 
+    #output {
+      margin-top: 15px;
+      font-size: 20px;
+      color: green;
+      animation: fadeIn 2.5s ease-in;
+    }
 
+    /* انیمیشن‌ها */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-                          </div>
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
 
-      </div>
-    </div>
-  </body>
-  <footer style="margin :30px; ">
-          This Website is Made by skinvent
-          for Github repository Of Hanzodev
-  </footer>
-				</html>
+  </style>
+</head>
+<body>
+
+  <h1>به سایت من خوش اومدی!</h1>
+  <p>این یه نمونه سایت با انیمیشن‌های جذاب هست.</p>
+
+  <!-- دکمه با Alert -->
+  <button onclick="sayHello()">کلیک کن</button>
+
+  <!-- ورودی نام و پیام خوش‌آمدگویی -->
+  <div style="margin-top: 30px;">
+    <input type="text" id="name" placeholder="نامت رو بنویس">
+    <button onclick="greet()">سلام بده</button>
+    <p id="output"></p>
+  </div>
+
+  <!-- تغییر رنگ پس‌زمینه -->
+  <div style="margin-top: 30px;">
+    <button onclick="changeColor()">تغییر رنگ پس‌زمینه</button>
+  </div>
+
+  <script>
+    function sayHello() {
+      alert("سلام! خوش اومدی.");
+    }
+
+    function greet() {
+      var name = document.getElementById("name").value;
+      document.getElementById("output").innerText = "سلام " + name + " عزیز!";
+    }
+
+    function changeColor() {
+      document.body.style.transition = "background-color 0.5s ease";
+      document.body.style.backgroundColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+    }
+  </script>
+
+</body>
+</html>
