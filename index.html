@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,30 +29,42 @@
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-4xl font-extrabold drop-shadow-xl">Chik Chok | AI Code Generator</h1>
       <button onclick="toggleTheme()" class="px-4 py-2 bg-white text-indigo-700 rounded-full shadow-lg hover:scale-105 transition">Toggle Theme</button>
-    </div><!-- Lottie Animation -->
-<div class="flex justify-center mb-8">
-  <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json" background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
-</div>
+    </div>
 
-<!-- Code Generator Form -->
-<div class="glass-card rounded-xl shadow-xl p-6 mb-10">
-  <h2 class="text-2xl font-semibold mb-4">Generate Kotlin/Java Code</h2>
-  <textarea id="userPrompt" class="w-full p-4 border-none rounded mb-4 bg-white bg-opacity-10 text-white placeholder-gray-300" rows="4" placeholder="مثلاً: یه کلاس بساز که کاربر رو با ایمیل و رمز ثبت‌نام کنه"></textarea>
-  <button onclick="generateCode()" class="bg-green-500 hover:bg-green-400 px-6 py-2 text-white font-bold rounded-lg shadow-md transition-all">Generate</button>
-</div>
+    <!-- Lottie Animation -->
+    <div class="flex justify-center mb-8">
+      <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json" background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
+    </div>
 
-<!-- Code Output -->
-<div id="codeOutput" class="space-y-8"></div>
+    <!-- Code Generator Form -->
+    <div class="glass-card rounded-xl shadow-xl p-6 mb-10">
+      <h2 class="text-2xl font-semibold mb-4">Generate Code</h2>
+      <select id="languageSelect" class="mb-4 p-2 bg-white bg-opacity-10 text-white rounded">
+        <option value="java">Java</option>
+        <option value="kotlin">Kotlin</option>
+        <option value="xml">XML</option>
+      </select>
+      <input type="text" id="apiKey" class="mb-4 p-2 w-full bg-white bg-opacity-10 text-white rounded" placeholder="Enter your OpenAI API key">
+      <small class="block mb-4 text-sm">Get your API key from <a href="https://platform.openai.com/account/api-keys" target="_blank" class="underline">here</a></small>
+      <textarea id="userPrompt" class="w-full p-4 border-none rounded mb-4 bg-white bg-opacity-10 text-white placeholder-gray-300" rows="4" placeholder="مثلاً: یه کلاس بساز که کاربر رو با ایمیل و رمز ثبت‌نام کنه"></textarea>
+      <button onclick="generateCode()" class="bg-green-500 hover:bg-green-400 px-6 py-2 text-white font-bold rounded-lg shadow-md transition-all">Generate</button>
+    </div>
 
-<!-- Toast Notification -->
-<div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-2 rounded shadow-lg hidden z-50">Copied to clipboard!</div>
+    <!-- Code Output -->
+    <div id="codeOutput" class="space-y-8"></div>
 
-<!-- Footer -->
-<footer class="text-center mt-20 text-white text-sm opacity-70">
-  &copy; 2025 Chik Chok | All rights reserved
-</footer>
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-2 rounded shadow-lg hidden z-50">Copied to clipboard!</div>
 
-  </div>  <script>
+    <!-- Footer -->
+    <footer class="text-center mt-20 text-white text-sm opacity-70">
+      © 2025 Chik Chok | All rights reserved
+    </footer>
+  </div>
+
+  <script type="module">
+    import { Configuration, OpenAIApi } from 'https://cdn.jsdelivr.net/npm/openai@latest/dist/index.js';
+
     function toggleTheme() {
       document.body.classList.toggle('dark-mode');
     }
@@ -66,34 +79,52 @@
       navigator.clipboard.writeText(code).then(showToast);
     }
 
-    function generateCode() {
-      const prompt = document.getElementById("userPrompt").value.trim();
-      if (!prompt) return alert("متن درخواست را وارد کن!");
+    async function generateCode() {
+      const apiKey = document.getElementById("apiKey").value.trim();
+      if (!apiKey) return alert("Please enter your OpenAI API key");
 
-      // Fake AI code simulation
-      const formattedCode = `// Request: ${prompt}
-class User(val email: String, val password: String) {
-    fun register() {
-        println("User registered with email: $email")
+      const language = document.getElementById("languageSelect").value;
+      const promptText = document.getElementById("userPrompt").value.trim();
+      if (!promptText) return alert("Please enter your prompt");
+
+      const configuration = new Configuration({
+        apiKey: apiKey,
+        dangerouslyAllowBrowser: true
+      });
+      const openai = new OpenAIApi(configuration);
+
+      try {
+        const completion = await openai.createChatCompletion({
+          model: "gpt-3.5-turbo",
+          messages: [
+            { role: "user", content: `Generate ${language} code for: ${promptText}` }
+          ],
+          temperature: 0.5,
+          max_tokens: 500 // افزایش تعداد توکن‌ها برای کدهای پیچیده‌تر
+        });
+
+        const generatedCode = completion.data.choices[0].message.content.trim();
+
+        const output = document.getElementById("codeOutput");
+        const card = document.createElement("div");
+        card.className = "glass-card p-6 rounded-xl shadow-xl relative";
+
+        const pre = document.createElement("pre");
+        pre.className = "overflow-auto bg-black bg-opacity-80 text-green-200 p-4 rounded-xl font-mono whitespace-pre-wrap";
+        pre.innerText = generatedCode;
+        pre.onclick = () => copyToClipboard(generatedCode);
+
+        const title = document.createElement("h3");
+        title.className = "text-lg font-bold mb-2";
+        title.innerText = `Generated ${language.charAt(0).toUpperCase() + language.slice(1)} Code`;
+
+        card.appendChild(title);
+        card.appendChild(pre);
+        output.prepend(card);
+      } catch (error) {
+        alert("Error generating code: " + error.message);
+      }
     }
-}`;
-
-      const output = document.getElementById("codeOutput");
-      const card = document.createElement("div");
-      card.className = "glass-card p-6 rounded-xl shadow-xl relative";
-
-      const pre = document.createElement("pre");
-      pre.className = "overflow-auto bg-black bg-opacity-80 text-green-200 p-4 rounded-xl font-mono whitespace-pre-wrap";
-      pre.innerText = formattedCode;
-      pre.onclick = () => copyToClipboard(formattedCode);
-
-      const title = document.createElement("h3");
-      title.className = "text-lg font-bold mb-2";
-      title.innerText = `Generated Code`;
-
-      card.appendChild(title);
-      card.appendChild(pre);
-      output.prepend(card);
-    }
-  </script></body>
+  </script>
+</body>
 </html>
