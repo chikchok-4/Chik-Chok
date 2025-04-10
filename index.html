@@ -13,28 +13,41 @@
     .card-dark {
       background-color: #374151;
     }
+    .gradient-bg {
+      background: linear-gradient(to right, #667eea, #764ba2);
+    }
+    .glass-card {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
   </style>
 </head>
-<body class="transition duration-300 ease-in-out bg-gray-100 text-gray-900">
-  <div class="max-w-4xl mx-auto p-6">
+<body class="transition duration-300 ease-in-out gradient-bg min-h-screen text-white">
+  <div class="max-w-5xl mx-auto p-6">
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold">Chik Chok | AI Code Generator</h1>
-      <button onclick="toggleTheme()" class="px-4 py-2 bg-indigo-600 text-white rounded shadow hover:bg-indigo-700">Toggle Theme</button>
-    </div><!-- Code Generator Form -->
-<div class="bg-white rounded-xl shadow p-6 mb-8 dark:card-dark">
-  <h2 class="text-xl font-semibold mb-4">Generate Kotlin/Java Code</h2>
-  <textarea id="userPrompt" class="w-full p-3 border rounded mb-4 dark:bg-gray-800 dark:text-white" rows="4" placeholder="مثلاً: یه کلاس بساز که کاربر رو با ایمیل و رمز ثبت‌نام کنه"></textarea>
-  <button onclick="generateCode()" class="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700">Generate</button>
+      <h1 class="text-4xl font-extrabold drop-shadow-xl">Chik Chok | AI Code Generator</h1>
+      <button onclick="toggleTheme()" class="px-4 py-2 bg-white text-indigo-700 rounded-full shadow-lg hover:scale-105 transition">Toggle Theme</button>
+    </div><!-- Lottie Animation -->
+<div class="flex justify-center mb-8">
+  <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json" background="transparent" speed="1" style="width: 200px; height: 200px;" loop autoplay></lottie-player>
+</div>
+
+<!-- Code Generator Form -->
+<div class="glass-card rounded-xl shadow-xl p-6 mb-10">
+  <h2 class="text-2xl font-semibold mb-4">Generate Kotlin/Java Code</h2>
+  <textarea id="userPrompt" class="w-full p-4 border-none rounded mb-4 bg-white bg-opacity-10 text-white placeholder-gray-300" rows="4" placeholder="مثلاً: یه کلاس بساز که کاربر رو با ایمیل و رمز ثبت‌نام کنه"></textarea>
+  <button onclick="generateCode()" class="bg-green-500 hover:bg-green-400 px-6 py-2 text-white font-bold rounded-lg shadow-md transition-all">Generate</button>
 </div>
 
 <!-- Code Output -->
-<div id="codeOutput" class="space-y-6"></div>
+<div id="codeOutput" class="space-y-8"></div>
 
 <!-- Toast Notification -->
 <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-2 rounded shadow-lg hidden z-50">Copied to clipboard!</div>
 
 <!-- Footer -->
-<footer class="text-center mt-10 text-gray-500 text-sm">
+<footer class="text-center mt-20 text-white text-sm opacity-70">
   &copy; 2025 Chik Chok | All rights reserved
 </footer>
 
@@ -57,8 +70,8 @@
       const prompt = document.getElementById("userPrompt").value.trim();
       if (!prompt) return alert("متن درخواست را وارد کن!");
 
-      // Simple fake local AI simulation (for local test only)
-      const exampleCode = `// You asked: ${prompt}
+      // Fake AI code simulation
+      const formattedCode = `// Request: ${prompt}
 class User(val email: String, val password: String) {
     fun register() {
         println("User registered with email: $email")
@@ -67,16 +80,16 @@ class User(val email: String, val password: String) {
 
       const output = document.getElementById("codeOutput");
       const card = document.createElement("div");
-      card.className = "bg-white dark:card-dark p-6 rounded-lg shadow";
+      card.className = "glass-card p-6 rounded-xl shadow-xl relative";
 
       const pre = document.createElement("pre");
-      pre.className = "overflow-auto bg-gray-900 text-green-200 p-4 rounded relative";
-      pre.innerText = exampleCode;
-      pre.onclick = () => copyToClipboard(exampleCode);
+      pre.className = "overflow-auto bg-black bg-opacity-80 text-green-200 p-4 rounded-xl font-mono whitespace-pre-wrap";
+      pre.innerText = formattedCode;
+      pre.onclick = () => copyToClipboard(formattedCode);
 
       const title = document.createElement("h3");
       title.className = "text-lg font-bold mb-2";
-      title.innerText = `Generated Kotlin/Java Code`;
+      title.innerText = `Generated Code`;
 
       card.appendChild(title);
       card.appendChild(pre);
