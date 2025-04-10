@@ -1,33 +1,56 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>چیک چوک | فروش کد با تبلیغات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chik Chok | Programming Snippets</title>
   <style>
     body {
-      font-family: Tahoma, sans-serif;
-      background-color: #f0f0f0;
-      direction: rtl;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
       padding: 20px;
       text-align: center;
     }
-
+    
     h1 {
       color: #2c3e50;
-      animation: fadeIn 1s ease-in-out;
+      margin-bottom: 30px;
     }
-
+    
+    .code-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
     .code-card {
       background-color: #fff;
       padding: 20px;
-      margin: 30px auto;
       width: 90%;
       max-width: 600px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      animation: slideUp 1s ease;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s;
     }
-
+    
+    .code-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .code-title {
+      color: #2c3e50;
+      margin-top: 0;
+      text-align: left;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
     pre {
       text-align: left;
       background-color: #272822;
@@ -35,345 +58,273 @@
       padding: 15px;
       border-radius: 5px;
       overflow-x: auto;
-      font-family: monospace;
+      font-family: 'Courier New', monospace;
       font-size: 14px;
+      margin: 0;
+      position: relative;
     }
-
-    button {
-      background-color: #e67e22;
+    
+    pre::after {
+      content: "Click to copy";
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      color: rgba(255,255,255,0.5);
+      font-size: 12px;
+      font-family: Arial, sans-serif;
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #27ae60;
       color: white;
-      border: none;
       padding: 10px 20px;
-      margin-top: 15px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #d35400;
-      transform: scale(1.05);
-    }
-
-    .ads-box {
-      margin: 20px auto;
-      width: 90%;
-      max-width: 600px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-  </style>
-</head>
-<body>
-
-  <h1>چیک چوک | فروش کد با تبلیغات</h1>
-
-  <!-- تبلیغات حرفه‌ای یکتانت -->
-  <div class="ads-box">
-    <!-- جای اسکریپت واقعی که از پنل یکتانت می‌گیری -->
-    <script type="text/javascript" src="https://cdn.yektanet.com/js/your-site-id.js"></script>
-  </div>
-
-  <!-- نمایش کد -->
-  <div class="code-card">
-    <h2>کد جاوا: نمایش لیست</h2>
-    <pre>
-import java.util.ArrayList;
-public class ListExample {
-  public static void main(String[] args) {
-    ArrayList<String> names = new ArrayList<>();
-    names.add("علی");
-    names.add("رضا");
-    for(String name : names){
-      System.out.println(name);
-    }
-  }
-}
-    </pre>
-    <button onclick="buyCode()">خرید کد (15 هزار تومان)</button>
-  </div>
-
-  <!-- تبلیغات گوگل (مثال ساختگی) -->
-  <div class="ads-box">
-    <!-- این کد باید از پنل گوگل ادسنس گرفته بشه -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-xxxxxxxxxxxxxxx"
-         data-ad-slot="1234567890"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
-
-  <script>
-    function buyCode() {
-      alert("این کد بعد از پرداخت در دسترس قرار می‌گیره!");
-    }
-  </script>
-
-</body>
-    </html><!DOCTYPE html>
-<html lang="fa">
-<head>
-  <meta charset="UTF-8">
-  <title>چیک چوک | فروش کد با تبلیغات</title>
-  <style>
-    body {
-      font-family: Tahoma, sans-serif;
-      background-color: #f0f0f0;
-      direction: rtl;
-      padding: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      color: #2c3e50;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    .code-card {
-      background-color: #fff;
-      padding: 20px;
-      margin: 30px auto;
-      width: 90%;
-      max-width: 600px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      animation: slideUp 1s ease;
-    }
-
-    pre {
-      text-align: left;
-      background-color: #272822;
-      color: #f8f8f2;
-      padding: 15px;
       border-radius: 5px;
-      overflow-x: auto;
-      font-family: monospace;
-      font-size: 14px;
+      animation: fadeIn 0.3s, fadeOut 0.3s 2s forwards;
+      z-index: 1000;
+      display: none;
     }
-
-    button {
-      background-color: #e67e22;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin-top: 15px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #d35400;
-      transform: scale(1.05);
-    }
-
-    .ads-box {
-      margin: 20px auto;
-      width: 90%;
-      max-width: 600px;
-    }
-
+    
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
-    @keyframes slideUp {
-      from { transform: translateY(50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
     }
-  </style>
-</head>
-<body>
-
-  <h1>چیک چوک | فروش کد با تبلیغات</h1>
-
-  <!-- تبلیغات حرفه‌ای یکتانت -->
-  <div class="ads-box">
-    <!-- جای اسکریپت واقعی که از پنل یکتانت می‌گیری -->
-    <script type="text/javascript" src="https://cdn.yektanet.com/js/your-site-id.js"></script>
-  </div>
-
-  <!-- نمایش کد -->
-  <div class="code-card">
-    <h2>کد جاوا: نمایش لیست</h2>
-    <pre>
-import java.util.ArrayList;
-public class ListExample {
-  public static void main(String[] args) {
-    ArrayList<String> names = new ArrayList<>();
-    names.add("علی");
-    names.add("رضا");
-    for(String name : names){
-      System.out.println(name);
-    }
-  }
-}
-    </pre>
-    <button onclick="buyCode()">خرید کد (15 هزار تومان)</button>
-  </div>
-
-  <!-- تبلیغات گوگل (مثال ساختگی) -->
-  <div class="ads-box">
-    <!-- این کد باید از پنل گوگل ادسنس گرفته بشه -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-xxxxxxxxxxxxxxx"
-         data-ad-slot="1234567890"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
-
-  <script>
-    function buyCode() {
-      alert("این کد بعد از پرداخت در دسترس قرار می‌گیره!");
-    }
-  </script>
-
-</body>
-    </html><!DOCTYPE html>
-<html lang="fa">
-<head>
-  <meta charset="UTF-8">
-  <title>چیک چوک | فروش کد با تبلیغات</title>
-  <style>
-    body {
-      font-family: Tahoma, sans-serif;
-      background-color: #f0f0f0;
-      direction: rtl;
+    
+    footer {
+      margin-top: 40px;
       padding: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      color: #2c3e50;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    .code-card {
-      background-color: #fff;
-      padding: 20px;
-      margin: 30px auto;
-      width: 90%;
-      max-width: 600px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      animation: slideUp 1s ease;
-    }
-
-    pre {
-      text-align: left;
-      background-color: #272822;
-      color: #f8f8f2;
-      padding: 15px;
-      border-radius: 5px;
-      overflow-x: auto;
-      font-family: monospace;
+      color: #7f8c8d;
       font-size: 14px;
     }
-
-    button {
-      background-color: #e67e22;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin-top: 15px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #d35400;
-      transform: scale(1.05);
-    }
-
-    .ads-box {
-      margin: 20px auto;
-      width: 90%;
-      max-width: 600px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
   </style>
 </head>
 <body>
+  <h1>CodeHub | Kotlin & XML Snippets</h1>
+  
+  <div class="code-container">
+    <!-- Kotlin: RecyclerView Adapter -->
+    <div class="code-card" onclick="copyCode(this)">
+      <h2 class="code-title">Kotlin: RecyclerView Adapter</h2>
+      <pre>
+class UserAdapter(private val users: List<User>) : 
+    RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-  <h1>چیک چوک | فروش کد با تبلیغات</h1>
-
-  <!-- تبلیغات حرفه‌ای یکتانت -->
-  <div class="ads-box">
-    <!-- جای اسکریپت واقعی که از پنل یکتانت می‌گیری -->
-    <script type="text/javascript" src="https://cdn.yektanet.com/js/your-site-id.js"></script>
-  </div>
-
-  <!-- نمایش کد -->
-  <div class="code-card">
-    <h2>کد جاوا: نمایش لیست</h2>
-    <pre>
-import java.util.ArrayList;
-public class ListExample {
-  public static void main(String[] args) {
-    ArrayList<String> names = new ArrayList<>();
-    names.add("علی");
-    names.add("رضا");
-    for(String name : names){
-      System.out.println(name);
+    class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val name: TextView = view.findViewById(R.id.name)
+        val email: TextView = view.findViewById(R.id.email)
     }
-  }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_user, parent, false)
+        return UserViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+        val user = users[position]
+        holder.name.text = user.name
+        holder.email.text = user.email
+    }
+
+    override fun getItemCount() = users.size
+}</pre>
+    </div>
+    
+    <!-- Kotlin: ViewModel Example -->
+    <div class="code-card" onclick="copyCode(this)">
+      <h2 class="code-title">Kotlin: ViewModel with LiveData</h2>
+      <pre>
+class UserViewModel : ViewModel() {
+    private val _users = MutableLiveData<List<User>>()
+    val users: LiveData<List<User>> = _users
+
+    fun loadUsers() {
+        viewModelScope.launch {
+            try {
+                val response = apiService.getUsers()
+                _users.value = response.users
+            } catch (e: Exception) {
+                // Handle error
+            }
+        }
+    }
 }
-    </pre>
-    <button onclick="buyCode()">خرید کد (15 هزار تومان)</button>
-  </div>
 
-  <!-- تبلیغات گوگل (مثال ساختگی) -->
-  <div class="ads-box">
-    <!-- این کد باید از پنل گوگل ادسنس گرفته بشه -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-xxxxxxxxxxxxxxx"
-         data-ad-slot="1234567890"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
+// In Activity/Fragment:
+private val viewModel: UserViewModel by viewModels()
 
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    viewModel.users.observe(this) { users ->
+        // Update UI
+    }
+    viewModel.loadUsers()
+}</pre>
+    </div>
+    
+    <!-- XML: RecyclerView Item Layout -->
+    <div class="code-card" onclick="copyCode(this)">
+      <h2 class="code-title">XML: RecyclerView Item Layout</h2>
+      <pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"&gt;
+
+    &lt;TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"/&gt;
+
+    &lt;TextView
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/gray"/&gt;
+
+&lt;/LinearLayout&gt;</pre>
+    </div>
+    
+    <!-- XML: ConstraintLayout Example -->
+    <div class="code-card" onclick="copyCode(this)">
+      <h2 class="code-title">XML: ConstraintLayout Example</h2>
+      <pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+
+    &lt;ImageView
+        android:id="@+id/image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/title"/&gt;
+
+    &lt;TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="App Title"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/&gt;
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</pre>
+    </div>
+    
+    <!-- Kotlin: Retrofit API Service -->
+    <div class="code-card" onclick="copyCode(this)">
+      <h2 class="code-title">Kotlin: Retrofit API Service</h2>
+      <pre>
+interface ApiService {
+    @GET("users")
+    suspend fun getUsers(): UsersResponse
+
+    @POST("login")
+    @FormUrlEncoded
+    suspend fun login(
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): LoginResponse
+}
+
+object RetrofitClient {
+    private const val BASE_URL = "https://api.example.com/"
+
+    val instance: ApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
+    }
+}
+
+// Usage:
+val apiService = RetrofitClient.instance
+val users = apiService.getUsers()</pre>
+    </div>
+    
+    <!-- XML: Material Button Styles -->
+    <div class="code-card" onclick="copyCode(this)">
+      <h2 class="code-title">XML: Material Button Styles</h2>
+      <pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"&gt;
+
+    &lt;com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contained Button"
+        style="@style/Widget.MaterialComponents.Button" /&gt;
+
+    &lt;com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Outlined Button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeColor="@color/colorPrimary"
+        android:layout_marginTop="8dp"/&gt;
+
+    &lt;com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Text Button"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_marginTop="8dp"/&gt;
+
+&lt;/LinearLayout&gt;</pre>
+    </div>
+  </div>
+  
+  <div id="toast" class="toast">Code copied to clipboard!</div>
+  
+  <footer>
+    <p>© 2025 Chik Chok | All rights reserved</p>
+  </footer>
+  
   <script>
-    function buyCode() {
-      alert("این کد بعد از پرداخت در دسترس قرار می‌گیره!");
+    function copyCode(cardElement) {
+      const preElement = cardElement.querySelector('pre');
+      const range = document.createRange();
+      range.selectNode(preElement);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      
+      // Show toast message
+      const toast = document.getElementById('toast');
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 2000);
     }
   </script>
-
 </body>
-    </html>
+</html>
