@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -48,6 +48,7 @@
       padding: 1rem;
       border-radius: 12px;
       white-space: pre-wrap;
+      font-size: 0.9rem;
     }
     #toast {
       background-color: #00ffab;
@@ -58,16 +59,16 @@
 </head>
 <body>
   <div class="max-w-4xl mx-auto p-6">
-    <h1 class="text-4xl font-bold mb-8">Chik Chok | AI Code Generator</h1>
+    <h1 class="text-4xl font-bold mb-8 text-center">Chik Chok | AI Code Generator</h1>
 
     <div class="glass-card p-6 mb-6">
-      <h2 class="text-2xl mb-4">کد دلخواهت رو بساز</h2>
+      <h2 class="text-2xl mb-4">Generate your desired code</h2>
       <select id="languageSelect" class="mb-4 w-full">
         <option value="java">Java</option>
         <option value="kotlin">Kotlin</option>
         <option value="xml">XML</option>
       </select>
-      <textarea id="userPrompt" rows="3" class="w-full mb-4" placeholder="مثلاً: یه کلاس برای لاگین بساز"></textarea>
+      <textarea id="userPrompt" rows="3" class="w-full mb-4" placeholder="e.g., create a login class"></textarea>
       <button onclick="generateCode()" class="neon-btn w-full">Generate</button>
     </div>
 
@@ -101,30 +102,81 @@
 
     function generateCode() {
       const language = document.getElementById("languageSelect").value;
-      const promptText = document.getElementById("userPrompt").value.trim();
+      const promptText = document.getElementById("userPrompt").value.trim().toLowerCase();
 
       if (!promptText) {
-        alert("لطفاً توضیحی وارد کن");
+        alert("Please enter a description");
         return;
       }
 
-      let sampleCode = `// متاسفیم، نمی‌توانیم این درخواست را پاسخ دهیم.`;
+      let sampleCode = "// Sorry, code not found for this request.";
 
+      // Examples of local code generation
       if (language === "java") {
-        sampleCode = `public class HelloWorld {
-  public static void main(String[] args) {
-    System.out.println("سلام دنیا!");
+        if (promptText.includes("login")) {
+          sampleCode = `public class Login {
+  private String username;
+  private String password;
+
+  public Login(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
+
+  public boolean authenticate() {
+    return username.equals("admin") && password.equals("1234");
   }
 }`;
-      } else if (language === "kotlin") {
-        sampleCode = `fun main() {
-  println("سلام دنیا!")
+        } else {
+          sampleCode = `public class HelloWorld {
+  public static void main(String[] args) {
+    System.out.println("Hello World!");
+  }
 }`;
+        }
+      } else if (language === "kotlin") {
+        if (promptText.includes("login")) {
+          sampleCode = `class Login(val username: String, val password: String) {
+  fun authenticate(): Boolean {
+    return username == "admin" && password == "1234"
+  }
+}`;
+        } else {
+          sampleCode = `fun main() {
+  println("Hello, World!")
+}`;
+        }
       } else if (language === "xml") {
-        sampleCode = `<TextView
+        if (promptText.includes("login")) {
+          sampleCode = `<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="16dp">
+
+  <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Username" />
+
+  <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Password"
+    android:inputType="textPassword" />
+
+  <Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Login" />
+</LinearLayout>`;
+        } else {
+          sampleCode = `<TextView
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:text="سلام دنیا!" />`;
+  android:text="Hello World!" />`;
+        }
       }
 
       const output = document.getElementById("codeOutput");
