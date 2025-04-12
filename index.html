@@ -4,159 +4,145 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>چیک چوک | مولد کد هوش مصنوعی</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
   <style>
     body {
       background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-      color: #e0e0e0;
-      font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
+      font-family: 'Vazirmatn', sans-serif;
+      color: #fff;
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      border-radius: 20px;
+    .container {
+      margin-top: 30px;
     }
-    .neon-btn {
-      background-color: #00ffab;
-      color: #000;
-      font-weight: bold;
-      border-radius: 8px;
-      padding: 10px 16px;
-      box-shadow: 0 0 10px #00ffab, 0 0 20px #00ffab40;
-      transition: all 0.3s ease;
+    .card {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
     }
-    .neon-btn:hover {
-      background-color: #0affc9;
-      transform: scale(1.05);
+    textarea, input, select {
+      color: white !important;
     }
-    textarea, select, input {
-      background-color: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #ffffff;
-      border-radius: 8px;
-      padding: 0.5rem;
+    .input-field input:focus + label,
+    .input-field textarea:focus + label {
+      color: #00e676 !important;
+    }
+    .input-field input:focus,
+    .input-field textarea:focus {
+      border-bottom: 1px solid #00e676 !important;
+      box-shadow: 0 1px 0 0 #00e676 !important;
     }
     pre {
-      background-color: #121212;
-      color: #00ffab;
+      background: #1e1e1e;
       padding: 1rem;
-      border-radius: 12px;
-      white-space: pre-wrap;
-      font-size: 0.9rem;
-    }
-    #toast {
-      background-color: #00ffab;
-      color: #000;
-      font-weight: bold;
+      border-radius: 10px;
+      overflow-x: auto;
+      color: #00e676;
     }
   </style>
 </head>
 <body>
-  <div class="max-w-3xl mx-auto p-6">
-    <h1 class="text-4xl font-bold mb-8 text-center">چیک چوک | مولد کد هوش مصنوعی</h1>
 
-    <div class="glass-card p-6 mb-6">
-      <h2 class="text-2xl mb-4">کد مورد نظر خود را ایجاد کنید</h2>
-      <select id="language" class="mb-4 w-full">
-        <option value="java">جاوا</option>
-        <option value="kotlin">کاتلین</option>
-        <option value="xml">XML</option>
-      </select>
-      <textarea id="prompt" rows="3" class="w-full mb-4" placeholder="مثلاً: صفحه لاگین بساز"></textarea>
-      <button onclick="generateCode()" class="neon-btn w-full">ایجاد کنید</button>
+  <div class="container">
+    <h4 class="center-align">چیک چوک | مولد کد هوش مصنوعی</h4>
+
+    <div class="card z-depth-3">
+      <div class="card-content">
+        <span class="card-title">تولید کد</span>
+        <div class="input-field">
+          <select id="language">
+            <option value="java">جاوا</option>
+            <option value="kotlin">کاتلین</option>
+            <option value="xml">XML</option>
+          </select>
+          <label>زبان برنامه‌نویسی</label>
+        </div>
+        <div class="input-field">
+          <textarea id="prompt" class="materialize-textarea" placeholder="مثلاً: لاگین بساز"></textarea>
+          <label for="prompt">توضیح کد</label>
+        </div>
+        <a class="waves-effect waves-light btn green" onclick="generateCode()">ایجاد</a>
+      </div>
     </div>
 
-    <div class="glass-card p-6 mb-6">
-      <h2 class="text-2xl mb-4">تبدیل کد</h2>
-      <select id="convertFrom" class="mb-2 w-full">
-        <option value="java">جاوا</option>
-        <option value="kotlin">کاتلین</option>
-      </select>
-      <select id="convertTo" class="mb-2 w-full">
-        <option value="kotlin">کاتلین</option>
-        <option value="java">جاوا</option>
-      </select>
-      <textarea id="codeToConvert" rows="5" class="w-full mb-4" placeholder="کدی برای تبدیل وارد کنید"></textarea>
-      <button onclick="convertCode()" class="neon-btn w-full">تبدیل کن</button>
+    <div class="card z-depth-3">
+      <div class="card-content">
+        <span class="card-title">تبدیل کد</span>
+        <div class="row">
+          <div class="input-field col s6">
+            <select id="convertFrom">
+              <option value="java">جاوا</option>
+              <option value="kotlin">کاتلین</option>
+            </select>
+            <label>از</label>
+          </div>
+          <div class="input-field col s6">
+            <select id="convertTo">
+              <option value="kotlin">کاتلین</option>
+              <option value="java">جاوا</option>
+            </select>
+            <label>به</label>
+          </div>
+        </div>
+        <div class="input-field">
+          <textarea id="codeToConvert" class="materialize-textarea" placeholder="کد خود را وارد کنید"></textarea>
+          <label for="codeToConvert">کد ورودی</label>
+        </div>
+        <a class="waves-effect waves-light btn teal" onclick="convertCode()">تبدیل</a>
+      </div>
     </div>
 
-    <div id="codeOutput" class="space-y-6"></div>
+    <div id="codeOutput" class="section"></div>
 
-    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded hidden z-50">کپی شد!</div>
-
-    <footer class="text-center mt-20 text-white text-sm opacity-70">
+    <footer class="center-align grey-text text-lighten-2" style="margin-top: 50px;">
       © 2025 چیک چوک | تمامی حقوق محفوظ است
     </footer>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script>
-    const serverUrl = "https://chikchok-code-server.onrender.com"; // آدرس سرور Flask خودت رو اینجا بذار
+    M.AutoInit();
+    const serverUrl = "https://chikchok-code-server.onrender.com";
 
-    function showToast() {
-      const toast = document.getElementById("toast");
-      toast.classList.remove("hidden");
-      setTimeout(() => toast.classList.add("hidden"), 2000);
-    }
-
-    function copyToClipboard(code) {
-      navigator.clipboard.writeText(code).then(showToast);
-    }
-
-    function showCode(titleText, code, lang) {
+    function showCode(titleText, code) {
       const output = document.getElementById("codeOutput");
       const card = document.createElement("div");
-      card.className = "glass-card p-4";
-
-      const title = document.createElement("h3");
-      title.className = "text-lg font-bold mb-2";
-      title.textContent = titleText;
-
-      const pre = document.createElement("pre");
-      pre.textContent = code;
-      pre.onclick = () => copyToClipboard(code);
-
-      const copyBtn = document.createElement("button");
-      copyBtn.textContent = "کپی";
-      copyBtn.className = "neon-btn mt-4";
-      copyBtn.onclick = () => copyToClipboard(code);
-
-      card.appendChild(title);
-      card.appendChild(pre);
-      card.appendChild(copyBtn);
+      card.className = "card z-depth-2";
+      card.innerHTML = `
+        <div class="card-content">
+          <span class="card-title">${titleText}</span>
+          <pre>${code}</pre>
+        </div>
+      `;
       output.prepend(card);
     }
 
     async function generateCode() {
       const language = document.getElementById("language").value;
       const prompt = document.getElementById("prompt").value.trim();
-      if (!prompt) return alert("لطفاً توضیحی وارد کنید.");
+      if (!prompt) return M.toast({ html: "لطفاً توضیح وارد کنید" });
 
       const res = await fetch(`${serverUrl}/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ language, prompt })
       });
-
       const data = await res.json();
-      showCode(`کد ${language}`, data.code, language);
+      showCode(`کد ${language}`, data.code);
     }
 
     async function convertCode() {
       const from = document.getElementById("convertFrom").value;
       const to = document.getElementById("convertTo").value;
       const code = document.getElementById("codeToConvert").value.trim();
-      if (!code) return alert("کدی برای تبدیل وارد نشده!");
+      if (!code) return M.toast({ html: "کدی برای تبدیل وارد نشده!" });
 
       const res = await fetch(`${serverUrl}/convert`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ from, to, code })
       });
-
       const data = await res.json();
-      showCode(`کد تبدیل شده به ${to}`, data.converted, to);
+      showCode(`کد تبدیل‌شده به ${to}`, data.converted);
     }
   </script>
 </body>
