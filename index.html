@@ -38,6 +38,11 @@
       border-radius: 12px;
       white-space: pre-wrap;
     }
+    #toast {
+      background-color: #00ffab;
+      color: #000;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -68,6 +73,8 @@
     </div>
 
     <div id="convertedCode" class="mt-4"></div>
+
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded hidden z-50">Copied to clipboard!</div>
   </div>
 
   <script>
@@ -133,10 +140,28 @@
       }
     };
 
+    function showToast() {
+      const toast = document.getElementById("toast");
+      toast.classList.remove("hidden");
+      setTimeout(() => toast.classList.add("hidden"), 2000);
+    }
+
+    function copyToClipboard(code) {
+      navigator.clipboard.writeText(code).then(showToast);
+    }
+
+    function downloadCode(code, language) {
+      const blob = new Blob([code], { type: 'text/plain' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      const ext = language === 'xml' ? 'xml' : language === 'kotlin' ? 'kt' : 'java';
+      link.download = `generated-code.${ext}`;
+      link.click();
+    }
+
     function generateCode() {
       const lang = document.getElementById("languageSelect").value;
       const prompt = document.getElementById("userPrompt").value.toLowerCase();
-
       let code = "// Sorry, I couldn't find matching code.";
 
       if (prompt.includes("login")) {
@@ -149,6 +174,10 @@
         <div class="glass-card">
           <h3 class="text-lg font-bold mb-2">Generated ${lang.toUpperCase()} Code:</h3>
           <pre>${code}</pre>
+          <div class="flex gap-4 mt-4">
+            <button class="material-btn" onclick='copyToClipboard(\`${code}\`)'>Copy</button>
+            <button class="material-btn" onclick='downloadCode(\`${code}\`, "${lang}")'>Download</button>
+          </div>
         </div>
       `;
     }
@@ -156,7 +185,6 @@
     function convertCode() {
       const direction = document.getElementById("convertDirection").value;
       const inputCode = document.getElementById("convertInput").value;
-
       let converted = "// Conversion not supported for this input.";
 
       if (direction === "java-to-kotlin" && inputCode.includes("public class Login")) {
@@ -171,6 +199,10 @@
         <div class="glass-card">
           <h3 class="text-lg font-bold mb-2">Converted Code:</h3>
           <pre>${converted}</pre>
+          <div class="flex gap-4 mt-4">
+            <button class="material-btn" onclick='copyToClipboard(\`${converted}\`)'>Copy</button>
+            <button class="material-btn" onclick='downloadCode(\`${converted}\`, "${direction.includes("kotlin") ? "kotlin" : "java"}")'>Download</button>
+          </div>
         </div>
       `;
     }
