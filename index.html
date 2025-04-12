@@ -1,148 +1,178 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>چیک چوک | مولد کد هوش مصنوعی</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+  <title>Chik Chok | AI Code Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-      font-family: 'Vazirmatn', sans-serif;
-      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
     }
-    .container {
-      margin-top: 30px;
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 1rem;
+      margin-bottom: 1rem;
     }
-    .card {
-      background-color: rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
+    .material-btn {
+      background-color: #00ffab;
+      color: black;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
     }
-    textarea, input, select {
-      color: white !important;
-    }
-    .input-field input:focus + label,
-    .input-field textarea:focus + label {
-      color: #00e676 !important;
-    }
-    .input-field input:focus,
-    .input-field textarea:focus {
-      border-bottom: 1px solid #00e676 !important;
-      box-shadow: 0 1px 0 0 #00e676 !important;
+    .material-btn:hover {
+      background-color: #0affc9;
+      transform: scale(1.05);
     }
     pre {
-      background: #1e1e1e;
+      background-color: #1e1e1e;
+      color: #00ffab;
       padding: 1rem;
-      border-radius: 10px;
-      overflow-x: auto;
-      color: #00e676;
+      border-radius: 12px;
+      white-space: pre-wrap;
     }
   </style>
 </head>
 <body>
+  <div class="max-w-4xl mx-auto p-6">
+    <h1 class="text-4xl font-bold mb-8 text-center">Chik Chok | AI Code Generator</h1>
 
-  <div class="container">
-    <h4 class="center-align">چیک چوک | مولد کد هوش مصنوعی</h4>
-
-    <div class="card z-depth-3">
-      <div class="card-content">
-        <span class="card-title">تولید کد</span>
-        <div class="input-field">
-          <select id="language">
-            <option value="java">جاوا</option>
-            <option value="kotlin">کاتلین</option>
-            <option value="xml">XML</option>
-          </select>
-          <label>زبان برنامه‌نویسی</label>
-        </div>
-        <div class="input-field">
-          <textarea id="prompt" class="materialize-textarea" placeholder="مثلاً: لاگین بساز"></textarea>
-          <label for="prompt">توضیح کد</label>
-        </div>
-        <a class="waves-effect waves-light btn green" onclick="generateCode()">ایجاد</a>
-      </div>
+    <div class="glass-card">
+      <h2 class="text-xl mb-2">Generate Code</h2>
+      <select id="languageSelect" class="w-full mb-3 p-2 rounded text-black">
+        <option value="java">Java</option>
+        <option value="kotlin">Kotlin</option>
+        <option value="xml">XML</option>
+      </select>
+      <textarea id="userPrompt" rows="3" class="w-full mb-3 p-2 rounded text-black" placeholder="e.g., login page code"></textarea>
+      <button onclick="generateCode()" class="material-btn w-full">Generate Code</button>
     </div>
 
-    <div class="card z-depth-3">
-      <div class="card-content">
-        <span class="card-title">تبدیل کد</span>
-        <div class="row">
-          <div class="input-field col s6">
-            <select id="convertFrom">
-              <option value="java">جاوا</option>
-              <option value="kotlin">کاتلین</option>
-            </select>
-            <label>از</label>
-          </div>
-          <div class="input-field col s6">
-            <select id="convertTo">
-              <option value="kotlin">کاتلین</option>
-              <option value="java">جاوا</option>
-            </select>
-            <label>به</label>
-          </div>
-        </div>
-        <div class="input-field">
-          <textarea id="codeToConvert" class="materialize-textarea" placeholder="کد خود را وارد کنید"></textarea>
-          <label for="codeToConvert">کد ورودی</label>
-        </div>
-        <a class="waves-effect waves-light btn teal" onclick="convertCode()">تبدیل</a>
-      </div>
+    <div id="codeOutput"></div>
+
+    <div class="glass-card mt-8">
+      <h2 class="text-xl mb-2">Convert Code</h2>
+      <select id="convertDirection" class="w-full mb-3 p-2 rounded text-black">
+        <option value="java-to-kotlin">Java to Kotlin</option>
+        <option value="kotlin-to-java">Kotlin to Java</option>
+      </select>
+      <textarea id="convertInput" rows="6" class="w-full mb-3 p-2 rounded text-black" placeholder="Paste your code here..."></textarea>
+      <button onclick="convertCode()" class="material-btn w-full">Convert Code</button>
     </div>
 
-    <div id="codeOutput" class="section"></div>
-
-    <footer class="center-align grey-text text-lighten-2" style="margin-top: 50px;">
-      © 2025 چیک چوک | تمامی حقوق محفوظ است
-    </footer>
+    <div id="convertedCode" class="mt-4"></div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script>
-    M.AutoInit();
-    const serverUrl = "https://chikchok-code-server.onrender.com";
+    const codeLibrary = {
+      java: {
+        login: `public class Login {
+  private String username;
+  private String password;
 
-    function showCode(titleText, code) {
-      const output = document.getElementById("codeOutput");
-      const card = document.createElement("div");
-      card.className = "card z-depth-2";
-      card.innerHTML = `
-        <div class="card-content">
-          <span class="card-title">${titleText}</span>
+  public Login(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
+
+  public boolean authenticate() {
+    return username.equals("admin") && password.equals("1234");
+  }
+}`,
+        hello: `public class HelloWorld {
+  public static void main(String[] args) {
+    System.out.println("Hello World!");
+  }
+}`
+      },
+      kotlin: {
+        login: `class Login(val username: String, val password: String) {
+  fun authenticate(): Boolean {
+    return username == "admin" && password == "1234"
+  }
+}`,
+        hello: `fun main() {
+  println("Hello, World!")
+}`
+      },
+      xml: {
+        login: `<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="16dp">
+
+  <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Username" />
+
+  <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Password"
+    android:inputType="textPassword" />
+
+  <Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Login" />
+</LinearLayout>`,
+        hello: `<TextView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:text="Hello World!" />`
+      }
+    };
+
+    function generateCode() {
+      const lang = document.getElementById("languageSelect").value;
+      const prompt = document.getElementById("userPrompt").value.toLowerCase();
+
+      let code = "// Sorry, I couldn't find matching code.";
+
+      if (prompt.includes("login")) {
+        code = codeLibrary[lang].login;
+      } else if (prompt.includes("hello")) {
+        code = codeLibrary[lang].hello;
+      }
+
+      document.getElementById("codeOutput").innerHTML = `
+        <div class="glass-card">
+          <h3 class="text-lg font-bold mb-2">Generated ${lang.toUpperCase()} Code:</h3>
           <pre>${code}</pre>
         </div>
       `;
-      output.prepend(card);
     }
 
-    async function generateCode() {
-      const language = document.getElementById("language").value;
-      const prompt = document.getElementById("prompt").value.trim();
-      if (!prompt) return M.toast({ html: "لطفاً توضیح وارد کنید" });
+    function convertCode() {
+      const direction = document.getElementById("convertDirection").value;
+      const inputCode = document.getElementById("convertInput").value;
 
-      const res = await fetch(`${serverUrl}/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ language, prompt })
-      });
-      const data = await res.json();
-      showCode(`کد ${language}`, data.code);
-    }
+      let converted = "// Conversion not supported for this input.";
 
-    async function convertCode() {
-      const from = document.getElementById("convertFrom").value;
-      const to = document.getElementById("convertTo").value;
-      const code = document.getElementById("codeToConvert").value.trim();
-      if (!code) return M.toast({ html: "کدی برای تبدیل وارد نشده!" });
+      if (direction === "java-to-kotlin" && inputCode.includes("public class Login")) {
+        converted = codeLibrary.kotlin.login;
+      } else if (direction === "kotlin-to-java" && inputCode.includes("class Login")) {
+        converted = codeLibrary.java.login;
+      } else if (inputCode.includes("HelloWorld") || inputCode.includes("main")) {
+        converted = direction === "java-to-kotlin" ? codeLibrary.kotlin.hello : codeLibrary.java.hello;
+      }
 
-      const res = await fetch(`${serverUrl}/convert`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ from, to, code })
-      });
-      const data = await res.json();
-      showCode(`کد تبدیل‌شده به ${to}`, data.converted);
+      document.getElementById("convertedCode").innerHTML = `
+        <div class="glass-card">
+          <h3 class="text-lg font-bold mb-2">Converted Code:</h3>
+          <pre>${converted}</pre>
+        </div>
+      `;
     }
   </script>
 </body>
