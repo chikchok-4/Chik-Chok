@@ -1,210 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chik Chok | AI Code Generator</title>
+  <title>Chik Chok | GitHub Code Search</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      background: #0f172a;
+      color: #fff;
       font-family: 'Segoe UI', sans-serif;
-      color: white;
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .glass {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
       backdrop-filter: blur(12px);
-      border-radius: 20px;
+      border-radius: 1rem;
       padding: 1rem;
       margin-bottom: 1rem;
     }
-    .material-btn {
-      background-color: #00ffab;
-      color: black;
-      padding: 10px 16px;
-      border-radius: 8px;
+    .neon {
+      background-color: #3b82f6;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
       font-weight: bold;
-      transition: 0.3s;
+      color: white;
+      box-shadow: 0 0 10px #3b82f6;
+      transition: transform 0.2s ease;
     }
-    .material-btn:hover {
-      background-color: #0affc9;
+    .neon:hover {
       transform: scale(1.05);
     }
     pre {
-      background-color: #1e1e1e;
-      color: #00ffab;
+      background: #1e293b;
       padding: 1rem;
-      border-radius: 12px;
+      border-radius: 0.75rem;
       white-space: pre-wrap;
-    }
-    #toast {
-      background-color: #00ffab;
-      color: #000;
-      font-weight: bold;
+      overflow-x: auto;
+      font-size: 0.9rem;
     }
   </style>
 </head>
-<body>
-  <div class="max-w-4xl mx-auto p-6">
-    <h1 class="text-4xl font-bold mb-8 text-center">Chik Chok | AI Code Generator</h1>
+<body class="p-6 max-w-5xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6 text-center">Chik Chok | GitHub Code Finder</h1>
 
-    <div class="glass-card">
-      <h2 class="text-xl mb-2">Generate Code</h2>
-      <select id="languageSelect" class="w-full mb-3 p-2 rounded text-black">
+  <div class="glass">
+    <input id="searchInput" type="text" placeholder="مثلاً: login activity" class="w-full mb-4 p-2 rounded bg-white/10 border border-white/20 text-white">
+    
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+      <select id="languageSelect" class="p-2 rounded bg-white/10 border border-white/20 text-white">
+        <option value="">همه زبان‌ها</option>
         <option value="java">Java</option>
         <option value="kotlin">Kotlin</option>
         <option value="xml">XML</option>
       </select>
-      <textarea id="userPrompt" rows="3" class="w-full mb-3 p-2 rounded text-black" placeholder="e.g., login page code"></textarea>
-      <button onclick="generateCode()" class="material-btn w-full">Generate Code</button>
-    </div>
-
-    <div id="codeOutput"></div>
-
-    <div class="glass-card mt-8">
-      <h2 class="text-xl mb-2">Convert Code</h2>
-      <select id="convertDirection" class="w-full mb-3 p-2 rounded text-black">
-        <option value="java-to-kotlin">Java to Kotlin</option>
-        <option value="kotlin-to-java">Kotlin to Java</option>
+      
+      <select id="resultCount" class="p-2 rounded bg-white/10 border border-white/20 text-white">
+        <option value="5">5 نتیجه</option>
+        <option value="10">10 نتیجه</option>
+        <option value="20">20 نتیجه</option>
+        <option value="30">30 نتیجه</option>
       </select>
-      <textarea id="convertInput" rows="6" class="w-full mb-3 p-2 rounded text-black" placeholder="Paste your code here..."></textarea>
-      <button onclick="convertCode()" class="material-btn w-full">Convert Code</button>
+
+      <button onclick="searchCode()" class="neon w-full col-span-2 md:col-span-1">جستجو در GitHub</button>
     </div>
-
-    <div id="convertedCode" class="mt-4"></div>
-
-    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded hidden z-50">Copied to clipboard!</div>
   </div>
 
+  <div id="results"></div>
+
   <script>
-    const codeLibrary = {
-      java: {
-        login: `public class Login {
-  private String username;
-  private String password;
-
-  public Login(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
-
-  public boolean authenticate() {
-    return username.equals("admin") && password.equals("1234");
-  }
-}`,
-        hello: `public class HelloWorld {
-  public static void main(String[] args) {
-    System.out.println("Hello World!");
-  }
-}`
-      },
-      kotlin: {
-        login: `class Login(val username: String, val password: String) {
-  fun authenticate(): Boolean {
-    return username == "admin" && password == "1234"
-  }
-}`,
-        hello: `fun main() {
-  println("Hello, World!")
-}`
-      },
-      xml: {
-        login: `<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  android:padding="16dp">
-
-  <EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Username" />
-
-  <EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Password"
-    android:inputType="textPassword" />
-
-  <Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Login" />
-</LinearLayout>`,
-        hello: `<TextView
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:text="Hello World!" />`
-      }
-    };
-
-    function showToast() {
-      const toast = document.getElementById("toast");
-      toast.classList.remove("hidden");
-      setTimeout(() => toast.classList.add("hidden"), 2000);
-    }
-
-    function copyToClipboard(code) {
-      navigator.clipboard.writeText(code).then(showToast);
-    }
-
-    function downloadCode(code, language) {
-      const blob = new Blob([code], { type: 'text/plain' });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      const ext = language === 'xml' ? 'xml' : language === 'kotlin' ? 'kt' : 'java';
-      link.download = `generated-code.${ext}`;
-      link.click();
-    }
-
-    function generateCode() {
+    async function searchCode() {
+      const query = document.getElementById("searchInput").value.trim();
       const lang = document.getElementById("languageSelect").value;
-      const prompt = document.getElementById("userPrompt").value.toLowerCase();
-      let code = "// Sorry, I couldn't find matching code.";
+      const count = parseInt(document.getElementById("resultCount").value);
 
-      if (prompt.includes("login")) {
-        code = codeLibrary[lang].login;
-      } else if (prompt.includes("hello")) {
-        code = codeLibrary[lang].hello;
+      if (!query) return alert("لطفاً یک عبارت برای جستجو وارد کن");
+
+      const resultsBox = document.getElementById("results");
+      resultsBox.innerHTML = '<p class="text-center text-sm text-gray-400">در حال جستجو در GitHub...</p>';
+
+      let searchQuery = `${encodeURIComponent(query)}+in:file`;
+      if (lang) {
+        searchQuery += `+language:${lang}`;
       }
 
-      document.getElementById("codeOutput").innerHTML = `
-        <div class="glass-card">
-          <h3 class="text-lg font-bold mb-2">Generated ${lang.toUpperCase()} Code:</h3>
-          <pre>${code}</pre>
-          <div class="flex gap-4 mt-4">
-            <button class="material-btn" onclick='copyToClipboard(\`${code}\`)'>Copy</button>
-            <button class="material-btn" onclick='downloadCode(\`${code}\`, "${lang}")'>Download</button>
-          </div>
-        </div>
-      `;
-    }
+      const url = `https://api.github.com/search/code?q=${searchQuery}&per_page=${count}`;
 
-    function convertCode() {
-      const direction = document.getElementById("convertDirection").value;
-      const inputCode = document.getElementById("convertInput").value;
-      let converted = "// Conversion not supported for this input.";
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
 
-      if (direction === "java-to-kotlin" && inputCode.includes("public class Login")) {
-        converted = codeLibrary.kotlin.login;
-      } else if (direction === "kotlin-to-java" && inputCode.includes("class Login")) {
-        converted = codeLibrary.java.login;
-      } else if (inputCode.includes("HelloWorld") || inputCode.includes("main")) {
-        converted = direction === "java-to-kotlin" ? codeLibrary.kotlin.hello : codeLibrary.java.hello;
+        if (!data.items || data.items.length === 0) {
+          resultsBox.innerHTML = '<p class="text-center text-red-400">نتیجه‌ای یافت نشد.</p>';
+          return;
+        }
+
+        resultsBox.innerHTML = "";
+        for (const item of data.items) {
+          const fileRes = await fetch(item.url, {
+            headers: { Accept: "application/vnd.github.v3.raw" }
+          });
+          const code = await fileRes.text();
+
+          const card = document.createElement("div");
+          card.className = "glass";
+
+          const title = document.createElement("h3");
+          title.className = "font-bold mb-2";
+          title.textContent = `${item.name} (${item.repository.full_name})`;
+
+          const pre = document.createElement("pre");
+          pre.textContent = code;
+
+          const btns = document.createElement("div");
+          btns.className = "mt-2 flex flex-wrap gap-2";
+
+          const copyBtn = document.createElement("button");
+          copyBtn.textContent = "کپی کد";
+          copyBtn.className = "neon";
+          copyBtn.onclick = () => navigator.clipboard.writeText(code);
+
+          const dlBtn = document.createElement("button");
+          dlBtn.textContent = "دانلود";
+          dlBtn.className = "neon";
+          dlBtn.onclick = () => {
+            const blob = new Blob([code], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = item.name;
+            a.click();
+          };
+
+          btns.appendChild(copyBtn);
+          btns.appendChild(dlBtn);
+
+          card.appendChild(title);
+          card.appendChild(pre);
+          card.appendChild(btns);
+          resultsBox.appendChild(card);
+        }
+      } catch (err) {
+        console.error(err);
+        resultsBox.innerHTML = '<p class="text-red-500">خطا در دریافت داده از GitHub</p>';
       }
-
-      document.getElementById("convertedCode").innerHTML = `
-        <div class="glass-card">
-          <h3 class="text-lg font-bold mb-2">Converted Code:</h3>
-          <pre>${converted}</pre>
-          <div class="flex gap-4 mt-4">
-            <button class="material-btn" onclick='copyToClipboard(\`${converted}\`)'>Copy</button>
-            <button class="material-btn" onclick='downloadCode(\`${converted}\`, "${direction.includes("kotlin") ? "kotlin" : "java"}")'>Download</button>
-          </div>
-        </div>
-      `;
     }
   </script>
 </body>
