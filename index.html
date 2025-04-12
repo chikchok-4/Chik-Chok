@@ -1,39 +1,42 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chik Chok | AI Code Generator</title>
+  <title>چیک چوک | مولد کد هوش مصنوعی</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     body {
-      background: linear-gradient(to bottom right, #1a1a2e, #16213e);
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
       color: #e0e0e0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
     }
     .glass-card {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
       border-radius: 20px;
-      transition: transform 0.3s ease;
-    }
-    .glass-card:hover {
-      transform: translateY(-5px);
     }
     .neon-btn {
       background-color: #00ffab;
       color: #000;
       font-weight: bold;
-      border-radius: 10px;
-      padding: 12px 20px;
+      border-radius: 8px;
+      padding: 10px 16px;
       box-shadow: 0 0 10px #00ffab, 0 0 20px #00ffab40;
       transition: all 0.3s ease;
     }
     .neon-btn:hover {
       background-color: #0affc9;
       transform: scale(1.05);
+    }
+    textarea, select, input {
+      background-color: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 0.5rem;
     }
     pre {
       background-color: #121212;
@@ -51,27 +54,46 @@
   </style>
 </head>
 <body>
-  <div class="max-w-4xl mx-auto p-6">
-    <h1 class="text-4xl font-bold mb-8 text-center">Chik Chok | AI Code Generator</h1><div class="glass-card p-6 mb-6">
-  <h2 class="text-2xl mb-4">Generate your desired code</h2>
-  <select id="languageSelect" class="mb-4 w-full">
-    <option value="java">Java</option>
-    <option value="kotlin">Kotlin</option>
-    <option value="xml">XML</option>
-  </select>
-  <textarea id="userPrompt" rows="3" class="w-full mb-4" placeholder="e.g., create a login class"></textarea>
-  <button onclick="generateCode()" class="neon-btn w-full">Generate</button>
-</div>
+  <div class="max-w-3xl mx-auto p-6">
+    <h1 class="text-4xl font-bold mb-8 text-center">چیک چوک | مولد کد هوش مصنوعی</h1>
 
-<div id="codeOutput" class="space-y-6"></div>
+    <div class="glass-card p-6 mb-6">
+      <h2 class="text-2xl mb-4">کد مورد نظر خود را ایجاد کنید</h2>
+      <select id="language" class="mb-4 w-full">
+        <option value="java">جاوا</option>
+        <option value="kotlin">کاتلین</option>
+        <option value="xml">XML</option>
+      </select>
+      <textarea id="prompt" rows="3" class="w-full mb-4" placeholder="مثلاً: صفحه لاگین بساز"></textarea>
+      <button onclick="generateCode()" class="neon-btn w-full">ایجاد کنید</button>
+    </div>
 
-<div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded hidden z-50">Copied to clipboard!</div>
+    <div class="glass-card p-6 mb-6">
+      <h2 class="text-2xl mb-4">تبدیل کد</h2>
+      <select id="convertFrom" class="mb-2 w-full">
+        <option value="java">جاوا</option>
+        <option value="kotlin">کاتلین</option>
+      </select>
+      <select id="convertTo" class="mb-2 w-full">
+        <option value="kotlin">کاتلین</option>
+        <option value="java">جاوا</option>
+      </select>
+      <textarea id="codeToConvert" rows="5" class="w-full mb-4" placeholder="کدی برای تبدیل وارد کنید"></textarea>
+      <button onclick="convertCode()" class="neon-btn w-full">تبدیل کن</button>
+    </div>
 
-<footer class="text-center mt-20 text-white text-sm opacity-70">
-  © 2025 Chik Chok | All rights reserved
-</footer>
+    <div id="codeOutput" class="space-y-6"></div>
 
-  </div>  <script>
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded hidden z-50">کپی شد!</div>
+
+    <footer class="text-center mt-20 text-white text-sm opacity-70">
+      © 2025 چیک چوک | تمامی حقوق محفوظ است
+    </footer>
+  </div>
+
+  <script>
+    const serverUrl = "https://chikchok-code-server.onrender.com"; // آدرس سرور Flask خودت رو اینجا بذار
+
     function showToast() {
       const toast = document.getElementById("toast");
       toast.classList.remove("hidden");
@@ -82,67 +104,60 @@
       navigator.clipboard.writeText(code).then(showToast);
     }
 
-    function downloadCode(code, language) {
-      const blob = new Blob([code], { type: 'text/plain' });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = `generated-code.${language === 'xml' ? 'xml' : language === 'kotlin' ? 'kt' : 'java'}`;
-      link.click();
-    }
-
-    async function generateCode() {
-      const language = document.getElementById("languageSelect").value;
-      const promptText = document.getElementById("userPrompt").value.trim();
-
-      if (!promptText) {
-        alert("Please enter a description");
-        return;
-      }
-
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: promptText, language }),
-      });
-
-      const data = await response.json();
-      showGeneratedCode(data.code, language);
-    }
-
-    function showGeneratedCode(code, language) {
+    function showCode(titleText, code, lang) {
       const output = document.getElementById("codeOutput");
       const card = document.createElement("div");
       card.className = "glass-card p-4";
 
       const title = document.createElement("h3");
       title.className = "text-lg font-bold mb-2";
-      title.textContent = `Generated ${language.charAt(0).toUpperCase() + language.slice(1)} Code`;
+      title.textContent = titleText;
 
       const pre = document.createElement("pre");
       pre.textContent = code;
       pre.onclick = () => copyToClipboard(code);
 
-      const btns = document.createElement("div");
-      btns.className = "flex gap-4 mt-4";
-
       const copyBtn = document.createElement("button");
-      copyBtn.textContent = "Copy";
-      copyBtn.className = "neon-btn";
+      copyBtn.textContent = "کپی";
+      copyBtn.className = "neon-btn mt-4";
       copyBtn.onclick = () => copyToClipboard(code);
-
-      const downloadBtn = document.createElement("button");
-      downloadBtn.textContent = "Download";
-      downloadBtn.className = "neon-btn";
-      downloadBtn.onclick = () => downloadCode(code, language);
-
-      btns.appendChild(copyBtn);
-      btns.appendChild(downloadBtn);
 
       card.appendChild(title);
       card.appendChild(pre);
-      card.appendChild(btns);
-
+      card.appendChild(copyBtn);
       output.prepend(card);
     }
-  </script></body>
+
+    async function generateCode() {
+      const language = document.getElementById("language").value;
+      const prompt = document.getElementById("prompt").value.trim();
+      if (!prompt) return alert("لطفاً توضیحی وارد کنید.");
+
+      const res = await fetch(`${serverUrl}/generate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ language, prompt })
+      });
+
+      const data = await res.json();
+      showCode(`کد ${language}`, data.code, language);
+    }
+
+    async function convertCode() {
+      const from = document.getElementById("convertFrom").value;
+      const to = document.getElementById("convertTo").value;
+      const code = document.getElementById("codeToConvert").value.trim();
+      if (!code) return alert("کدی برای تبدیل وارد نشده!");
+
+      const res = await fetch(`${serverUrl}/convert`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ from, to, code })
+      });
+
+      const data = await res.json();
+      showCode(`کد تبدیل شده به ${to}`, data.converted, to);
+    }
+  </script>
+</body>
 </html>
