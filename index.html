@@ -1,149 +1,180 @@
-<!DOCTYPE html>
-<html lang="fa">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chik Chok | GitHub Code Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chik Chok | AI Code Generator</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#00ffab',
+            darkbg: '#0f172a',
+          },
+          borderRadius: {
+            xl: '1rem',
+            '2xl': '1.5rem',
+          },
+        },
+      },
+    }
+  </script>
   <style>
     body {
-      background: #0f172a;
-      color: #fff;
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      color: #e0e0e0;
       font-family: 'Segoe UI', sans-serif;
     }
-    .glass {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(12px);
-      border-radius: 1rem;
-      padding: 1rem;
-      margin-bottom: 1rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
     }
-    .neon {
-      background-color: #3b82f6;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      font-weight: bold;
-      color: white;
-      box-shadow: 0 0 10px #3b82f6;
-      transition: transform 0.2s ease;
-    }
-    .neon:hover {
-      transform: scale(1.05);
+    textarea, select, input {
+      background-color: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
     }
     pre {
-      background: #1e293b;
+      background-color: #121212;
+      color: #00ffab;
       padding: 1rem;
-      border-radius: 0.75rem;
+      border-radius: 12px;
       white-space: pre-wrap;
-      overflow-x: auto;
-      font-size: 0.9rem;
+    }
+    .neon-btn {
+      background-color: #00ffab;
+      color: #000;
+      font-weight: bold;
+      border-radius: 8px;
+      padding: 10px 16px;
+      box-shadow: 0 0 10px #00ffab, 0 0 20px #00ffab40;
+      transition: all 0.3s ease;
+    }
+    .neon-btn:hover {
+      background-color: #0affc9;
+      transform: scale(1.05);
     }
   </style>
 </head>
-<body class="p-6 max-w-5xl mx-auto">
-  <h1 class="text-3xl font-bold mb-6 text-center">Chik Chok | GitHub Code Finder</h1>
+<body class="p-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-10">
+      <h1 class="text-4xl font-bold mb-2">Chik Chok | AI Code Generator</h1>
+      <label class="inline-flex items-center cursor-pointer mt-2">
+        <span class="mr-2">Dark Mode</span>
+        <input type="checkbox" id="themeToggle" class="hidden">
+        <div class="w-10 h-5 bg-gray-400 rounded-full p-1 flex items-center">
+          <div id="themeBall" class="w-4 h-4 bg-white rounded-full transition-transform"></div>
+        </div>
+      </label>
+    </div><div class="glass-card p-6 mb-6">
+  <div class="grid md:grid-cols-3 gap-4">
+    <select id="languageSelect" class="w-full p-2 rounded">
+      <option value="java">Java</option>
+      <option value="kotlin">Kotlin</option>
+      <option value="xml">XML</option>
+      <option value="html">HTML</option>
+    </select>
 
-  <div class="glass">
-    <input id="searchInput" type="text" placeholder="مثلاً: login activity" class="w-full mb-4 p-2 rounded bg-white/10 border border-white/20 text-white">
-    
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
-      <select id="languageSelect" class="p-2 rounded bg-white/10 border border-white/20 text-white">
-        <option value="">همه زبان‌ها</option>
-        <option value="java">Java</option>
-        <option value="kotlin">Kotlin</option>
-        <option value="xml">XML</option>
-      </select>
-      
-      <select id="resultCount" class="p-2 rounded bg-white/10 border border-white/20 text-white">
-        <option value="5">5 نتیجه</option>
-        <option value="10">10 نتیجه</option>
-        <option value="20">20 نتیجه</option>
-        <option value="30">30 نتیجه</option>
-      </select>
+    <input id="userPrompt" placeholder="e.g., create a login class" class="w-full p-2 rounded" />
 
-      <button onclick="searchCode()" class="neon w-full col-span-2 md:col-span-1">جستجو در GitHub</button>
-    </div>
+    <button onclick="generateCode()" class="neon-btn w-full">Generate Code</button>
   </div>
 
-  <div id="results"></div>
+  <div class="flex gap-4 mt-4">
+    <button onclick="convertCode()" class="neon-btn">Convert Java ⇄ Kotlin</button>
+    <button onclick="runCode()" class="neon-btn">Run Code</button>
+  </div>
+</div>
 
-  <script>
-    async function searchCode() {
-      const query = document.getElementById("searchInput").value.trim();
+<div id="codeOutput" class="space-y-6"></div>
+
+<div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded hidden z-50 bg-primary text-black font-bold">Copied to clipboard!</div>
+
+<footer class="text-center mt-20 text-white text-sm opacity-70">
+  © 2025 Chik Chok | All rights reserved
+</footer>
+
+  </div>  <script>
+    let codeDatabase = {
+      java: {
+        login: `public class Login { String u, p; Login(String u, String p){ this.u=u; this.p=p; } boolean auth(){ return u.equals("admin") && p.equals("1234"); } }`,
+        hello: `public class Hello { public static void main(String[] args) { System.out.println("Hello World"); } }`,
+        calc: `class Calculator { int sum(int a, int b){ return a+b; } }`
+      },
+      kotlin: {
+        login: `class Login(val u: String, val p: String){ fun auth() = u == "admin" && p == "1234" }`,
+        hello: `fun main() { println("Hello, Kotlin!") }`,
+        calc: `class Calculator { fun sum(a: Int, b: Int) = a + b }`
+      },
+      xml: {
+        login: `<LinearLayout><EditText hint="Username"/><EditText hint="Password"/><Button text="Login"/></LinearLayout>`,
+        hello: `<TextView android:text="Hello World!"/>`
+      },
+      html: {
+        hello: `<!DOCTYPE html><html><body><h1>Hello World</h1></body></html>`
+      }
+    };
+
+    function generateCode() {
       const lang = document.getElementById("languageSelect").value;
-      const count = parseInt(document.getElementById("resultCount").value);
-
-      if (!query) return alert("لطفاً یک عبارت برای جستجو وارد کن");
-
-      const resultsBox = document.getElementById("results");
-      resultsBox.innerHTML = '<p class="text-center text-sm text-gray-400">در حال جستجو در GitHub...</p>';
-
-      let searchQuery = `${encodeURIComponent(query)}+in:file`;
-      if (lang) {
-        searchQuery += `+language:${lang}`;
-      }
-
-      const url = `https://api.github.com/search/code?q=${searchQuery}&per_page=${count}`;
-
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-
-        if (!data.items || data.items.length === 0) {
-          resultsBox.innerHTML = '<p class="text-center text-red-400">نتیجه‌ای یافت نشد.</p>';
-          return;
-        }
-
-        resultsBox.innerHTML = "";
-        for (const item of data.items) {
-          const fileRes = await fetch(item.url, {
-            headers: { Accept: "application/vnd.github.v3.raw" }
-          });
-          const code = await fileRes.text();
-
-          const card = document.createElement("div");
-          card.className = "glass";
-
-          const title = document.createElement("h3");
-          title.className = "font-bold mb-2";
-          title.textContent = `${item.name} (${item.repository.full_name})`;
-
-          const pre = document.createElement("pre");
-          pre.textContent = code;
-
-          const btns = document.createElement("div");
-          btns.className = "mt-2 flex flex-wrap gap-2";
-
-          const copyBtn = document.createElement("button");
-          copyBtn.textContent = "کپی کد";
-          copyBtn.className = "neon";
-          copyBtn.onclick = () => navigator.clipboard.writeText(code);
-
-          const dlBtn = document.createElement("button");
-          dlBtn.textContent = "دانلود";
-          dlBtn.className = "neon";
-          dlBtn.onclick = () => {
-            const blob = new Blob([code], { type: 'text/plain' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = item.name;
-            a.click();
-          };
-
-          btns.appendChild(copyBtn);
-          btns.appendChild(dlBtn);
-
-          card.appendChild(title);
-          card.appendChild(pre);
-          card.appendChild(btns);
-          resultsBox.appendChild(card);
-        }
-      } catch (err) {
-        console.error(err);
-        resultsBox.innerHTML = '<p class="text-red-500">خطا در دریافت داده از GitHub</p>';
-      }
+      const prompt = document.getElementById("userPrompt").value.toLowerCase();
+      let code = codeDatabase[lang][Object.keys(codeDatabase[lang]).find(k => prompt.includes(k))] || `// Code not found for: ${prompt}`;
+      displayCode(code, lang);
     }
+
+    function displayCode(code, lang) {
+      const out = document.getElementById("codeOutput");
+      const card = document.createElement("div");
+      card.className = "glass-card p-4";
+      card.innerHTML = `
+        <h3 class="text-lg font-bold mb-2">Generated ${lang.toUpperCase()} Code</h3>
+        <pre>${code}</pre><div class="flex gap-4 mt-4">
+      <button class="neon-btn" onclick="navigator.clipboard.writeText(\`${code}\`).then(showToast)">Copy</button>
+      <button class="neon-btn" onclick="downloadCode(\`${code}\`, '${lang}')">Download</button>
+    </div>
+  `;
+  out.prepend(card);
+}
+
+function showToast() {
+  const toast = document.getElementById("toast");
+  toast.classList.remove("hidden");
+  setTimeout(() => toast.classList.add("hidden"), 2000);
+}
+
+function downloadCode(code, lang) {
+  const blob = new Blob([code], { type: 'text/plain' });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `code.${lang === 'kotlin' ? 'kt' : lang}`;
+  link.click();
+}
+
+function convertCode() {
+  const lang = document.getElementById("languageSelect").value;
+  const prompt = document.getElementById("userPrompt").value;
+  const targetLang = lang === 'java' ? 'kotlin' : lang === 'kotlin' ? 'java' : null;
+  if (!targetLang) return alert("Conversion only for Java ⇄ Kotlin");
+  const match = Object.keys(codeDatabase[lang]).find(k => prompt.toLowerCase().includes(k));
+  const code = codeDatabase[targetLang][match] || `// No ${targetLang} code found for this prompt.`;
+  displayCode(code, targetLang);
+}
+
+function runCode() {
+  alert("Running code... (Simulation only - Execution not supported in browser)");
+}
+
+document.getElementById("themeToggle").addEventListener("change", (e) => {
+  document.body.classList.toggle("bg-white");
+  document.body.classList.toggle("text-black");
+  document.body.classList.toggle("text-white");
+});
+
   </script>
 </body>
 </html>
