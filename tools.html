@@ -1,24 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" class="mdui-theme-dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chik Chok | Super Codegen & Tools</title>
-  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css"/>
-  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  <!-- Material Design 3 Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@material/web@1.0.0/dist/mdc.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@material/web@1.0.0/dist/mdc.min.js"></script>
   <style>
-    html {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    html:root {
-      --mdui-color-primary: 219 198 111;
-      --mdui-color-surface-tint: 219 198 111;
-      --mdui-color-on-primary: 57 48 0;
-      --mdui-color-background: 21 19 11;
-      --mdui-color-on-background: 232 226 212;
-      --mdui-color-surface: 21 19 11;
-      --mdui-color-on-surface: 232 226 212;
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      color: #333;
     }
 
     .container {
@@ -27,127 +23,116 @@
       margin: auto;
     }
 
-    .btn-group {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    .card {
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+      padding: 16px;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
       gap: 12px;
     }
 
-    mdui-button {
-      min-width: 180px;
-      justify-content: flex-start;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    mdui-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    mdui-select {
-      margin-top: 16px;
-      width: 250px;
+    .mdc-button {
+      margin-top: 12px;
     }
 
     @media (max-width: 600px) {
-      .btn-group {
-        grid-template-columns: 1fr;
+      .button-group {
+        flex-direction: column;
       }
     }
   </style>
 </head>
 <body>
-  <mdui-top-app-bar>
-    <mdui-button-icon icon="menu"></mdui-button-icon>
-    <div class="mdui-top-app-bar-title">Chik Chok | Super Codegen & Tools</div>
-  </mdui-top-app-bar>
-
-  <div class="container">
+  <!-- App Bar -->
+  <header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <button class="mdc-icon-button material-icons" aria-label="Menu">menu</button>
+        <span class="mdc-top-app-bar__title">Chik Chok | Super Codegen & Tools</span>
+      </section>
+    </div>
+  </header>
+  
+  <main class="container">
     <!-- Code Generator Section -->
-    <mdui-card class="mdui-m-y-4" variant="elevated">
-      <div class="mdui-card-content">
-        <mdui-text-field id="codePrompt" label="Describe your code idea" variant="outlined" full-width></mdui-text-field>
-        
-        <mdui-select label="Language" id="langSelect" variant="outlined">
-          <mdui-menu-item value="kotlin">Kotlin</mdui-menu-item>
-          <mdui-menu-item value="java">Java</mdui-menu-item>
-          <mdui-menu-item value="python">Python</mdui-menu-item>
-          <mdui-menu-item value="cpp">C++</mdui-menu-item>
-        </mdui-select>
-
-        <mdui-button class="mdui-m-t-3" onclick="generateCode()" icon="bolt" variant="filled">
-          Generate Code
-        </mdui-button>
-
-        <mdui-textarea id="generatedCode" label="Generated Code Output" rows="12" readonly variant="outlined" class="mdui-m-t-3" full-width></mdui-textarea>
+    <div class="card">
+      <h2>Code Generator</h2>
+      <label class="mdc-floating-label" for="codePrompt">Describe your code idea</label>
+      <input id="codePrompt" class="mdc-text-field__input" type="text">
+      <div class="mdc-select">
+        <select id="langSelect" class="mdc-select__native-control">
+          <option value="kotlin">Kotlin</option>
+          <option value="java">Java</option>
+          <option value="python">Python</option>
+          <option value="cpp">C++</option>
+        </select>
+        <label class="mdc-floating-label">Language</label>
       </div>
-    </mdui-card>
-
+      <button class="mdc-button" onclick="generateCode()">
+        <span class="mdc-button__label">Generate Code</span>
+      </button>
+      <textarea id="generatedCode" class="mdc-text-field__input" rows="12" readonly></textarea>
+    </div>
+    
     <!-- Tools Section -->
-    <mdui-card class="mdui-m-y-4" variant="elevated">
-      <div class="mdui-card-content">
-        <h4>Tools</h4>
-        <div class="btn-group">
-          <mdui-button onclick="convertToKotlin()" icon="sync_alt" variant="tonal">Convert to Kotlin</mdui-button>
-          <mdui-button onclick="convertToJava()" icon="sync_alt" variant="tonal">Convert to Java</mdui-button>
-          <mdui-button onclick="copyCode()" icon="content_copy" variant="tonal">Copy</mdui-button>
-          <mdui-button onclick="downloadCode()" icon="download" variant="tonal">Download</mdui-button>
-        </div>
+    <div class="card">
+      <h2>Tools</h2>
+      <div class="button-group">
+        <button class="mdc-button" onclick="convertToKotlin()">
+          <span class="mdc-button__label">Convert to Kotlin</span>
+        </button>
+        <button class="mdc-button" onclick="convertToJava()">
+          <span class="mdc-button__label">Convert to Java</span>
+        </button>
+        <button class="mdc-button" onclick="copyCode()">
+          <span class="mdc-button__label">Copy</span>
+        </button>
+        <button class="mdc-button" onclick="downloadCode()">
+          <span class="mdc-button__label">Download</span>
+        </button>
       </div>
-    </mdui-card>
-  </div>
+    </div>
+  </main>
 
   <script>
-    const snippets = {
-      "login class in kotlin": `class Login(val user: String, val pass: String){ fun auth() = user == "admin" && pass == "1234" }`,
-      "login class in java": `public class Login { String u, p; Login(String u, String p){ this.u=u; this.p=p; } boolean auth(){ return u.equals("admin") && p.equals("1234"); } }`
-    };
-
-    const output = document.getElementById("generatedCode");
-
     async function generateCode() {
       const input = document.getElementById("codePrompt").value;
       const lang = document.getElementById("langSelect").value;
-
-      // Simulated API call
       const response = await fetch("https://api.example.com/generate-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: input, language: lang })
       });
-
       const data = await response.json();
-      output.value = data.generatedCode || "// No matching code found.";
-      localStorage.setItem("lastCode", output.value);
+      document.getElementById("generatedCode").value = data.generatedCode || "// No matching code found.";
     }
 
     function convertToKotlin() {
-      output.value = snippets["login class in kotlin"];
-      localStorage.setItem("lastCode", output.value);
+      document.getElementById("generatedCode").value = "class Login(val user, val pass)";
     }
 
     function convertToJava() {
-      output.value = snippets["login class in java"];
-      localStorage.setItem("lastCode", output.value);
+      document.getElementById("generatedCode").value = "public class Login { String user, pass; }";
     }
 
     function copyCode() {
-      navigator.clipboard.writeText(output.value);
-      mdui.snackbar({ message: 'Copied to clipboard!' });
+      navigator.clipboard.writeText(document.getElementById("generatedCode").value);
+      alert("Copied to clipboard!");
     }
 
     function downloadCode() {
-      const blob = new Blob([output.value], { type: "text/plain" });
+      const blob = new Blob([document.getElementById("generatedCode").value], { type: "text/plain" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = "code.txt";
       a.click();
     }
-
-    window.onload = () => {
-      const saved = localStorage.getItem("lastCode");
-      if (saved) output.value = saved;
-    };
   </script>
 </body>
 </html>
