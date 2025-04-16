@@ -1,129 +1,206 @@
 <!DOCTYPE html>
 <html lang="en" class="mdui-theme-dark">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools | Chik Chok IDE</title>
-    <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.0-beta5/dist/css/mdui.min.css">
-    <script src="https://unpkg.com/mdui@2.0.0-beta5/dist/js/mdui.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-      html, body {
-        font-family: 'Roboto', sans-serif;
-        background: linear-gradient(135deg, #121212, #1c1c1c);
-        color: #e0e0e0;
-        margin: 0;
-        padding: 0;
-      }
-      .content {
-        padding: 20px;
-        max-width: 1200px;
-        margin: auto;
-      }
-      .feature-card {
-        margin: 10px;
-        padding: 20px;
-        background: #1e1e1e;
-        border-radius: 12px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-        text-align: center;
-      }
-      .feature-card img {
-        width: 100px;
-        height: 100px;
-        margin-bottom: 10px;
-      }
-      .feature-card h1 {
-        font-size: 24px;
-        margin: 10px 0;
-      }
-      .languages-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin-top: 20px;
-      }
-      .languages-grid .mdui-fab {
-        margin: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Header -->
-    <header>
-      <mdui-appbar>
-        <div class="mdui-toolbar mdui-color-theme">
-          <img src="ghosticon.png" width="40px" height="40px" alt="Logo">
-          <span class="mdui-typo-title">Tools | Chik Chok IDE</span>
-          <div class="mdui-toolbar-spacer"></div>
-          <mdui-button class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu'}">
-            <i class="mdui-icon material-icons">more_vert</i>
-          </mdui-button>
-          <ul class="mdui-menu" id="menu">
-            <li class="mdui-menu-item">
-              <a href="https://github.com/chikchok-4/ChikChok.github.io" class="mdui-ripple">GitHub Repository</a>
-            </li>
-            <li class="mdui-menu-item">
-              <a href="#" class="mdui-ripple">Contact Us</a>
-            </li>
-          </ul>
-        </div>
-      </mdui-appbar>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools | Chik Chok IDE</title>
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.0-beta5/dist/css/mdui.min.css">
+  <script src="https://unpkg.com/mdui@2.0.0-beta5/dist/js/mdui.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    html, body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #121212, #1c1c1c);
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+    }
 
-    <!-- Content -->
-    <div class="content">
-      <!-- Title -->
-      <div style="text-align: center; margin-bottom: 20px;">
-        <h1>Welcome to the Tools Page</h1>
-        <p>Explore features and generate code effortlessly!</p>
-      </div>
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
 
-      <!-- Features Section -->
-      <div style="text-align: center;">
-        <h1>Features</h1>
-        <hr style="width: 120px; margin: 20px auto;">
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: #1e1e1e;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header img {
+      height: 40px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      color: #ffc107;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .feature-card {
+      margin: 10px;
+      padding: 20px;
+      background: #2e2e2e;
+      border-radius: 12px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: scale(1.05);
+    }
+
+    .feature-card img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    .feature-card h2 {
+      font-size: 20px;
+      margin: 10px 0;
+      color: #ffd54f;
+    }
+
+    .feature-card p {
+      font-size: 16px;
+      color: #e0e0e0;
+    }
+
+    .code-output {
+      background: #1e1e1e;
+      color: #76ff03;
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .button-group {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1e1e1e;
+      margin-top: 40px;
+      color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <img src="ghosticon.png" alt="Logo">
+    <h1>Chik Chok IDE Tools</h1>
+    <div>
+      <mdui-button class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu'}">
+        <i class="mdui-icon material-icons">menu</i>
+      </mdui-button>
+      <ul class="mdui-menu" id="menu">
+        <li class="mdui-menu-item">
+          <a href="https://github.com/chikchok-4/ChikChok.github.io" class="mdui-ripple">GitHub Repository</a>
+        </li>
+        <li class="mdui-menu-item">
+          <a href="#" class="mdui-ripple">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="container">
+    <!-- Title -->
+    <div style="text-align: center; margin-bottom: 30px;">
+      <h1>Welcome to Chik Chok IDE Tools</h1>
+      <p>Generate code, explore features, and improve productivity effortlessly.</p>
+    </div>
+
+    <!-- Features Section -->
+    <div style="text-align: center;">
+      <h2>Features</h2>
+      <hr style="width: 120px; margin: 20px auto;">
+      <div>
         <div class="feature-card">
           <img src="oss.png" alt="Open Source">
-          <h1>Open Source</h1>
-          <p>This app is completely Open Source. You can view the source code on GitHub.</p>
+          <h2>Open Source</h2>
+          <p>View our source code on GitHub and contribute to the project.</p>
         </div>
         <div class="feature-card">
           <img src="secure.png" alt="Secure">
-          <h1>Secure</h1>
-          <p>The app is secure and respects your privacy with encryption.</p>
+          <h2>Secure</h2>
+          <p>Our tools are designed with security and privacy in mind.</p>
         </div>
         <div class="feature-card">
           <img src="speed.png" alt="Performance">
-          <h1>High Performance</h1>
-          <p>Optimized for smooth performance across all devices.</p>
-        </div>
-      </div>
-
-      <!-- Supported Languages -->
-      <div style="text-align: center; margin-top: 40px;">
-        <h1>Supported Languages</h1>
-        <hr style="width: 120px; margin: 20px auto;">
-        <div class="languages-grid">
-          <mdui-fab extended>Java</mdui-fab>
-          <mdui-fab extended>Kotlin</mdui-fab>
-          <mdui-fab extended>Python</mdui-fab>
-          <mdui-fab extended>Web</mdui-fab>
-          <mdui-fab extended>Ruby</mdui-fab>
-          <mdui-fab extended>Shell</mdui-fab>
-          <mdui-fab extended>C++</mdui-fab>
-          <mdui-fab extended>C</mdui-fab>
-          <mdui-fab extended>C#</mdui-fab>
-          <mdui-fab extended>Sass</mdui-fab>
-          <mdui-fab extended>Scss</mdui-fab>
-          <mdui-fab extended>SQL</mdui-fab>
+          <h2>High Performance</h2>
+          <p>Optimized for smooth and fast performance.</p>
         </div>
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer style="text-align: center; margin-top: 40px; padding: 20px; background: #1e1e1e;">
-      <p>Made by Chik Chok Dev Team. Visit our <a href="https://github.com/chikchok-4/ChikChok.github.io" style="color: #ff5722;">GitHub</a>.</p>
-    </footer>
-  </body>
+    <!-- Code Generator Section -->
+    <div class="mdui-card mdui-shadow-3" style="margin-top: 40px;">
+      <div class="mdui-card-primary">
+        <div class="mdui-card-primary-title">Code Generator</div>
+        <div class="mdui-card-primary-subtitle">Generate Kotlin, Java, or XML code</div>
+      </div>
+      <div class="mdui-card-content">
+        <div class="mdui-textfield">
+          <label class="mdui-textfield-label">Describe your code idea</label>
+          <input class="mdui-textfield-input" type="text" id="codePrompt" placeholder="Enter your idea here...">
+        </div>
+        <div class="mdui-textfield">
+          <label class="mdui-textfield-label">Select Language</label>
+          <select class="mdui-select" id="langSelect">
+            <option value="kotlin">Kotlin</option>
+            <option value="java">Java</option>
+            <option value="xml">XML</option>
+          </select>
+        </div>
+        <div class="button-group">
+          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" onclick="generateCode()">Generate Code</button>
+        </div>
+        <div id="generatedCode" class="code-output">// Your generated code will appear here...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Chik Chok Dev Team. Visit our <a href="https://github.com/chikchok-4/ChikChok.github.io" style="color: #ffc107;">GitHub</a>.</p>
+  </footer>
+
+  <script>
+    function generateCode() {
+      const lang = document.getElementById('langSelect').value;
+      const output = document.getElementById('generatedCode');
+      const templates = {
+        kotlin: `fun main() {\n    println("Hello, Kotlin!")\n}`,
+        java: `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Java!");\n    }\n}`,
+        xml: `<note>\n    <to>Tove</to>\n    <from>Jani</from>\n    <heading>Reminder</heading>\n    <body>Don't forget me this weekend!</body>\n</note>`
+      };
+      output.textContent = templates[lang] || "// No template available.";
+    }
+  </script>
+
+</body>
 </html>
