@@ -69,6 +69,33 @@
         right: 20px;
         top: 20px;
       }
+
+      /* New Style for Code Box */
+      .code-box {
+        background-color: #1e1e1e;
+        color: #d4d4d4;
+        padding: 20px;
+        border-radius: 12px;
+        font-family: monospace;
+        min-height: 200px;
+        white-space: pre-wrap;
+        margin-top: 30px;
+        overflow-x: auto;
+      }
+
+      /* Style for Copy Button */
+      .copy-btn {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+
+      .copy-btn:hover {
+        background-color: #45a049;
+      }
     </style>
   </head>
   <body>
@@ -81,9 +108,14 @@
       <p class="description">Build and test your Java, Kotlin, and XML code with just one click!</p>
 
       <div class="action-buttons">
-        <mdui-btn href="editor.html" variant="raised" color="primary">Start Coding</mdui-btn>
-        <mdui-btn href="docs.html" variant="raised">View Documentation</mdui-btn>
+        <!-- Change the href link to tools.html -->
+        <mdui-btn href="tools.html" variant="raised" color="primary">Start Coding</mdui-btn>
+        <mdui-btn href="about.html" variant="raised">View Documentation</mdui-btn>
       </div>
+
+      <!-- New Code Box and Copy Button -->
+      <div class="code-box" id="codeOutput">Your generated code will appear here...</div>
+      <button class="copy-btn" onclick="copyCode()">Copy Code</button>
 
       <div class="footer">Made by ChikChok Devs — 2025</div>
     </div>
@@ -92,6 +124,8 @@
       document.getElementById("themeSwitch").addEventListener("change", (e) => {
         document.documentElement.classList.toggle("mdui-theme-dark", e.target.checked);
       });
+
+    
     </script>
   </body>
 </html>
