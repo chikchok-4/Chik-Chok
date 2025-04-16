@@ -47,7 +47,7 @@
       padding: 40px;
       border-radius: 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-      max-width: 400px;
+      max-width: 500px;
       width: 90%;
     }
 
@@ -118,6 +118,26 @@
       width: 20px;
       height: 20px;
     }
+
+    .code-container {
+      margin-top: 20px;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .code-container pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      color: #fff;
+    }
+
+    .action-btns {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -127,14 +147,35 @@
 
     <h1>Welcome to Chik Chok IDE</h1>
     <p>The simplest way to generate code using AI</p>
-    
-    <!-- دکمه جدید -->
+
+    <!-- دکمه شروع -->
     <button class="custom-btn" onclick="goToNextPage()">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
       </svg>
       Start
     </button>
+
+    <!-- کد نمونه جاوا -->
+    <div class="code-container" id="codeContainer">
+      <pre id="codeContent">
+        public class HelloWorld {
+          public static void main(String[] args) {
+            System.out.println("Hello, World!");
+          }
+        }
+      </pre>
+    </div>
+
+    <!-- دکمه‌های کپی، تبدیل و نمایش عکس -->
+    <div class="action-btns">
+      <button class="custom-btn" onclick="copyCode()">
+        Copy Code
+      </button>
+      <button class="custom-btn" onclick="convertCode()">
+        Convert to Kotlin
+      </button>
+    </div>
   </div>
 
   <script>
@@ -144,6 +185,25 @@
       setTimeout(() => {
         window.location.href = "tools.html";
       }, 1000);
+    }
+
+    // کپی کردن کد
+    function copyCode() {
+      const code = document.getElementById('codeContent').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Code copied to clipboard!");
+      });
+    }
+
+    // تبدیل کد جاوا به کاتلین (نمونه ساده)
+    function convertCode() {
+      const javaCode = document.getElementById('codeContent').textContent;
+      const kotlinCode = javaCode
+        .replace("public class", "class")
+        .replace("public static void main(String[] args)", "fun main()")
+        .replace("System.out.println", "println");
+
+      document.getElementById('codeContent').textContent = kotlinCode;
     }
   </script>
 </body>
