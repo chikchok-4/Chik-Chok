@@ -1,34 +1,74 @@
 <!DOCTYPE html>
 <html lang="fa" class="mdui-theme-dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chik Chok IDE</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>شروع | Chik Chok IDE</title>
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
   <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
   <style>
-    html {
-      font-family: 'Space Grotesk', sans-serif;
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.1);
+      }
     }
-    .home {
-      padding: 40px;
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: radial-gradient(circle at center, #2c2c2c, #121212);
+    }
+
+    .start-container {
       text-align: center;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .fade-out {
+      animation: fadeOut 1s forwards;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 32px;
+      color: #e4e4e4;
+    }
+
+    p {
+      color: #aaa;
+      margin-bottom: 30px;
     }
   </style>
 </head>
 <body>
-  <mdui-top-app-bar>
-    <div slot="start">Chik Chok IDE</div>
-    <div slot="end">
-      <mdui-button href="index.html" variant="text">خانه</mdui-button>
-      <mdui-button href="tools.html" variant="text">ابزارها</mdui-button>
-      <mdui-button href="about.html" variant="text">درباره ما</mdui-button>
-    </div>
-  </mdui-top-app-bar>
-
-  <div class="home">
-    <h1>به Chik Chok IDE خوش آمدید</h1>
-    <p>یک محیط توسعه تحت وب هوشمند برای برنامه‌نویسان اندروید</p>
+  <div class="start-container" id="startBox">
+    <img src="ghosticon.png" alt="Logo" class="logo" />
+    <h1>به Chik Chok IDE خوش آمدی</h1>
+    <p>ساده‌ترین راه برای تولید کد با هوش مصنوعی</p>
+    <mdui-button variant="filled" icon="rocket_launch" onclick="goToNextPage()">شروع کن</mdui-button>
   </div>
+
+  <script>
+    function goToNextPage() {
+      const box = document.getElementById('startBox');
+      box.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = "codegen.html";
+      }, 1000);
+    }
+  </script>
 </body>
 </html>
