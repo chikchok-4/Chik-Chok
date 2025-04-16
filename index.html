@@ -1,173 +1,384 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Material Design Start</title>
-  <style>
-    :root {
-      --primary-color: #845DF7;
-      --bg-light: #f5f3f7;
-      --bg-dark: #141418;
-      --text-light: #000;
-      --text-dark: #fff;
-      --card-light: #ffffff;
-      --card-dark: #1f1f23;
-    }
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+    <meta charset="UTF-8" />  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+    <title>ChikChok Start Page</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
+    <style>  
+      :root {  
+        --primary-color: #845DF7;  
+        --primary-hover: #6b4fd1;  
+        --secondary-color: #FF6B6B;  
+        --text-primary: #ffffff;  
+        --text-secondary: rgba(255, 255, 255, 0.8);  
+        --bg-primary: #141418;  
+        --bg-secondary: rgba(0, 0, 0, 0.6);  
+        --bg-code: rgba(0, 255, 0, 0.05);  
+        --shadow-color: rgba(0, 0, 0, 0.5);  
+        --card-bg: rgba(20, 20, 24, 0.8);  
+        --toggle-bg: #3A3A3A;  
+        --toggle-fg: #F5F5F5;  
+        --toggle-thumb: #845DF7;  
+        --toggle-track: #555;  
+      }  [data-theme="light"] {  
+    --primary-color: #6C5CE7;  
+    --primary-hover: #5649c0;  
+    --secondary-color: #FD79A8;  
+    --text-primary: #2d3436;  
+    --text-secondary: rgba(45, 52, 54, 0.8);  
+    --bg-primary: #f5f6fa;  
+    --bg-secondary: rgba(255, 255, 255, 0.8);  
+    --bg-code: rgba(0, 0, 255, 0.05);  
+    --shadow-color: rgba(0, 0, 0, 0.1);  
+    --card-bg: rgba(245, 246, 250, 0.9);  
+    --toggle-bg: #E0E0E0;  
+    --toggle-fg: #212121;  
+    --toggle-thumb: #6C5CE7;  
+    --toggle-track: #BDBDBD;  
+  }  
 
-    [data-theme="light"] {
-      --bg: var(--bg-light);
-      --text: var(--text-light);
-      --card: var(--card-light);
-    }
+  body {  
+    font-family: 'Space Grotesk', sans-serif;  
+    background-color: var(--bg-primary);  
+    color: var(--text-primary);  
+    text-align: center;  
+    padding: 20px;  
+    overflow: hidden;  
+    transition: all 0.4s ease;  
+    min-height: 100vh;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+  }  
 
-    [data-theme="dark"] {
-      --bg: var(--bg-dark);
-      --text: var(--text-dark);
-      --card: var(--card-dark);
-    }
+  /* Code background effect */  
+  body::before {  
+    content: "public class HelloWorld { static void main(String[] args) { System.out.println('Hello'); } } \n\n// Welcome to ChikChok \n\nfunction init() { \n  console.log('Initializing...'); \n  loadTheme(); \n} \n\nconst API = { \n  endpoint: 'https://api.chikchok.com', \n  version: '1.0' \n};";  
+    position: absolute;  
+    top: 0;  
+    left: 5%;  
+    font-size: 14px;  
+    color: var(--bg-code);  
+    white-space: pre-wrap;  
+    font-family: 'Courier New', monospace;  
+    animation: moveCode 20s linear infinite;  
+    z-index: 0;  
+    line-height: 1.8;  
+  }  
 
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      transition: all 0.4s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-    }
+  @keyframes moveCode {  
+    0% {  
+      transform: translateY(0);  
+    }  
+    100% {  
+      transform: translateY(-100%);  
+    }  
+  }  
 
-    .card {
-      background-color: var(--card);
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-      transition: background-color 0.4s ease;
-    }
+  .container {  
+    margin-top: 0;  
+    animation: fadeIn 1.5s ease-in-out;  
+    background: var(--card-bg);  
+    padding: 40px;  
+    border-radius: 20px;  
+    box-shadow: 0 10px 30px var(--shadow-color);  
+    position: relative;  
+    z-index: 1;  
+    backdrop-filter: blur(10px);  
+    border: 1px solid rgba(255, 255, 255, 0.1);  
+    max-width: 500px;  
+    width: 90%;  
+  }  
 
-    .title {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
+  .title {  
+    font-size: 2.8rem;  
+    color: var(--primary-color);  
+    animation: slideDown 1.5s ease-in-out;  
+    margin-bottom: 15px;  
+    font-weight: 700;  
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));  
+    -webkit-background-clip: text;  
+    -webkit-text-fill-color: transparent;  
+  }  
 
-    .description {
-      font-size: 1rem;
-      opacity: 0.8;
-    }
+  .description {  
+    font-size: 1.2rem;  
+    margin-top: 10px;  
+    color: var(--text-secondary);  
+    animation: fadeIn 2s ease-in-out;  
+    line-height: 1.6;  
+  }  
 
-    .start-button {
-      margin-top: 2rem;
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+  .action-button {  
+    margin-top: 30px;  
+    animation: fadeIn 2.5s ease-in-out;  
+  }  
 
-    .start-button:hover {
-      background-color: #6b4fd1;
-    }
+  .material-button {  
+    padding: 15px 30px;  
+    font-size: 16px;  
+    font-weight: 600;  
+    background-color: var(--primary-color);  
+    color: white;  
+    border: none;  
+    border-radius: 12px;  
+    cursor: pointer;  
+    box-shadow: 0px 4px 15px rgba(132, 93, 247, 0.3);  
+    transition: all 0.3s ease;  
+    position: relative;  
+    overflow: hidden;  
+  }  
 
-    .theme-toggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
+  .material-button:hover {  
+    background-color: var(--primary-hover);  
+    transform: translateY(-3px);  
+    box-shadow: 0px 6px 20px rgba(132, 93, 247, 0.4);  
+  }  
 
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
+  .material-button:active {  
+    transform: translateY(1px);  
+  }  
 
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+  .material-button::after {  
+    content: "";  
+    position: absolute;  
+    top: 50%;  
+    left: 50%;  
+    width: 5px;  
+    height: 5px;  
+    background: rgba(255, 255, 255, 0.5);  
+    opacity: 0;  
+    border-radius: 100%;  
+    transform: scale(1, 1) translate(-50%);  
+    transform-origin: 50% 50%;  
+  }  
 
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 34px;
-    }
+  .material-button:focus:not(:active)::after {  
+    animation: ripple 1s ease-out;  
+  }  
 
-    .slider:before {
-      position: absolute;
-      content: "✓";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: #4b28a6;
-      color: white;
-      text-align: center;
-      line-height: 26px;
-      border-radius: 50%;
-      transition: .4s;
-    }
+  @keyframes ripple {  
+    0% {  
+      transform: scale(0, 0);  
+      opacity: 0.5;  
+    }  
+    20% {  
+      transform: scale(25, 25);  
+      opacity: 0.3;  
+    }  
+    100% {  
+      opacity: 0;  
+      transform: scale(40, 40);  
+    }  
+  }  
 
-    input:checked + .slider {
-      background-color: var(--primary-color);
-    }
+  .logo {  
+    margin: 0 auto 20px;  
+    width: 120px;  
+    height: 120px;  
+    border-radius: 50%;  
+    animation: fadeIn 3s ease-in-out;  
+    box-shadow: 0 10px 30px var(--shadow-color);  
+    filter: blur(2px);  
+    transition: all 0.5s ease;  
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    color: white;  
+    font-size: 2rem;  
+    font-weight: bold;  
+  }  
 
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
+  .logo:hover {  
+    filter: blur(0px);  
+    transform: rotate(10deg) scale(1.05);  
+  }  
 
-    .graphic {
-      margin-top: 2rem;
-      width: 150px;
-      height: 150px;
-      background-color: #ddd;
-      border-radius: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      background-image: url("graphic.png");
-      background-size: cover;
-      background-position: center;
-    }
-  </style>
-</head>
-<body>
-  <div class="theme-toggle">
-    <label class="switch">
-      <input type="checkbox" id="themeToggle" />
-      <span class="slider"></span>
-    </label>
-  </div>
+  .theme-switch-wrapper {  
+    position: absolute;  
+    top: 20px;  
+    right: 20px;  
+    z-index: 100;  
+    display: flex;  
+    align-items: center;  
+  }  
 
-  <div class="card">
-    <div class="graphic"></div>
-    <h1 class="title">Welcome to ChikChok</h1>
-    <p class="description">Start building your Android app with Material Design 3.</p>
-    <button class="start-button" onclick="start()">Get Started</button>
-  </div>
+  .theme-switch {  
+    display: inline-block;  
+    height: 34px;  
+    position: relative;  
+    width: 60px;  
+  }  
 
-  <script>
-    const toggle = document.getElementById("themeToggle");
-    toggle.addEventListener("change", () => {
-      document.documentElement.setAttribute("data-theme", toggle.checked ? "dark" : "light");
-    });
+  .theme-switch input {  
+    display:none;  
+  }  
 
-    function start() {
-      alert("Let's build something amazing!");
-      // window.location.href = 'tools.html';
-    }
-  </script>
+  .slider {  
+    background-color: var(--toggle-track);  
+    bottom: 0;  
+    cursor: pointer;  
+    left: 0;  
+    position: absolute;  
+    right: 0;  
+    top: 0;  
+    transition: .4s;  
+    border-radius: 34px;  
+  }  
+
+  .slider:before {  
+    background-color: var(--toggle-thumb);  
+    bottom: 4px;  
+    content: "";  
+    height: 26px;  
+    left: 4px;  
+    position: absolute;  
+    transition: .4s;  
+    width: 26px;  
+    border-radius: 50%;  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);  
+  }  
+
+  input:checked + .slider {  
+    background-color: var(--toggle-track);  
+  }  
+
+  input:checked + .slider:before {  
+    transform: translateX(26px);  
+    background-color: var(--toggle-thumb);  
+  }  
+
+  .slider-icon {  
+    color: var(--text-primary);  
+    margin: 0 10px;  
+    font-size: 20px;  
+    transition: all 0.3s ease;  
+  }  
+
+  .material-icons {  
+    font-family: 'Material Icons';  
+    font-weight: normal;  
+    font-style: normal;  
+    font-size: 24px;  
+    line-height: 1;  
+    letter-spacing: normal;  
+    text-transform: none;  
+    display: inline-block;  
+    white-space: nowrap;  
+    word-wrap: normal;  
+    direction: ltr;  
+    -webkit-font-feature-settings: 'liga';  
+    -webkit-font-smoothing: antialiased;  
+  }  
+
+  @keyframes fadeIn {  
+    from {  
+      opacity: 0;  
+    }  
+    to {  
+      opacity: 1;  
+    }  
+  }  
+
+  @keyframes slideDown {  
+    from {  
+      transform: translateY(-50px);  
+      opacity: 0;  
+    }  
+    to {  
+      transform: translateY(0);  
+      opacity: 1;  
+    }  
+  }  
+
+  .fade-out {  
+    animation: fadeOut 1s ease-in-out forwards;  
+  }  
+
+  @keyframes fadeOut {  
+    from {  
+      opacity: 1;  
+    }  
+    to {  
+      opacity: 0;  
+    }  
+  }  
+
+  .particles {  
+    position: absolute;  
+    top: 0;  
+    left: 0;  
+    width: 100%;  
+    height: 100%;  
+    z-index: 0;  
+  }  
+
+  .particle {  
+    position: absolute;  
+    background: var(--primary-color);  
+    border-radius: 50%;  
+    opacity: 0.3;  
+    animation: float linear infinite;  
+  }  
+
+  @keyframes float {  
+    0% {  
+      transform: translateY(0) rotate(0deg);  
+    }  
+    100% {  
+      transform: translateY(-100vh) rotate(360deg);  
+    }  
+  }  
+</style>
+
+</head>  
+<body>  
+    <div class="theme-switch-wrapper">  
+        <span class="slider-icon material-icons" id="darkIcon">brightness_3</span>  
+        <label class="theme-switch">  
+            <input type="checkbox" id="themeCheckbox">  
+            <span class="slider round"></span>  
+        </label>  
+        <span class="slider-icon material-icons" id="lightIcon">wb_sunny</span>  
+    </div>  <div class="particles" id
+<div class="particles" id="particles-container"></div>
+
+    <div class="container">
+        <div class="logo">C4</div>
+        <div class="title">Welcome to ChikChok</div>
+        <div class="description">
+            Build Android apps with code generation, smart tools, and a powerful dark/light theme system.
+        </div>
+        <div class="action-button">
+            <button class="material-button" onclick="location.href='about.html'">Get Started</button>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle
+        const checkbox = document.getElementById('themeCheckbox');
+        checkbox.addEventListener('change', () => {
+            document.documentElement.setAttribute('data-theme', checkbox.checked ? 'light' : 'dark');
+        });
+
+        // Particle generator
+        const particleContainer = document.getElementById('particles-container');
+        const particleCount = 30;
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 8 + 4;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            particleContainer.appendChild(particle);
+        }
+    </script>
 </body>
 </html>
+
