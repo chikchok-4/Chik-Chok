@@ -1,20 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>ChikChok Start Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap" rel="stylesheet" />
     <style>
+      :root {
+        --bg-dark: #141418;
+        --bg-light: #f4f4f9;
+        --text-dark: #ffffff;
+        --text-light: #121212;
+        --accent: #845DF7;
+        --button-hover: #6b4fd1;
+      }
+
+      [data-theme="dark"] {
+        --bg-color: var(--bg-dark);
+        --text-color: var(--text-dark);
+      }
+
+      [data-theme="light"] {
+        --bg-color: var(--bg-light);
+        --text-color: var(--text-light);
+      }
+
       body {
+        margin: 0;
         font-family: 'Space Grotesk', sans-serif;
-        background-color: #141418;
-        color: white;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.5s ease, color 0.5s ease;
         text-align: center;
         padding: 20px;
         overflow: hidden;
       }
 
-      /* افکت پس‌زمینه متنی کدنویسی */
       body::before {
         content: "public class HelloWorld { static void main(String[] args) { System.out.println('Hello'); } }";
         position: absolute;
@@ -29,93 +50,94 @@
       }
 
       @keyframes moveCode {
-        0% {
-          transform: translateY(0);
-        }
-        100% {
-          transform: translateY(-100%);
-        }
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-100%); }
       }
 
       .container {
-        margin-top: 50px;
+        margin-top: 60px;
+        background: rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(6px);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
         animation: fadeIn 1.5s ease-in-out;
-        background: rgba(0, 0, 0, 0.6);
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         position: relative;
         z-index: 1;
+        display: inline-block;
+        max-width: 500px;
       }
 
       .title {
-        font-size: 2.8rem;
-        color: #845DF7;
-        animation: slideDown 1.5s ease-in-out;
+        font-size: 2.5rem;
+        color: var(--accent);
+        margin-bottom: 10px;
+        animation: slideDown 1.2s ease-in-out;
       }
 
       .description {
-        font-size: 1.2rem;
-        margin-top: 10px;
+        font-size: 1.1rem;
         opacity: 0.8;
+        margin-bottom: 20px;
         animation: fadeIn 2s ease-in-out;
       }
 
-      .action-button {
-        margin-top: 30px;
-        animation: fadeIn 2.5s ease-in-out;
-      }
-
       .material-button {
-        padding: 12px 24px;
+        padding: 12px 28px;
         font-size: 16px;
-        background-color: #845DF7;
+        background-color: var(--accent);
         color: white;
         border: none;
-        border-radius: 12px;
+        border-radius: 14px;
         cursor: pointer;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-        transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        transition: all 0.3s ease;
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
       }
 
       .material-button:hover {
-        background-color: #6b4fd1;
-        transform: translateY(-3px);
-        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+        background-color: var(--button-hover);
+        transform: translateY(-2px);
       }
 
       img {
-        margin-top: 20px;
         max-width: 150px;
-        border-radius: 12px;
-        animation: fadeIn 3s ease-in-out;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        border-radius: 16px;
+        margin-bottom: 20px;
         filter: blur(5px);
-        transition: filter 0.3s ease;
+        transition: filter 0.4s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
       }
 
       img:hover {
-        filter: blur(0px);
+        filter: blur(0);
+      }
+
+      .theme-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: transparent;
+        border: 2px solid var(--accent);
+        padding: 6px 12px;
+        border-radius: 10px;
+        color: var(--text-color);
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        background: var(--accent);
+        color: #fff;
       }
 
       @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+        from { opacity: 0; }
+        to { opacity: 1; }
       }
 
       @keyframes slideDown {
-        from {
-          transform: translateY(-50px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
+        from { transform: translateY(-40px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
       }
 
       .fade-out {
@@ -123,23 +145,19 @@
       }
 
       @keyframes fadeOut {
-        from {
-          opacity: 1;
-        }
-        to {
-          opacity: 0;
-        }
+        from { opacity: 1; }
+        to { opacity: 0; }
       }
     </style>
   </head>
   <body>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
     <div class="container" id="content">
-      <img src="android.png" alt="Android Image" />
+      <img src="android.png" alt="Android Logo" />
       <h1 class="title">Welcome to ChikChok!</h1>
       <p class="description">Click the button below to start your journey.</p>
-      <div class="action-button">
-        <button class="material-button" onclick="goToNextPage()">Start Now</button>
-      </div>
+      <button class="material-button" onclick="goToNextPage()">Start Now</button>
     </div>
 
     <script>
@@ -149,6 +167,12 @@
         setTimeout(() => {
           window.location.href = 'tools.html';
         }, 1000);
+      }
+
+      function toggleTheme() {
+        const htmlTag = document.documentElement;
+        const current = htmlTag.getAttribute('data-theme');
+        htmlTag.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
       }
     </script>
   </body>
