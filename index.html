@@ -1,136 +1,34 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="fa" class="mdui-theme-dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chik Chok | AI Code Generator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#00ffab',
-            darkbg: '#0f172a',
-          },
-          borderRadius: {
-            xl: '1rem',
-            '2xl': '1.5rem',
-          },
-        },
-      },
-    }
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chik Chok IDE</title>
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
+  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
   <style>
-    body {
-      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-      color: #e0e0e0;
-      font-family: 'Segoe UI', sans-serif;
+    html {
+      font-family: 'Space Grotesk', sans-serif;
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      border-radius: 20px;
-    }
-    .neon-btn {
-      background-color: #00ffab;
-      color: #000;
-      font-weight: bold;
-      border-radius: 8px;
-      padding: 10px 16px;
-      box-shadow: 0 0 10px #00ffab, 0 0 20px #00ffab40;
-      transition: all 0.3s ease;
-    }
-    .neon-btn:hover {
-      background-color: #0affc9;
-      transform: scale(1.05);
+    .home {
+      padding: 40px;
+      text-align: center;
     }
   </style>
 </head>
-<body class="p-4">
-  <nav class="glass-card p-4 flex justify-between items-center mb-8">
-    <h1 class="text-2xl font-bold text-primary">Chik Chok IDE</h1>
-    <div class="space-x-4">
-      <button onclick="switchPage('home')" class="neon-btn">Home</button>
-      <button onclick="switchPage('tools')" class="neon-btn">Tools</button>
-      <button onclick="switchPage('about')" class="neon-btn">About</button>
+<body>
+  <mdui-top-app-bar>
+    <div slot="start">Chik Chok IDE</div>
+    <div slot="end">
+      <mdui-button href="index.html" variant="text">خانه</mdui-button>
+      <mdui-button href="tools.html" variant="text">ابزارها</mdui-button>
+      <mdui-button href="about.html" variant="text">درباره ما</mdui-button>
     </div>
-  </nav>  <div id="home" class="glass-card p-8 mb-8">
-    <h2 class="text-3xl font-bold mb-4">Welcome to Chik Chok AI Code Generator</h2>
-    <p class="mb-4">Create Android code using AI with a modern interface and instant preview.</p>
-    <button onclick="switchPage('tools')" class="neon-btn">Start Generating</button>
-  </div>  <div id="tools" class="hidden glass-card p-6 mb-8">
-    <div class="grid md:grid-cols-3 gap-4 mb-4">
-      <select id="languageSelect" class="w-full p-2 rounded">
-        <option value="java">Java</option>
-        <option value="kotlin">Kotlin</option>
-        <option value="xml">XML</option>
-        <option value="html">HTML</option>
-      </select>
-      <input id="userPrompt" placeholder="e.g., create a login class" class="w-full p-2 rounded" />
-      <button onclick="generateCode()" class="neon-btn w-full">Generate Code</button>
-    </div>
-    <div class="flex gap-4 mb-4">
-      <button onclick="convertCode()" class="neon-btn">Convert Java ⇄ Kotlin</button>
-      <button onclick="runCode()" class="neon-btn">Run Code</button>
-    </div>
-    <div id="codeOutput" class="space-y-4"></div>
-  </div>  <div id="about" class="hidden glass-card p-6">
-    <h2 class="text-2xl font-bold mb-2">About Chik Chok IDE</h2>
-    <p>This is an AI-powered code generation and conversion tool for Android developers. It supports Java, Kotlin, XML, and HTML with beautiful dark UI and smart tools.</p>
-  </div>  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded hidden z-50 bg-primary text-black font-bold">Copied to clipboard!</div>  <footer class="text-center mt-20 text-white text-sm opacity-70">
-    © 2025 Chik Chok | All rights reserved
-  </footer><script>
-const codeDatabase = {
-  java: {
-    login: `public class Login { String u, p; Login(String u, String p){ this.u=u; this.p=p; } boolean auth(){ return u.equals("admin") && p.equals("1234"); } }`,
-    hello: `public class Hello { public static void main(String[] args) { System.out.println("Hello World"); } }`,
-    calc: `class Calculator { int sum(int a, int b){ return a+b; } }`
-  },
-  kotlin: {
-    login: `class Login(val u: String, val p: String){ fun auth() = u == "admin" && p == "1234" }`,
-    hello: `fun main() { println("Hello, Kotlin!") }`,
-    calc: `class Calculator { fun sum(a: Int, b: Int) = a + b }`
-  },
-  xml: {
-    login: `<LinearLayout><EditText hint="Username"/><EditText hint="Password"/><Button text="Login"/></LinearLayout>`,
-    hello: `<TextView android:text="Hello World!"/>`
-  },
-  html: {
-    hello: `<!DOCTYPE html><html><body><h1>Hello World</h1></body></html>`
-  }
-};
+  </mdui-top-app-bar>
 
-function generateCode() {
-  const lang = document.getElementById("languageSelect").value;
-  const prompt = document.getElementById("userPrompt").value.toLowerCase();
-  let code = codeDatabase[lang][Object.keys(codeDatabase[lang]).find(k => prompt.includes(k))] || `// Code not found for: ${prompt}`;
-  displayCode(code, lang);
-}
-
-function displayCode(code, lang) {
-  const out = document.getElementById("codeOutput");
-  const card = document.createElement("div");
-  card.className = "glass-card p-4";
-  card.innerHTML = `
-    <h3 class="text-lg font-bold mb-2">Generated ${lang.toUpperCase()} Code</h3>
-    <pre class="bg-black p-4 rounded text-primary overflow-auto">${code}</pre><div class="flex gap-4 mt-2">
-  <button class="neon-btn" onclick="navigator.clipboard.writeText(\`${code}\`).then(showToast)">Copy</button>
-  <button class="neon-btn" onclick="downloadCode(\`${code}\`, '${lang}')">Download</button>
-</div>
-
-`; out.prepend(card); }
-
-function showToast() { const toast = document.getElementById("toast"); toast.classList.remove("hidden"); setTimeout(() => toast.classList.add("hidden"), 2000); }
-
-function downloadCode(code, lang) { const blob = new Blob([code], { type: 'text/plain' }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = code.${lang === 'kotlin' ? 'kt' : lang}; link.click(); }
-
-function convertCode() { const lang = document.getElementById("languageSelect").value; const prompt = document.getElementById("userPrompt").value; const targetLang = lang === 'java' ? 'kotlin' : lang === 'kotlin' ? 'java' : null; if (!targetLang) return alert("Conversion only for Java ⇄ Kotlin"); const match = Object.keys(codeDatabase[lang]).find(k => prompt.toLowerCase().includes(k)); const code = codeDatabase[targetLang][match] || // No ${targetLang} code found for this prompt.; displayCode(code, targetLang); }
-
-function runCode() { alert("Running code... (Simulation only - Execution not supported in browser)"); }
-
-function switchPage(page) { document.getElementById("home").classList.add("hidden"); document.getElementById("tools").classList.add("hidden"); document.getElementById("about").classList.add("hidden"); document.getElementById(page).classList.remove("hidden"); } </script>
-
+  <div class="home">
+    <h1>به Chik Chok IDE خوش آمدید</h1>
+    <p>یک محیط توسعه تحت وب هوشمند برای برنامه‌نویسان اندروید</p>
+  </div>
 </body>
 </html>
