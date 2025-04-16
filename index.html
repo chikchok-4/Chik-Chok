@@ -3,129 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ChikChok IDE - Start</title>
-
-    <!-- MDUI 2 -->
-    <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
-    <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
-
+    <title>ChikChok Start Page</title>
     <style>
-      html {
-        font-family: 'Space Grotesk', sans-serif;
-      }
-
-      html:root {
-        --mdui-color-primary: 132 94 247;
-        --mdui-color-background: 20 20 24;
-        --mdui-color-on-background: 255 255 255;
-      }
-
       body {
+        font-family: 'Space Grotesk', sans-serif;
+        background-color: #141418;
+        color: white;
+        text-align: center;
         padding: 20px;
-        background-color: rgb(var(--mdui-color-background));
-        color: rgb(var(--mdui-color-on-background));
       }
 
       .container {
-        max-width: 960px;
-        margin: auto;
+        margin-top: 50px;
       }
 
       .title {
-        text-align: center;
-        font-size: 3rem;
-        margin-top: 50px;
-        color: rgb(var(--mdui-color-primary));
+        font-size: 2.8rem;
+        color: #845DF7;
       }
 
       .description {
-        text-align: center;
         font-size: 1.2rem;
-        margin-top: 20px;
+        margin-top: 10px;
         opacity: 0.8;
       }
 
-      .action-buttons {
-        text-align: center;
-        margin-top: 40px;
-      }
-
-      .mdui-btn {
-        margin: 0 15px;
-      }
-
-      .footer {
-        text-align: center;
-        margin-top: 50px;
-        font-size: 0.85em;
-        opacity: 0.7;
-      }
-
-      .theme-toggle {
-        position: fixed;
-        right: 20px;
-        top: 20px;
-      }
-
-      /* New Style for Code Box */
-      .code-box {
-        background-color: #1e1e1e;
-        color: #d4d4d4;
-        padding: 20px;
-        border-radius: 12px;
-        font-family: monospace;
-        min-height: 200px;
-        white-space: pre-wrap;
+      .action-button {
         margin-top: 30px;
-        overflow-x: auto;
       }
 
-      /* Style for Copy Button */
-      .copy-btn {
-        background-color: #4caf50;
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #845DF7;
         color: white;
-        padding: 10px 15px;
-        border-radius: 8px;
-        margin-top: 20px;
+        border: none;
+        border-radius: 5px;
         cursor: pointer;
       }
 
-      .copy-btn:hover {
-        background-color: #45a049;
+      button:hover {
+        background-color: #6b4fd1;
+      }
+
+      img {
+        margin-top: 30px;
+        max-width: 200px;
+        border-radius: 12px;
       }
     </style>
   </head>
   <body>
-    <div class="theme-toggle">
-      <mdui-switch id="themeSwitch" checked>Dark Mode</mdui-switch>
-    </div>
-
     <div class="container">
-      <h1 class="title">Welcome to ChikChok IDE</h1>
-      <p class="description">Build and test your Java, Kotlin, and XML code with just one click!</p>
-
-      <div class="action-buttons">
-        <!-- Change the href link to tools.html -->
-        <mdui-btn href="tools.html" variant="raised" color="primary">Start Coding</mdui-btn>
-        <mdui-btn href="about.html" variant="raised">View Documentation</mdui-btn>
+      <h1 class="title">Welcome to ChikChok!</h1>
+      <p class="description">Click the button below to start your journey.</p>
+      <div class="action-button">
+        <!-- Button with link to tools.html -->
+        <button onclick="location.href='tools.html'">Start Now</button>
       </div>
-
-      <!-- New Code Box and Copy Button -->
-      <div class="code-box" id="codeOutput">Your generated code will appear here...</div>
-      <button class="copy-btn" onclick="copyCode()">Copy Code</button>
-
-      <div class="footer">Made by ChikChok Devs — 2025</div>
+      <img src="android.png" alt="Android Image" />
     </div>
-
-    <script>
-      document.getElementById("themeSwitch").addEventListener("change", (e) => {
-        document.documentElement.classList.toggle("mdui-theme-dark", e.target.checked);
-      });
-
-    
-    </script>
   </body>
 </html>
