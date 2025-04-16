@@ -1,92 +1,173 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Theme Switch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Material Design Start</title>
   <style>
     :root {
-      --accent: #845DF7;
-      --dark-bg: #141418;
-      --light-bg: #f9f9f9;
-      --dark-text: #fff;
-      --light-text: #000;
-    }
-
-    [data-theme="dark"] {
-      background-color: var(--dark-bg);
-      color: var(--dark-text);
+      --primary-color: #845DF7;
+      --bg-light: #f5f3f7;
+      --bg-dark: #141418;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-light: #ffffff;
+      --card-dark: #1f1f23;
     }
 
     [data-theme="light"] {
-      background-color: var(--light-bg);
-      color: var(--light-text);
+      --bg: var(--bg-light);
+      --text: var(--text-light);
+      --card: var(--card-light);
+    }
+
+    [data-theme="dark"] {
+      --bg: var(--bg-dark);
+      --text: var(--text-dark);
+      --card: var(--card-dark);
     }
 
     body {
-      font-family: sans-serif;
       margin: 0;
-      padding: 40px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: all 0.4s ease;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
-      transition: background-color 0.5s ease, color 0.5s ease;
+      padding: 2rem;
     }
 
-    .theme-switch {
-      width: 60px;
-      height: 32px;
-      background: var(--accent);
-      border-radius: 999px;
-      position: relative;
+    .card {
+      background-color: var(--card);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      transition: background-color 0.4s ease;
+    }
+
+    .title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .description {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .start-button {
+      margin-top: 2rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border-radius: 50px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background-color 0.3s ease;
     }
 
-    .switch-thumb {
-      width: 28px;
-      height: 28px;
-      background: #3f2f7d;
-      border-radius: 50%;
+    .start-button:hover {
+      background-color: #6b4fd1;
+    }
+
+    .theme-toggle {
       position: absolute;
-      top: 2px;
-      left: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.3s ease;
+      top: 20px;
+      right: 20px;
     }
 
-    .switch-thumb svg {
-      width: 16px;
-      height: 16px;
-      fill: white;
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
     }
 
-    .theme-switch.active .switch-thumb {
-      transform: translateX(28px);
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "✓";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: #4b28a6;
+      color: white;
+      text-align: center;
+      line-height: 26px;
+      border-radius: 50%;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary-color);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    .graphic {
+      margin-top: 2rem;
+      width: 150px;
+      height: 150px;
+      background-color: #ddd;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      background-image: url("graphic.png");
+      background-size: cover;
+      background-position: center;
     }
   </style>
 </head>
 <body>
-
-<div class="theme-switch" onclick="toggleTheme()" id="themeSwitch">
-  <div class="switch-thumb">
-    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+  <div class="theme-toggle">
+    <label class="switch">
+      <input type="checkbox" id="themeToggle" />
+      <span class="slider"></span>
+    </label>
   </div>
-</div>
 
-<script>
-  function toggleTheme() {
-    const htmlTag = document.documentElement;
-    const switchBtn = document.getElementById('themeSwitch');
-    const currentTheme = htmlTag.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    htmlTag.setAttribute('data-theme', newTheme);
-    switchBtn.classList.toggle('active');
-  }
-</script>
+  <div class="card">
+    <div class="graphic"></div>
+    <h1 class="title">Welcome to ChikChok</h1>
+    <p class="description">Start building your Android app with Material Design 3.</p>
+    <button class="start-button" onclick="start()">Get Started</button>
+  </div>
 
+  <script>
+    const toggle = document.getElementById("themeToggle");
+    toggle.addEventListener("change", () => {
+      document.documentElement.setAttribute("data-theme", toggle.checked ? "dark" : "light");
+    });
+
+    function start() {
+      alert("Let's build something amazing!");
+      // window.location.href = 'tools.html';
+    }
+  </script>
 </body>
 </html>
