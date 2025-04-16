@@ -1,169 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tools | Chik Chok IDE</title>
-  <!-- MDUI Library for Material Design -->
-  <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.0-beta5/dist/css/mdui.min.css">
-  <script src="https://unpkg.com/mdui@2.0.0-beta5/dist/js/mdui.min.js"></script>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 800px;
-      padding: 24px;
-    }
-
-    .mdui-card {
-      border-radius: 12px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-      margin-bottom: 24px;
-    }
-
-    .mdui-card-title {
-      font-size: 24px;
-      font-weight: bold;
-      color: #212121;
-    }
-
-    .mdui-card-content {
-      font-size: 16px;
-      color: #424242;
-    }
-
-    .mdui-textfield {
-      margin-top: 16px;
-    }
-
-    .code-output {
-      background: #e8f5e9;
-      color: #1b5e20;
-      padding: 16px;
-      border-radius: 8px;
-      margin-top: 16px;
-      font-family: 'Courier New', monospace;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-
-    .button-group {
-      margin-top: 16px;
-    }
-  </style>
-</head>
-<body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
-  <div class="container">
-    <div class="mdui-card mdui-shadow-3">
-      <div class="mdui-card-primary">
-        <div class="mdui-card-primary-title">Code Generator</div>
-        <div class="mdui-card-primary-subtitle">Generate your code easily</div>
-      </div>
-      <div class="mdui-card-content">
-        <div class="mdui-textfield">
-          <label class="mdui-textfield-label">Describe your code idea</label>
-          <input class="mdui-textfield-input" type="text" id="codePrompt" placeholder="Enter your idea here...">
-        </div>
-        <div class="mdui-textfield">
-          <label class="mdui-textfield-label">Select Language</label>
-          <select class="mdui-select" id="langSelect">
-            <option value="kotlin">Kotlin</option>
-            <option value="java">Java</option>
-            <option value="xml">XML</option>
-          </select>
-        </div>
-        <div class="button-group">
-          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" onclick="generateCode()">Generate Code</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="mdui-card mdui-shadow-3">
-      <div class="mdui-card-primary">
-        <div class="mdui-card-primary-title">Fetch Code from URL</div>
-        <div class="mdui-card-primary-subtitle">Retrieve code from the internet</div>
-      </div>
-      <div class="mdui-card-content">
-        <div class="mdui-textfield">
-          <label class="mdui-textfield-label">Enter URL</label>
-          <input class="mdui-textfield-input" type="text" id="codeUrl" placeholder="e.g., https://gist.githubusercontent.com/...">
-        </div>
-        <div class="button-group">
-          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" onclick="fetchCode()">Fetch Code</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="mdui-card mdui-shadow-3">
-      <div class="mdui-card-primary">
-        <div class="mdui-card-primary-title">Code Output</div>
-        <div class="mdui-card-primary-subtitle">View or download your code</div>
-      </div>
-      <div class="mdui-card-content">
-        <div id="generatedCode" class="code-output">// Your generated code will appear here...</div>
-        <div class="button-group">
-          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme" onclick="copyCode()">Copy Code</button>
-          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme" onclick="downloadCode()">Download Code</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Function to generate code
-    function generateCode() {
-      const language = document.getElementById("langSelect").value;
-      const output = document.getElementById("generatedCode");
-      const templates = {
-        kotlin: `fun main() {\n    println("Hello, Kotlin!")\n}`,
-        java: `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Java!");\n    }\n}`,
-        xml: `<note>\n    <to>Tove</to>\n    <from>Jani</from>\n    <heading>Reminder</heading>\n    <body>Don't forget me this weekend!</body>\n</note>`
-      };
-
-      output.textContent = templates[language] || "// No template available.";
-    }
-
-    // Function to fetch code from a URL
-    async function fetchCode() {
-      const url = document.getElementById("codeUrl").value;
-      const output = document.getElementById("generatedCode");
-
-      try {
-        const response = await fetch(url);
-        const code = await response.text();
-        output.textContent = code;
-      } catch (error) {
-        output.textContent = "// Failed to fetch code. Please check the URL.";
+<html lang="en" class="mdui-theme-dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools | Chik Chok IDE</title>
+    <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.0-beta5/dist/css/mdui.min.css">
+    <script src="https://unpkg.com/mdui@2.0.0-beta5/dist/js/mdui.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+      html, body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #121212, #1c1c1c);
+        color: #e0e0e0;
+        margin: 0;
+        padding: 0;
       }
-    }
+      .content {
+        padding: 20px;
+        max-width: 1200px;
+        margin: auto;
+      }
+      .feature-card {
+        margin: 10px;
+        padding: 20px;
+        background: #1e1e1e;
+        border-radius: 12px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+      .feature-card img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+      }
+      .feature-card h1 {
+        font-size: 24px;
+        margin: 10px 0;
+      }
+      .languages-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+      .languages-grid .mdui-fab {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <mdui-appbar>
+        <div class="mdui-toolbar mdui-color-theme">
+          <img src="ghosticon.png" width="40px" height="40px" alt="Logo">
+          <span class="mdui-typo-title">Tools | Chik Chok IDE</span>
+          <div class="mdui-toolbar-spacer"></div>
+          <mdui-button class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu'}">
+            <i class="mdui-icon material-icons">more_vert</i>
+          </mdui-button>
+          <ul class="mdui-menu" id="menu">
+            <li class="mdui-menu-item">
+              <a href="https://github.com/chikchok-4/ChikChok.github.io" class="mdui-ripple">GitHub Repository</a>
+            </li>
+            <li class="mdui-menu-item">
+              <a href="#" class="mdui-ripple">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+      </mdui-appbar>
+    </header>
 
-    // Function to copy code
-    function copyCode() {
-      const code = document.getElementById("generatedCode").textContent;
-      navigator.clipboard.writeText(code);
-      alert("Code copied to clipboard!");
-    }
+    <!-- Content -->
+    <div class="content">
+      <!-- Title -->
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1>Welcome to the Tools Page</h1>
+        <p>Explore features and generate code effortlessly!</p>
+      </div>
 
-    // Function to download code
-    function downloadCode() {
-      const code = document.getElementById("generatedCode").textContent;
-      const blob = new Blob([code], { type: "text/plain" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "code.txt";
-      a.click();
-    }
-  </script>
-</body>
+      <!-- Features Section -->
+      <div style="text-align: center;">
+        <h1>Features</h1>
+        <hr style="width: 120px; margin: 20px auto;">
+        <div class="feature-card">
+          <img src="oss.png" alt="Open Source">
+          <h1>Open Source</h1>
+          <p>This app is completely Open Source. You can view the source code on GitHub.</p>
+        </div>
+        <div class="feature-card">
+          <img src="secure.png" alt="Secure">
+          <h1>Secure</h1>
+          <p>The app is secure and respects your privacy with encryption.</p>
+        </div>
+        <div class="feature-card">
+          <img src="speed.png" alt="Performance">
+          <h1>High Performance</h1>
+          <p>Optimized for smooth performance across all devices.</p>
+        </div>
+      </div>
+
+      <!-- Supported Languages -->
+      <div style="text-align: center; margin-top: 40px;">
+        <h1>Supported Languages</h1>
+        <hr style="width: 120px; margin: 20px auto;">
+        <div class="languages-grid">
+          <mdui-fab extended>Java</mdui-fab>
+          <mdui-fab extended>Kotlin</mdui-fab>
+          <mdui-fab extended>Python</mdui-fab>
+          <mdui-fab extended>Web</mdui-fab>
+          <mdui-fab extended>Ruby</mdui-fab>
+          <mdui-fab extended>Shell</mdui-fab>
+          <mdui-fab extended>C++</mdui-fab>
+          <mdui-fab extended>C</mdui-fab>
+          <mdui-fab extended>C#</mdui-fab>
+          <mdui-fab extended>Sass</mdui-fab>
+          <mdui-fab extended>Scss</mdui-fab>
+          <mdui-fab extended>SQL</mdui-fab>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align: center; margin-top: 40px; padding: 20px; background: #1e1e1e;">
+      <p>Made by Chik Chok Dev Team. Visit our <a href="https://github.com/chikchok-4/ChikChok.github.io" style="color: #ff5722;">GitHub</a>.</p>
+    </footer>
+  </body>
 </html>
