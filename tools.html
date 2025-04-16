@@ -16,11 +16,25 @@
       --mdui-color-on-primary: 57 48 0;
       --mdui-color-background: 21 19 11;
       --mdui-color-on-background: 232 226 212;
-      --mdui-color-surface: 21 19 11;
+      --mdui-color-surface: 28 26 20;
       --mdui-color-on-surface: 232 226 212;
     }
     .container {
-      padding: 20px;
+      padding: 32px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .mdui-card {
+      border-radius: 18px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+    }
+    .mdui-card:hover {
+      transform: scale(1.01);
+    }
+    mdui-button {
+      margin-right: 12px;
+      margin-bottom: 12px;
     }
   </style>
 </head>
@@ -32,18 +46,35 @@
 
   <div class="container">
     <mdui-card class="mdui-m-y-4" variant="elevated">
-      <mdui-text-field id="codePrompt" label="Describe the code (e.g., login class in Kotlin)" variant="outlined"></mdui-text-field>
-      <mdui-button class="mdui-m-t-2" onclick="generateCode()" icon="bolt" variant="filled">Generate Code</mdui-button>
-      <mdui-textarea id="generatedCode" label="Generated Code" rows="10" readonly variant="outlined" class="mdui-m-t-2"></mdui-textarea>
+      <div class="mdui-card-content">
+        <mdui-text-field 
+          id="codePrompt" 
+          label="Describe your code idea (e.g., login class in Kotlin)" 
+          variant="outlined" 
+          full-width></mdui-text-field>
+        <mdui-button class="mdui-m-t-3" onclick="generateCode()" icon="bolt" variant="filled">
+          Generate Code
+        </mdui-button>
+        <mdui-textarea 
+          id="generatedCode" 
+          label="Generated Code Output" 
+          rows="12" 
+          readonly 
+          variant="outlined" 
+          class="mdui-m-t-3" 
+          full-width></mdui-textarea>
+      </div>
     </mdui-card>
 
     <mdui-card class="mdui-m-y-4" variant="elevated">
-      <div class="mdui-textfield-label">Tools</div>
-      <div class="mdui-m-y-2">
-        <mdui-button onclick="convertToKotlin()" icon="sync_alt" variant="outlined">Convert to Kotlin</mdui-button>
-        <mdui-button onclick="convertToJava()" icon="sync_alt" variant="outlined">Convert to Java</mdui-button>
-        <mdui-button onclick="copyCode()" icon="content_copy" variant="outlined">Copy</mdui-button>
-        <mdui-button onclick="downloadCode()" icon="download" variant="outlined">Download</mdui-button>
+      <div class="mdui-card-content">
+        <h4>Tools</h4>
+        <div>
+          <mdui-button onclick="convertToKotlin()" icon="sync_alt" variant="tonal">Convert to Kotlin</mdui-button>
+          <mdui-button onclick="convertToJava()" icon="sync_alt" variant="tonal">Convert to Java</mdui-button>
+          <mdui-button onclick="copyCode()" icon="content_copy" variant="tonal">Copy</mdui-button>
+          <mdui-button onclick="downloadCode()" icon="download" variant="tonal">Download</mdui-button>
+        </div>
       </div>
     </mdui-card>
   </div>
@@ -61,13 +92,13 @@
     }
 
     function convertToKotlin() {
-      const javaCode = snippets["login class in kotlin"];
-      document.getElementById("generatedCode").value = javaCode;
+      const kotlinCode = snippets["login class in kotlin"];
+      document.getElementById("generatedCode").value = kotlinCode;
     }
 
     function convertToJava() {
-      const kotlinCode = snippets["login class in java"];
-      document.getElementById("generatedCode").value = kotlinCode;
+      const javaCode = snippets["login class in java"];
+      document.getElementById("generatedCode").value = javaCode;
     }
 
     function copyCode() {
