@@ -27,7 +27,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 10px 20px;
-      background: #1e1e1e;
+      background: linear-gradient(135deg, #ff5722, #e64a19);
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
       position: sticky;
       top: 0;
@@ -43,6 +43,22 @@
       color: #ffc107;
     }
 
+    .mdui-menu {
+      transition: all 0.3s ease-in-out;
+      background: linear-gradient(135deg, #ff5722, #e64a19);
+      border-radius: 12px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .mdui-menu-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .mdui-menu-item:hover {
+      background: #ffc107;
+      color: #121212;
+    }
+
     .content {
       padding: 20px;
     }
@@ -50,32 +66,27 @@
     .feature-card {
       margin: 10px;
       padding: 20px;
-      background: #2e2e2e;
+      background: #3d3d3d;
       border-radius: 12px;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
       text-align: center;
       transition: transform 0.3s ease;
+      animation: fadeIn 0.5s ease-in-out;
     }
 
     .feature-card:hover {
       transform: scale(1.05);
     }
 
-    .feature-card img {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 10px;
-    }
-
-    .feature-card h2 {
-      font-size: 20px;
-      margin: 10px 0;
-      color: #ffd54f;
-    }
-
-    .feature-card p {
-      font-size: 16px;
-      color: #e0e0e0;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .code-output {
@@ -87,13 +98,6 @@
       font-family: 'Courier New', monospace;
       white-space: pre-wrap;
       word-wrap: break-word;
-    }
-
-    .button-group {
-      margin-top: 20px;
-      display: flex;
-      justify-content: flex-start;
-      gap: 10px;
     }
 
     footer {
@@ -112,15 +116,19 @@
     <img src="ghosticon.png" alt="Logo">
     <h1>Chik Chok IDE Tools</h1>
     <div>
-      <mdui-button class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu'}">
+      <button class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu'}">
         <i class="mdui-icon material-icons">menu</i>
-      </mdui-button>
+      </button>
       <ul class="mdui-menu" id="menu">
         <li class="mdui-menu-item">
-          <a href="https://github.com/chikchok-4/ChikChok.github.io" class="mdui-ripple">GitHub Repository</a>
+          <a href="https://github.com/chikchok-4/ChikChok.github.io" class="mdui-ripple">
+            <i class="mdui-icon material-icons">code</i> GitHub Repository
+          </a>
         </li>
         <li class="mdui-menu-item">
-          <a href="#" class="mdui-ripple">Contact Us</a>
+          <a href="#" class="mdui-ripple">
+            <i class="mdui-icon material-icons">contact_mail</i> Contact Us
+          </a>
         </li>
       </ul>
     </div>
@@ -128,7 +136,6 @@
 
   <!-- Content -->
   <div class="container">
-    <!-- Title -->
     <div style="text-align: center; margin-bottom: 30px;">
       <h1>Welcome to Chik Chok IDE Tools</h1>
       <p>Generate code, explore features, and improve productivity effortlessly.</p>
