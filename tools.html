@@ -2,7 +2,7 @@
 <html lang="en" class="mdui-theme-dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ChikChok IDE</title>
 
     <!-- MDUI 2 -->
@@ -18,9 +18,8 @@
       }
 
       html:root {
-        --mdui-color-primary: 160 106 255;
-        --mdui-color-surface-tint: 160 106 255;
-        --mdui-color-background: 20 20 20;
+        --mdui-color-primary: 132 94 247;
+        --mdui-color-background: 20 20 24;
         --mdui-color-on-background: 255 255 255;
       }
 
@@ -31,31 +30,27 @@
       }
 
       .container {
-        max-width: 900px;
+        max-width: 960px;
         margin: auto;
-      }
-
-      .title {
-        text-align: center;
-        margin-bottom: 20px;
       }
 
       .code-box {
         background-color: #1e1e1e;
-        color: #cfcfcf;
+        color: #d4d4d4;
         padding: 20px;
         border-radius: 12px;
         font-family: monospace;
-        min-height: 200px;
+        min-height: 300px;
         white-space: pre-wrap;
-        margin-top: 20px;
+        margin-top: 30px;
+        overflow-x: auto;
       }
 
       .footer {
         text-align: center;
-        margin-top: 40px;
-        font-size: 0.9em;
-        opacity: 0.6;
+        margin-top: 50px;
+        font-size: 0.85em;
+        opacity: 0.7;
       }
 
       .theme-toggle {
@@ -63,9 +58,25 @@
         right: 20px;
         top: 20px;
       }
+
+      mdui-button {
+        margin-top: 30px;
+      }
+
+      h1.title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      p.subtitle {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 1.2rem;
+        opacity: 0.8;
+      }
     </style>
   </head>
-
   <body>
     <div class="theme-toggle">
       <mdui-switch id="themeSwitch" checked>Dark Mode</mdui-switch>
@@ -73,18 +84,23 @@
 
     <div class="container">
       <h1 class="title">ChikChok IDE</h1>
-      <p style="text-align:center;">Generate Java, Kotlin, and XML code instantly with style.</p>
-
-      <mdui-text-field
-        label="Prompt (e.g., 'Create a login screen')"
-        id="promptInput"
-        variant="outlined"
-        style="width: 100%; margin-top: 20px;"
-      ></mdui-text-field>
+      <p class="subtitle">Build code in Java, Kotlin & XML with one click</p>
 
       <mdui-select
-        label="Select Language"
+        id="exampleSelect"
+        label="Select an Example"
+        variant="outlined"
+        style="width: 100%;"
+      >
+        <mdui-menu-item value="login">Login Form</mdui-menu-item>
+        <mdui-menu-item value="api">API Request</mdui-menu-item>
+        <mdui-menu-item value="data">Data Class</mdui-menu-item>
+        <mdui-menu-item value="ui">XML Layout</mdui-menu-item>
+      </mdui-select>
+
+      <mdui-select
         id="languageSelect"
+        label="Language"
         variant="outlined"
         style="width: 100%; margin-top: 20px;"
       >
@@ -93,64 +109,135 @@
         <mdui-menu-item value="xml">XML</mdui-menu-item>
       </mdui-select>
 
-      <mdui-button
-        icon="code"
-        variant="filled"
-        style="margin-top: 30px;"
-        onclick="generateCode()"
-      >
-        Generate Code
-      </mdui-button>
+      <mdui-button icon="code" variant="filled" onclick="generateCode()">Generate Code</mdui-button>
 
-      <div class="code-box" id="codeOutput">// Your generated code will appear here.</div>
+      <div class="code-box" id="codeOutput">// Generated code appears here.</div>
 
-      <div class="footer">
-        Made with ❤️ by ChikChok Devs
-      </div>
+      <div class="footer">Made by ChikChok Devs — 2025</div>
     </div>
 
     <script>
-      const themeSwitch = document.getElementById("themeSwitch");
-
-      themeSwitch.addEventListener("change", () => {
-        if (themeSwitch.checked) {
-          document.documentElement.classList.add("mdui-theme-dark");
-        } else {
-          document.documentElement.classList.remove("mdui-theme-dark");
-        }
+      document.getElementById("themeSwitch").addEventListener("change", (e) => {
+        document.documentElement.classList.toggle("mdui-theme-dark", e.target.checked);
       });
 
       function generateCode() {
-        const prompt = document.getElementById("promptInput").value.toLowerCase();
         const language = document.getElementById("languageSelect").value;
+        const example = document.getElementById("exampleSelect").value;
         const output = document.getElementById("codeOutput");
 
-        let code = "// Example output\n";
+        let code = "// Generated code:\n\n";
 
-        if (language === "java") {
-          code = `public class Main {
-    public static void main(String[] args) {
-        System.out.println("${prompt || "Hello from ChikChok Java!"}");
+        const codes = {
+          login: {
+            java: `
+public class LoginActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
     }
-}`;
-        } else if (language === "kotlin") {
-          code = `fun main() {
-    println("${prompt || "Hello from ChikChok Kotlin!"}")
-}`;
-        } else if (language === "xml") {
-          code = `<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    public void login(String username, String password) {
+        if (username.equals("admin") && password.equals("1234")) {
+            Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+        }
+    }
+}`,
+            kotlin: `
+class LoginActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
+    }
+
+    fun login(username: String, password: String) {
+        if (username == "admin" && password == "1234") {
+            Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
+        }
+    }
+}`,
+            xml: `
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <EditText android:hint="Username" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <EditText android:hint="Password" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textPassword"/>
+    <Button android:text="Login" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>`
+          },
+          api: {
+            java: `
+public class ApiClient {
+    public void fetchData() {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("https://api.example.com/data").build();
+
+        client.newCall(request).enqueue(new Callback() {
+            public void onFailure(Call call, IOException e) {}
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = response.body().string();
+            }
+        });
+    }
+}`,
+            kotlin: `
+fun fetchData() {
+    val client = OkHttpClient()
+    val request = Request.Builder().url("https://api.example.com/data").build()
+
+    client.newCall(request).enqueue(object : Callback {
+        override fun onFailure(call: Call, e: IOException) {}
+        override fun onResponse(call: Call, response: Response) {
+            val json = response.body?.string()
+        }
+    })
+}`,
+            xml: `<!-- No XML for API requests -->`
+          },
+          data: {
+            java: `
+public class User {
+    private String name;
+    private int age;
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Getters and setters
+}`,
+            kotlin: `
+data class User(
+    val name: String,
+    val age: Int
+)`,
+            xml: `<!-- No XML for data class -->`
+          },
+          ui: {
+            java: `// Use XML layout for UI`,
+            kotlin: `// Use XML layout for UI`,
+            xml: `
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="${prompt || "Hello from ChikChok XML!"}" />
-</LinearLayout>`;
-        } else {
-          code = "// Please select a language.";
-        }
+    <TextView android:text="Hello ChikChok!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>`
+          }
+        };
+
+        code = codes[example]?.[language] || "// No code available for this combination.";
 
         output.textContent = code;
       }
