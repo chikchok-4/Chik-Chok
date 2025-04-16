@@ -10,31 +10,43 @@
     html {
       font-family: 'Space Grotesk', sans-serif;
     }
+
     html:root {
       --mdui-color-primary: 219 198 111;
       --mdui-color-surface-tint: 219 198 111;
       --mdui-color-on-primary: 57 48 0;
       --mdui-color-background: 21 19 11;
       --mdui-color-on-background: 232 226 212;
-      --mdui-color-surface: 28 26 20;
+      --mdui-color-surface: 21 19 11;
       --mdui-color-on-surface: 232 226 212;
     }
+
     .container {
-      padding: 32px;
-      max-width: 900px;
+      padding: 20px;
+      max-width: 800px;
       margin: auto;
     }
-    .mdui-card {
-      border-radius: 18px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s ease;
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
     }
-    .mdui-card:hover {
-      transform: scale(1.01);
+
+    @media (max-width: 600px) {
+      .btn-group {
+        flex-direction: column;
+      }
     }
+
     mdui-button {
-      margin-right: 12px;
-      margin-bottom: 12px;
+      min-width: 180px;
+      justify-content: flex-start;
+    }
+
+    mdui-select {
+      margin-top: 16px;
+      width: 200px;
     }
   </style>
 </head>
@@ -45,31 +57,29 @@
   </mdui-top-app-bar>
 
   <div class="container">
+    <!-- Code Generator Section -->
     <mdui-card class="mdui-m-y-4" variant="elevated">
       <div class="mdui-card-content">
-        <mdui-text-field 
-          id="codePrompt" 
-          label="Describe your code idea (e.g., login class in Kotlin)" 
-          variant="outlined" 
-          full-width></mdui-text-field>
+        <mdui-text-field id="codePrompt" label="Describe your code idea" variant="outlined" full-width></mdui-text-field>
+        
+        <mdui-select label="Language" id="langSelect" variant="outlined">
+          <mdui-menu-item value="kotlin">Kotlin</mdui-menu-item>
+          <mdui-menu-item value="java">Java</mdui-menu-item>
+        </mdui-select>
+
         <mdui-button class="mdui-m-t-3" onclick="generateCode()" icon="bolt" variant="filled">
           Generate Code
         </mdui-button>
-        <mdui-textarea 
-          id="generatedCode" 
-          label="Generated Code Output" 
-          rows="12" 
-          readonly 
-          variant="outlined" 
-          class="mdui-m-t-3" 
-          full-width></mdui-textarea>
+
+        <mdui-textarea id="generatedCode" label="Generated Code Output" rows="12" readonly variant="outlined" class="mdui-m-t-3" full-width></mdui-textarea>
       </div>
     </mdui-card>
 
+    <!-- Tools Section -->
     <mdui-card class="mdui-m-y-4" variant="elevated">
       <div class="mdui-card-content">
         <h4>Tools</h4>
-        <div>
+        <div class="btn-group">
           <mdui-button onclick="convertToKotlin()" icon="sync_alt" variant="tonal">Convert to Kotlin</mdui-button>
           <mdui-button onclick="convertToJava()" icon="sync_alt" variant="tonal">Convert to Java</mdui-button>
           <mdui-button onclick="copyCode()" icon="content_copy" variant="tonal">Copy</mdui-button>
@@ -85,36 +95,44 @@
       "login class in java": `public class Login { String u, p; Login(String u, String p){ this.u=u; this.p=p; } boolean auth(){ return u.equals("admin") && p.equals("1234"); } }`
     };
 
+    const output = document.getElementById("generatedCode");
+
     function generateCode() {
       const input = document.getElementById("codePrompt").value.toLowerCase();
-      const code = snippets[input] || "// No matching code found.";
-      document.getElementById("generatedCode").value = code;
+      const lang = document.getElementById("langSelect").value;
+      const key = input.includes("login") ? `login class in ${lang}` : null;
+      const code = key && snippets[key] ? snippets[key] : "// No matching code found.";
+      output.value = code;
+      localStorage.setItem("lastCode", code);
     }
 
     function convertToKotlin() {
-      const kotlinCode = snippets["login class in kotlin"];
-      document.getElementById("generatedCode").value = kotlinCode;
+      output.value = snippets["login class in kotlin"];
+      localStorage.setItem("lastCode", output.value);
     }
 
     function convertToJava() {
-      const javaCode = snippets["login class in java"];
-      document.getElementById("generatedCode").value = javaCode;
+      output.value = snippets["login class in java"];
+      localStorage.setItem("lastCode", output.value);
     }
 
     function copyCode() {
-      const code = document.getElementById("generatedCode").value;
-      navigator.clipboard.writeText(code);
+      navigator.clipboard.writeText(output.value);
       mdui.snackbar({ message: 'Copied to clipboard!' });
     }
 
     function downloadCode() {
-      const code = document.getElementById("generatedCode").value;
-      const blob = new Blob([code], { type: "text/plain" });
+      const blob = new Blob([output.value], { type: "text/plain" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = "code.txt";
       a.click();
     }
+
+    window.onload = () => {
+      const saved = localStorage.getItem("lastCode");
+      if (saved) output.value = saved;
+    };
   </script>
 </body>
 </html>
