@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="mdui-theme-dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chik Chok | Super Codegen & Tools</title>
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css"/>
+  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  <style>
+    html {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    html:root {
+      --mdui-color-primary: 219 198 111;
+      --mdui-color-surface-tint: 219 198 111;
+      --mdui-color-on-primary: 57 48 0;
+      --mdui-color-background: 21 19 11;
+      --mdui-color-on-background: 232 226 212;
+      --mdui-color-surface: 21 19 11;
+      --mdui-color-on-surface: 232 226 212;
+    }
+    .container {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <mdui-top-app-bar>
+    <mdui-button-icon icon="menu"></mdui-button-icon>
+    <div class="mdui-top-app-bar-title">Chik Chok | Super Codegen & Tools</div>
+  </mdui-top-app-bar>
+
+  <div class="container">
+    <mdui-card class="mdui-m-y-4" variant="elevated">
+      <mdui-text-field id="codePrompt" label="Describe the code (e.g., login class in Kotlin)" variant="outlined"></mdui-text-field>
+      <mdui-button class="mdui-m-t-2" onclick="generateCode()" icon="bolt" variant="filled">Generate Code</mdui-button>
+      <mdui-textarea id="generatedCode" label="Generated Code" rows="10" readonly variant="outlined" class="mdui-m-t-2"></mdui-textarea>
+    </mdui-card>
+
+    <mdui-card class="mdui-m-y-4" variant="elevated">
+      <div class="mdui-textfield-label">Tools</div>
+      <div class="mdui-m-y-2">
+        <mdui-button onclick="convertToKotlin()" icon="sync_alt" variant="outlined">Convert to Kotlin</mdui-button>
+        <mdui-button onclick="convertToJava()" icon="sync_alt" variant="outlined">Convert to Java</mdui-button>
+        <mdui-button onclick="copyCode()" icon="content_copy" variant="outlined">Copy</mdui-button>
+        <mdui-button onclick="downloadCode()" icon="download" variant="outlined">Download</mdui-button>
+      </div>
+    </mdui-card>
+  </div>
+
+  <script>
+    const snippets = {
+      "login class in kotlin": `class Login(val user: String, val pass: String){ fun auth() = user == "admin" && pass == "1234" }`,
+      "login class in java": `public class Login { String u, p; Login(String u, String p){ this.u=u; this.p=p; } boolean auth(){ return u.equals("admin") && p.equals("1234"); } }`
+    };
+
+    function generateCode() {
+      const input = document.getElementById("codePrompt").value.toLowerCase();
+      const code = snippets[input] || "// No matching code found.";
+      document.getElementById("generatedCode").value = code;
+    }
+
+    function convertToKotlin() {
+      const javaCode = snippets["login class in kotlin"];
+      document.getElementById("generatedCode").value = javaCode;
+    }
+
+    function convertToJava() {
+      const kotlinCode = snippets["login class in java"];
+      document.getElementById("generatedCode").value = kotlinCode;
+    }
+
+    function copyCode() {
+      const code = document.getElementById("generatedCode").value;
+      navigator.clipboard.writeText(code);
+      mdui.snackbar({ message: 'Copied to clipboard!' });
+    }
+
+    function downloadCode() {
+      const code = document.getElementById("generatedCode").value;
+      const blob = new Blob([code], { type: "text/plain" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "code.txt";
+      a.click();
+    }
+  </script>
+</body>
+</html>
