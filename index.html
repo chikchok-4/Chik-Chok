@@ -87,48 +87,37 @@
       margin-bottom: 20px;
     }
 
-    <style>
-  .custom-btn {
-    background: linear-gradient(135deg, #7F00FF, #E100FF);
-    color: white;
-    padding: 12px 28px;
-    font-size: 16px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(200, 0, 255, 0.3);
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: bold;
-  }
+    .custom-btn {
+      background: linear-gradient(135deg, #7F00FF, #E100FF);
+      color: white;
+      padding: 12px 28px;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(200, 0, 255, 0.3);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+    }
 
-  .custom-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(200, 0, 255, 0.5);
-    background: linear-gradient(135deg, #9B00FF, #FF00E0);
-  }
+    .custom-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(200, 0, 255, 0.5);
+      background: linear-gradient(135deg, #9B00FF, #FF00E0);
+    }
 
-  .custom-btn:active {
-    transform: scale(0.97);
-    box-shadow: 0 2px 10px rgba(200, 0, 255, 0.3);
-  }
+    .custom-btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 10px rgba(200, 0, 255, 0.3);
+    }
 
-  .custom-btn svg {
-    width: 20px;
-    height: 20px;
-  }
-</style>
-
-<!-- جایگزین mdui-button کن با این کد -->
-<button class="custom-btn" onclick="goToNextPage()">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-  </svg>
-  Start
-</button>
-
+    .custom-btn svg {
+      width: 20px;
+      height: 20px;
+    }
   </style>
 </head>
 <body>
@@ -138,7 +127,14 @@
 
     <h1>Welcome to Chik Chok IDE</h1>
     <p>The simplest way to generate code using AI</p>
-    <mdui-button variant="filled" icon="rocket_launch" onclick="goToNextPage()">Start</mdui-button>
+    
+    <!-- دکمه جدید -->
+    <button class="custom-btn" onclick="goToNextPage()">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+      </svg>
+      Start
+    </button>
   </div>
 
   <script>
