@@ -50,11 +50,11 @@
 
       .action-buttons {
         text-align: center;
-        margin-top: 40px;
+        margin-top: 30px;
       }
 
       .mdui-btn {
-        margin: 0 15px;
+        margin: 10px;
       }
 
       .code-box {
@@ -96,30 +96,26 @@
       <h1 class="title">ChikChok IDE - Tools</h1>
       <p class="description">Generate Java, Kotlin, or XML code based on examples.</p>
 
-      <mdui-select
-        id="exampleSelect"
-        label="Select an Example"
-        variant="outlined"
-        style="width: 100%;"
-      >
+      <mdui-select id="exampleSelect" label="Select an Example" variant="outlined" style="width: 100%;">
         <mdui-menu-item value="login">Login Form</mdui-menu-item>
         <mdui-menu-item value="api">API Request</mdui-menu-item>
         <mdui-menu-item value="data">Data Class</mdui-menu-item>
         <mdui-menu-item value="ui">XML Layout</mdui-menu-item>
+        <mdui-menu-item value="toast">Toast Message</mdui-menu-item>
+        <mdui-menu-item value="dialog">Alert Dialog</mdui-menu-item>
       </mdui-select>
 
-      <mdui-select
-        id="languageSelect"
-        label="Select Language"
-        variant="outlined"
-        style="width: 100%; margin-top: 20px;"
-      >
+      <mdui-select id="languageSelect" label="Select Language" variant="outlined" style="width: 100%; margin-top: 20px;">
         <mdui-menu-item value="java">Java</mdui-menu-item>
         <mdui-menu-item value="kotlin">Kotlin</mdui-menu-item>
         <mdui-menu-item value="xml">XML</mdui-menu-item>
       </mdui-select>
 
-      <mdui-button icon="code" variant="filled" onclick="generateCode()">Generate Code</mdui-button>
+      <div class="action-buttons">
+        <mdui-button icon="code" variant="filled" onclick="generateCode()">Generate Code</mdui-button>
+        <mdui-button icon="content_copy" variant="outlined" onclick="copyCode()">Copy</mdui-button>
+        <mdui-button icon="sync_alt" variant="outlined" onclick="convertCode()">Convert</mdui-button>
+      </div>
 
       <div class="code-box" id="codeOutput">// Generated code appears here.</div>
 
@@ -136,92 +132,90 @@
         const example = document.getElementById("exampleSelect").value;
         const output = document.getElementById("codeOutput");
 
-        let code = "// Generated code:\n\n";
-
         const codes = {
           login: {
             java: `public class LoginActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-    }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_login);
+  }
 
-    public void login(String username, String password) {
-        if (username.equals("admin") && password.equals("1234")) {
-            Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
-        }
+  public void login(String username, String password) {
+    if (username.equals("admin") && password.equals("1234")) {
+      Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show();
+    } else {
+      Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
     }
+  }
 }`,
             kotlin: `class LoginActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_login)
+  }
 
-    fun login(username: String, password: String) {
-        if (username == "admin" && password == "1234") {
-            Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
-        }
+  fun login(username: String, password: String) {
+    if (username == "admin" && password == "1234") {
+      Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show()
+    } else {
+      Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
     }
+  }
 }`,
             xml: `<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="24dp">
 
-    <EditText android:hint="Username" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <EditText android:hint="Password" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textPassword"/>
-    <Button android:text="Login" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+  <EditText android:hint="Username" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+  <EditText android:hint="Password" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textPassword"/>
+  <Button android:text="Login" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 </LinearLayout>`
           },
           api: {
             java: `public class ApiClient {
-    public void fetchData() {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("https://api.example.com/data").build();
+  public void fetchData() {
+    OkHttpClient client = new OkHttpClient();
+    Request request = new Request.Builder().url("https://api.example.com/data").build();
 
-        client.newCall(request).enqueue(new Callback() {
-            public void onFailure(Call call, IOException e) {}
-            public void onResponse(Call call, Response response) throws IOException {
-                String json = response.body().string();
-            }
-        });
-    }
+    client.newCall(request).enqueue(new Callback() {
+      public void onFailure(Call call, IOException e) {}
+      public void onResponse(Call call, Response response) throws IOException {
+        String json = response.body().string();
+      }
+    });
+  }
 }`,
             kotlin: `fun fetchData() {
-    val client = OkHttpClient()
-    val request = Request.Builder().url("https://api.example.com/data").build()
+  val client = OkHttpClient()
+  val request = Request.Builder().url("https://api.example.com/data").build()
 
-    client.newCall(request).enqueue(object : Callback {
-        override fun onFailure(call: Call, e: IOException) {}
-        override fun onResponse(call: Call, response: Response) {
-            val json = response.body?.string()
-        }
-    })
+  client.newCall(request).enqueue(object : Callback {
+    override fun onFailure(call: Call, e: IOException) {}
+    override fun onResponse(call: Call, response: Response) {
+      val json = response.body?.string()
+    }
+  })
 }`,
             xml: `<!-- No XML for API requests -->`
           },
           data: {
             java: `public class User {
-    private String name;
-    private int age;
+  private String name;
+  private int age;
 
-    public User(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
+  public User(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
 
-    // Getters and setters
+  // Getters and setters
 }`,
             kotlin: `data class User(
-    val name: String,
-    val age: Int
+  val name: String,
+  val age: Int
 )`,
             xml: `<!-- No XML for data class -->`
           },
@@ -229,19 +223,56 @@
             java: `// Use XML layout for UI`,
             kotlin: `// Use XML layout for UI`,
             xml: `<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:orientation="vertical">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:padding="16dp"
+  android:orientation="vertical">
 
-    <TextView android:text="Hello ChikChok!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+  <TextView android:text="Hello ChikChok!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 </LinearLayout>`
+          },
+          toast: {
+            java: `Toast.makeText(this, "Hello from Java", Toast.LENGTH_SHORT).show();`,
+            kotlin: `Toast.makeText(this, "Hello from Kotlin", Toast.LENGTH_SHORT).show()`,
+            xml: `<!-- No XML for Toast -->`
+          },
+          dialog: {
+            java: `new AlertDialog.Builder(this)
+  .setTitle("Title")
+  .setMessage("This is a dialog.")
+  .setPositiveButton("OK", null)
+  .show();`,
+            kotlin: `AlertDialog.Builder(this)
+  .setTitle("Title")
+  .setMessage("This is a dialog.")
+  .setPositiveButton("OK", null)
+  .show()`,
+            xml: `<!-- No XML for Dialog -->`
           }
         };
 
-        code = codes[example]?.[language] || "// No code available for this combination.";
-
+        const code = codes[example]?.[language] || "// No code available for this combination.";
         output.textContent = code;
+      }
+
+      function copyCode() {
+        const code = document.getElementById("codeOutput").textContent;
+        navigator.clipboard.writeText(code).then(() => {
+          mdui.snackbar({ message: "Code copied!" });
+        });
+      }
+
+      function convertCode() {
+        const languageSelect = document.getElementById("languageSelect");
+        if (languageSelect.value === "java") {
+          languageSelect.value = "kotlin";
+        } else if (languageSelect.value === "kotlin") {
+          languageSelect.value = "java";
+        } else {
+          mdui.snackbar({ message: "Conversion not supported for XML." });
+          return;
+        }
+        generateCode();
       }
     </script>
   </body>
