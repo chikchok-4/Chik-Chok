@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ChikChok IDE</title>
+    <title>ChikChok IDE - Tools</title>
 
     <!-- MDUI 2 -->
     <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
@@ -34,6 +34,29 @@
         margin: auto;
       }
 
+      .title {
+        text-align: center;
+        font-size: 3rem;
+        margin-top: 50px;
+        color: rgb(var(--mdui-color-primary));
+      }
+
+      .description {
+        text-align: center;
+        font-size: 1.2rem;
+        margin-top: 20px;
+        opacity: 0.8;
+      }
+
+      .action-buttons {
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      .mdui-btn {
+        margin: 0 15px;
+      }
+
       .code-box {
         background-color: #1e1e1e;
         color: #d4d4d4;
@@ -59,41 +82,7 @@
         top: 20px;
       }
 
-      mdui-button {
-        margin-top: 30px;
-      }
-
-      h1.title {
-        text-align: center;
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-      }
-
-      p.subtitle {
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 1.2rem;
-        opacity: 0.8;
-      }
-
-      .copy-btn {
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: background-color 0.3s;
-      }
-
-      .copy-btn:hover {
-        background-color: #45a049;
-      }
-
-      .action-btns {
-        display: flex;
-        justify-content: space-between;
+      .mdui-select {
         margin-top: 20px;
       }
     </style>
@@ -104,8 +93,8 @@
     </div>
 
     <div class="container">
-      <h1 class="title">ChikChok IDE</h1>
-      <p class="subtitle">Build code in Java, Kotlin & XML with one click</p>
+      <h1 class="title">ChikChok IDE - Tools</h1>
+      <p class="description">Generate Java, Kotlin, or XML code based on examples.</p>
 
       <mdui-select
         id="exampleSelect"
@@ -121,7 +110,7 @@
 
       <mdui-select
         id="languageSelect"
-        label="Language"
+        label="Select Language"
         variant="outlined"
         style="width: 100%; margin-top: 20px;"
       >
@@ -133,9 +122,6 @@
       <mdui-button icon="code" variant="filled" onclick="generateCode()">Generate Code</mdui-button>
 
       <div class="code-box" id="codeOutput">// Generated code appears here.</div>
-
-      <!-- دکمه کپی کد -->
-      <button class="copy-btn" onclick="copyCode()">Copy Code</button>
 
       <div class="footer">Made by ChikChok Devs — 2025</div>
     </div>
@@ -183,8 +169,7 @@
         }
     }
 }`,
-            xml: `
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xml: `<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -195,22 +180,68 @@
     <Button android:text="Login" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 </LinearLayout>`
           },
-          // سایر نمونه‌ها ادامه دارد...
+          api: {
+            java: `public class ApiClient {
+    public void fetchData() {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("https://api.example.com/data").build();
+
+        client.newCall(request).enqueue(new Callback() {
+            public void onFailure(Call call, IOException e) {}
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = response.body().string();
+            }
+        });
+    }
+}`,
+            kotlin: `fun fetchData() {
+    val client = OkHttpClient()
+    val request = Request.Builder().url("https://api.example.com/data").build()
+
+    client.newCall(request).enqueue(object : Callback {
+        override fun onFailure(call: Call, e: IOException) {}
+        override fun onResponse(call: Call, response: Response) {
+            val json = response.body?.string()
+        }
+    })
+}`,
+            xml: `<!-- No XML for API requests -->`
+          },
+          data: {
+            java: `public class User {
+    private String name;
+    private int age;
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Getters and setters
+}`,
+            kotlin: `data class User(
+    val name: String,
+    val age: Int
+)`,
+            xml: `<!-- No XML for data class -->`
+          },
+          ui: {
+            java: `// Use XML layout for UI`,
+            kotlin: `// Use XML layout for UI`,
+            xml: `<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <TextView android:text="Hello ChikChok!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>`
+          }
         };
 
         code = codes[example]?.[language] || "// No code available for this combination.";
 
         output.textContent = code;
-      }
-
-      // کپی کردن کد به کلیپ بورد
-      function copyCode() {
-        const code = document.getElementById("codeOutput").textContent;
-        navigator.clipboard.writeText(code).then(() => {
-          alert("Code copied to clipboard!");
-        }).catch((err) => {
-          console.error("Failed to copy text: ", err);
-        });
       }
     </script>
   </body>
