@@ -9,120 +9,156 @@
   <style>
     body {
       font-family: 'Vazirmatn', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       background: radial-gradient(circle at center, #2c2c2c, #121212);
+      margin: 0;
+      padding: 20px;
+      color: #e4e4e4;
     }
 
     .container {
-      text-align: center;
       max-width: 800px;
       margin: auto;
-    }
-
-    h1 {
-      color: #e4e4e4;
-      margin-bottom: 20px;
-    }
-
-    p {
-      color: #aaa;
-      margin-bottom: 20px;
-    }
-
-    .card {
-      background: #1e1e1e;
-      border-radius: 12px;
       padding: 20px;
+      background-color: #1e1e1e;
+      border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    h1, h2 {
+      color: #e4e4e4;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-group {
       margin-bottom: 20px;
     }
 
-    .generated-code {
-      background: #121212;
-      color: #e4e4e4;
-      border: 1px solid #333;
-      border-radius: 8px;
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
       padding: 10px;
-      margin-top: 20px;
-      height: 200px;
-      overflow: auto;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background-color: #121212;
+      color: #e4e4e4;
     }
 
-    .btn-group {
+    .form-group textarea {
+      height: 150px;
+    }
+
+    .button-group {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
       justify-content: center;
+      gap: 10px;
     }
 
-    mdui-button {
-      min-width: 150px;
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Tools | Chik Chok IDE</h1>
-    <p>Generate and manage code effortlessly!</p>
+    <h2>Generate and Manage Your Code</h2>
 
     <!-- Code Generator Section -->
-    <div class="card">
-      <h2>Code Generator</h2>
-      <mdui-text-field id="codePrompt" label="Describe your code idea" variant="outlined" full-width></mdui-text-field>
-      <mdui-select id="langSelect" label="Select Language" variant="outlined">
-        <mdui-menu-item value="kotlin">Kotlin</mdui-menu-item>
-        <mdui-menu-item value="java">Java</mdui-menu-item>
-        <mdui-menu-item value="python">Python</mdui-menu-item>
-        <mdui-menu-item value="cpp">C++</mdui-menu-item>
-        <mdui-menu-item value="javascript">JavaScript</mdui-menu-item>
-      </mdui-select>
-      <mdui-button class="mdui-m-t-3" onclick="generateCode()" variant="filled" icon="bolt">Generate Code</mdui-button>
-      <div class="generated-code" id="generatedCode">// Your generated code will appear here...</div>
+    <div class="form-group">
+      <label for="codePrompt">Describe your code idea</label>
+      <input type="text" id="codePrompt" placeholder="Enter your idea here..." />
+    </div>
+    <div class="form-group">
+      <label for="langSelect">Select Language</label>
+      <select id="langSelect">
+        <option value="kotlin">Kotlin</option>
+        <option value="java">Java</option>
+        <option value="python">Python</option>
+        <option value="cpp">C++</option>
+        <option value="javascript">JavaScript</option>
+      </select>
+    </div>
+    <div class="button-group">
+      <button onclick="generateCode()">Generate Code</button>
     </div>
 
-    <!-- Tools Section -->
-    <div class="card">
-      <h2>Tools</h2>
-      <div class="btn-group">
-        <mdui-button onclick="copyCode()" variant="tonal" icon="content_copy">Copy Code</mdui-button>
-        <mdui-button onclick="downloadCode()" variant="tonal" icon="download">Download Code</mdui-button>
-      </div>
+    <!-- Code Output Section -->
+    <div class="form-group">
+      <label for="generatedCode">Generated Code</label>
+      <textarea id="generatedCode" readonly>// Your generated code will appear here...</textarea>
+    </div>
+    <div class="button-group">
+      <button onclick="copyCode()">Copy Code</button>
+      <button onclick="downloadCode()">Download Code</button>
     </div>
   </div>
 
   <script>
-    async function generateCode() {
-      const prompt = document.getElementById("codePrompt").value;
-      const lang = document.getElementById("langSelect").value;
+    // Predefined code templates
+    const codeTemplates = {
+      kotlin: `fun main() {
+    println("Hello, Kotlin!")
+}`,
+      java: `public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, Java!");
+    }
+}`,
+      python: `def main():
+    print("Hello, Python!")
+
+if __name__ == "__main__":
+    main()`,
+      cpp: `#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, C++!" << endl;
+    return 0;
+}`,
+      javascript: `function main() {
+    console.log("Hello, JavaScript!");
+}
+main();`
+    };
+
+    // Function to generate code
+    function generateCode() {
+      const language = document.getElementById("langSelect").value;
       const output = document.getElementById("generatedCode");
 
-      output.textContent = "// Generating your code...";
-      try {
-        // Simulated API call
-        const response = await fetch("https://api.example.com/generate-code", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt, language: lang }),
-        });
-        const data = await response.json();
-        output.textContent = data.generatedCode || "// No matching code found.";
-      } catch (error) {
-        output.textContent = "// Error generating code. Please try again.";
+      if (codeTemplates[language]) {
+        output.value = codeTemplates[language];
+      } else {
+        output.value = "// No template available for the selected language.";
       }
     }
 
+    // Function to copy code
     function copyCode() {
-      const code = document.getElementById("generatedCode").textContent;
+      const code = document.getElementById("generatedCode").value;
       navigator.clipboard.writeText(code);
-      mdui.snackbar({ message: "Code copied to clipboard!" });
+      alert("Code copied to clipboard!");
     }
 
+    // Function to download code
     function downloadCode() {
-      const code = document.getElementById("generatedCode").textContent;
+      const code = document.getElementById("generatedCode").value;
       const blob = new Blob([code], { type: "text/plain" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
