@@ -9,23 +9,23 @@
   <style>
     body {
       font-family: 'Vazirmatn', sans-serif;
-      background: radial-gradient(circle at center, #2c2c2c, #121212);
+      background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+      color: #e4e4e4;
       margin: 0;
       padding: 20px;
-      color: #e4e4e4;
     }
 
     .container {
       max-width: 800px;
       margin: auto;
       padding: 20px;
-      background-color: #1e1e1e;
+      background-color: #1f1f1f;
       border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     h1, h2 {
-      color: #e4e4e4;
+      color: #ffffff;
       margin-bottom: 20px;
       text-align: center;
     }
@@ -71,6 +71,17 @@
     button:hover {
       background-color: #0056b3;
     }
+
+    .code-output {
+      background: #1e1e1e;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      margin-top: 20px;
+      height: 200px;
+      overflow: auto;
+      color: #e4e4e4;
+    }
   </style>
 </head>
 <body>
@@ -88,19 +99,26 @@
       <select id="langSelect">
         <option value="kotlin">Kotlin</option>
         <option value="java">Java</option>
-        <option value="python">Python</option>
-        <option value="cpp">C++</option>
-        <option value="javascript">JavaScript</option>
+        <option value="xml">XML</option>
       </select>
     </div>
     <div class="button-group">
       <button onclick="generateCode()">Generate Code</button>
     </div>
 
+    <!-- Fetch Code from URL Section -->
+    <div class="form-group">
+      <label for="codeUrl">Fetch Code from URL</label>
+      <input type="text" id="codeUrl" placeholder="Enter a URL (e.g., GitHub Gist or Pastebin)" />
+    </div>
+    <div class="button-group">
+      <button onclick="fetchCode()">Fetch Code</button>
+    </div>
+
     <!-- Code Output Section -->
     <div class="form-group">
-      <label for="generatedCode">Generated Code</label>
-      <textarea id="generatedCode" readonly>// Your generated code will appear here...</textarea>
+      <label for="generatedCode">Code Output</label>
+      <div id="generatedCode" class="code-output">// Your generated code will appear here...</div>
     </div>
     <div class="button-group">
       <button onclick="copyCode()">Copy Code</button>
@@ -109,7 +127,7 @@
   </div>
 
   <script>
-    // Predefined code templates
+    // Predefined code templates for languages
     const codeTemplates = {
       kotlin: `fun main() {
     println("Hello, Kotlin!")
@@ -119,22 +137,12 @@
         System.out.println("Hello, Java!");
     }
 }`,
-      python: `def main():
-    print("Hello, Python!")
-
-if __name__ == "__main__":
-    main()`,
-      cpp: `#include <iostream>
-using namespace std;
-
-int main() {
-    cout << "Hello, C++!" << endl;
-    return 0;
-}`,
-      javascript: `function main() {
-    console.log("Hello, JavaScript!");
-}
-main();`
+      xml: `<note>
+    <to>Tove</to>
+    <from>Jani</from>
+    <heading>Reminder</heading>
+    <body>Don't forget me this weekend!</body>
+</note>`
     };
 
     // Function to generate code
@@ -143,22 +151,42 @@ main();`
       const output = document.getElementById("generatedCode");
 
       if (codeTemplates[language]) {
-        output.value = codeTemplates[language];
+        output.textContent = codeTemplates[language];
       } else {
-        output.value = "// No template available for the selected language.";
+        output.textContent = "// No template available for the selected language.";
+      }
+    }
+
+    // Function to fetch code from a URL
+    async function fetchCode() {
+      const url = document.getElementById("codeUrl").value;
+      const output = document.getElementById("generatedCode");
+
+      try {
+        const response = await fetch(url);
+        const code = await response.text();
+
+        // Filtering only Java, Kotlin, and XML code
+        if (url.endsWith(".java") || url.endsWith(".kt") || url.endsWith(".xml")) {
+          output.textContent = code;
+        } else {
+          output.textContent = "// Only Java, Kotlin, and XML files are supported.";
+        }
+      } catch (error) {
+        output.textContent = "// Failed to fetch code. Please check the URL and try again.";
       }
     }
 
     // Function to copy code
     function copyCode() {
-      const code = document.getElementById("generatedCode").value;
+      const code = document.getElementById("generatedCode").textContent;
       navigator.clipboard.writeText(code);
       alert("Code copied to clipboard!");
     }
 
     // Function to download code
     function downloadCode() {
-      const code = document.getElementById("generatedCode").value;
+      const code = document.getElementById("generatedCode").textContent;
       const blob = new Blob([code], { type: "text/plain" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
