@@ -1,160 +1,137 @@
 <!DOCTYPE html>
-<html lang="en" class="mdui-theme-dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tools | Chik Chok IDE</title>
-  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
-  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  <!-- MDUI Library for Material Design -->
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.0-beta5/dist/css/mdui.min.css">
+  <script src="https://unpkg.com/mdui@2.0.0-beta5/dist/js/mdui.min.js"></script>
   <style>
     body {
-      font-family: 'Vazirmatn', sans-serif;
-      background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
-      color: #e4e4e4;
+      font-family: 'Roboto', sans-serif;
+      background: #f5f5f5;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-      background-color: #1f1f1f;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    h1, h2 {
-      color: #ffffff;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-
-    .form-group input, .form-group select, .form-group textarea {
       width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #333;
-      background-color: #121212;
-      color: #e4e4e4;
+      max-width: 800px;
+      padding: 24px;
     }
 
-    .form-group textarea {
-      height: 150px;
+    .mdui-card {
+      border-radius: 12px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      margin-bottom: 24px;
     }
 
-    .button-group {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
+    .mdui-card-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #212121;
     }
 
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background-color: #007bff;
-      color: #fff;
-      cursor: pointer;
+    .mdui-card-content {
+      font-size: 16px;
+      color: #424242;
     }
 
-    button:hover {
-      background-color: #0056b3;
+    .mdui-textfield {
+      margin-top: 16px;
     }
 
     .code-output {
-      background: #1e1e1e;
-      padding: 10px;
+      background: #e8f5e9;
+      color: #1b5e20;
+      padding: 16px;
       border-radius: 8px;
-      border: 1px solid #333;
-      margin-top: 20px;
-      height: 200px;
-      overflow: auto;
-      color: #e4e4e4;
+      margin-top: 16px;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .button-group {
+      margin-top: 16px;
     }
   </style>
 </head>
-<body>
+<body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
   <div class="container">
-    <h1>Tools | Chik Chok IDE</h1>
-    <h2>Generate and Manage Your Code</h2>
-
-    <!-- Code Generator Section -->
-    <div class="form-group">
-      <label for="codePrompt">Describe your code idea</label>
-      <input type="text" id="codePrompt" placeholder="Enter your idea here..." />
-    </div>
-    <div class="form-group">
-      <label for="langSelect">Select Language</label>
-      <select id="langSelect">
-        <option value="kotlin">Kotlin</option>
-        <option value="java">Java</option>
-        <option value="xml">XML</option>
-      </select>
-    </div>
-    <div class="button-group">
-      <button onclick="generateCode()">Generate Code</button>
-    </div>
-
-    <!-- Fetch Code from URL Section -->
-    <div class="form-group">
-      <label for="codeUrl">Fetch Code from URL</label>
-      <input type="text" id="codeUrl" placeholder="Enter a URL (e.g., GitHub Gist or Pastebin)" />
-    </div>
-    <div class="button-group">
-      <button onclick="fetchCode()">Fetch Code</button>
+    <div class="mdui-card mdui-shadow-3">
+      <div class="mdui-card-primary">
+        <div class="mdui-card-primary-title">Code Generator</div>
+        <div class="mdui-card-primary-subtitle">Generate your code easily</div>
+      </div>
+      <div class="mdui-card-content">
+        <div class="mdui-textfield">
+          <label class="mdui-textfield-label">Describe your code idea</label>
+          <input class="mdui-textfield-input" type="text" id="codePrompt" placeholder="Enter your idea here...">
+        </div>
+        <div class="mdui-textfield">
+          <label class="mdui-textfield-label">Select Language</label>
+          <select class="mdui-select" id="langSelect">
+            <option value="kotlin">Kotlin</option>
+            <option value="java">Java</option>
+            <option value="xml">XML</option>
+          </select>
+        </div>
+        <div class="button-group">
+          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" onclick="generateCode()">Generate Code</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Code Output Section -->
-    <div class="form-group">
-      <label for="generatedCode">Code Output</label>
-      <div id="generatedCode" class="code-output">// Your generated code will appear here...</div>
+    <div class="mdui-card mdui-shadow-3">
+      <div class="mdui-card-primary">
+        <div class="mdui-card-primary-title">Fetch Code from URL</div>
+        <div class="mdui-card-primary-subtitle">Retrieve code from the internet</div>
+      </div>
+      <div class="mdui-card-content">
+        <div class="mdui-textfield">
+          <label class="mdui-textfield-label">Enter URL</label>
+          <input class="mdui-textfield-input" type="text" id="codeUrl" placeholder="e.g., https://gist.githubusercontent.com/...">
+        </div>
+        <div class="button-group">
+          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" onclick="fetchCode()">Fetch Code</button>
+        </div>
+      </div>
     </div>
-    <div class="button-group">
-      <button onclick="copyCode()">Copy Code</button>
-      <button onclick="downloadCode()">Download Code</button>
+
+    <div class="mdui-card mdui-shadow-3">
+      <div class="mdui-card-primary">
+        <div class="mdui-card-primary-title">Code Output</div>
+        <div class="mdui-card-primary-subtitle">View or download your code</div>
+      </div>
+      <div class="mdui-card-content">
+        <div id="generatedCode" class="code-output">// Your generated code will appear here...</div>
+        <div class="button-group">
+          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme" onclick="copyCode()">Copy Code</button>
+          <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme" onclick="downloadCode()">Download Code</button>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    // Predefined code templates for languages
-    const codeTemplates = {
-      kotlin: `fun main() {
-    println("Hello, Kotlin!")
-}`,
-      java: `public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello, Java!");
-    }
-}`,
-      xml: `<note>
-    <to>Tove</to>
-    <from>Jani</from>
-    <heading>Reminder</heading>
-    <body>Don't forget me this weekend!</body>
-</note>`
-    };
-
     // Function to generate code
     function generateCode() {
       const language = document.getElementById("langSelect").value;
       const output = document.getElementById("generatedCode");
+      const templates = {
+        kotlin: `fun main() {\n    println("Hello, Kotlin!")\n}`,
+        java: `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Java!");\n    }\n}`,
+        xml: `<note>\n    <to>Tove</to>\n    <from>Jani</from>\n    <heading>Reminder</heading>\n    <body>Don't forget me this weekend!</body>\n</note>`
+      };
 
-      if (codeTemplates[language]) {
-        output.textContent = codeTemplates[language];
-      } else {
-        output.textContent = "// No template available for the selected language.";
-      }
+      output.textContent = templates[language] || "// No template available.";
     }
 
     // Function to fetch code from a URL
@@ -165,15 +142,9 @@
       try {
         const response = await fetch(url);
         const code = await response.text();
-
-        // Filtering only Java, Kotlin, and XML code
-        if (url.endsWith(".java") || url.endsWith(".kt") || url.endsWith(".xml")) {
-          output.textContent = code;
-        } else {
-          output.textContent = "// Only Java, Kotlin, and XML files are supported.";
-        }
+        output.textContent = code;
       } catch (error) {
-        output.textContent = "// Failed to fetch code. Please check the URL and try again.";
+        output.textContent = "// Failed to fetch code. Please check the URL.";
       }
     }
 
