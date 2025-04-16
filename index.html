@@ -37,20 +37,22 @@
         animation: fadeIn 2.5s ease-in-out;
       }
 
-      button {
-        padding: 10px 20px;
+      .material-button {
+        padding: 12px 24px;
         font-size: 16px;
         background-color: #845DF7;
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 12px;
         cursor: pointer;
-        transition: transform 0.2s ease;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
       }
 
-      button:hover {
+      .material-button:hover {
         background-color: #6b4fd1;
-        transform: scale(1.1);
+        transform: translateY(-3px);
+        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
       }
 
       img {
@@ -58,6 +60,7 @@
         max-width: 200px;
         border-radius: 12px;
         animation: fadeIn 3s ease-in-out;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       }
 
       /* Animations */
@@ -98,13 +101,15 @@
   </head>
   <body>
     <div class="container" id="content">
+      <!-- Add image at the top -->
+      <img src="android.png" alt="Android Image" />
+
       <h1 class="title">Welcome to ChikChok!</h1>
       <p class="description">Click the button below to start your journey.</p>
       <div class="action-button">
-        <!-- Button with link to tools.html -->
-        <button onclick="goToNextPage()">Start Now</button>
+        <!-- Material Design 3 Button -->
+        <button class="material-button" onclick="goToNextPage()">Start Now</button>
       </div>
-      <img src="android.png" alt="Android Image" />
     </div>
 
     <script>
