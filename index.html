@@ -1,179 +1,92 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ChikChok Start Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap" rel="stylesheet" />
-    <style>
-      :root {
-        --bg-dark: #141418;
-        --bg-light: #f4f4f9;
-        --text-dark: #ffffff;
-        --text-light: #121212;
-        --accent: #845DF7;
-        --button-hover: #6b4fd1;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Theme Switch</title>
+  <style>
+    :root {
+      --accent: #845DF7;
+      --dark-bg: #141418;
+      --light-bg: #f9f9f9;
+      --dark-text: #fff;
+      --light-text: #000;
+    }
 
-      [data-theme="dark"] {
-        --bg-color: var(--bg-dark);
-        --text-color: var(--text-dark);
-      }
+    [data-theme="dark"] {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
 
-      [data-theme="light"] {
-        --bg-color: var(--bg-light);
-        --text-color: var(--text-light);
-      }
+    [data-theme="light"] {
+      background-color: var(--light-bg);
+      color: var(--light-text);
+    }
 
-      body {
-        margin: 0;
-        font-family: 'Space Grotesk', sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        transition: background-color 0.5s ease, color 0.5s ease;
-        text-align: center;
-        padding: 20px;
-        overflow: hidden;
-      }
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
 
-      body::before {
-        content: "public class HelloWorld { static void main(String[] args) { System.out.println('Hello'); } }";
-        position: absolute;
-        top: 20%;
-        left: 5%;
-        font-size: 14px;
-        color: rgba(0, 255, 0, 0.05);
-        white-space: pre-wrap;
-        font-family: 'Courier New', monospace;
-        animation: moveCode 20s linear infinite;
-        z-index: 0;
-      }
+    .theme-switch {
+      width: 60px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 999px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-      @keyframes moveCode {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(-100%); }
-      }
+    .switch-thumb {
+      width: 28px;
+      height: 28px;
+      background: #3f2f7d;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
 
-      .container {
-        margin-top: 60px;
-        background: rgba(0, 0, 0, 0.05);
-        backdrop-filter: blur(6px);
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-        animation: fadeIn 1.5s ease-in-out;
-        position: relative;
-        z-index: 1;
-        display: inline-block;
-        max-width: 500px;
-      }
+    .switch-thumb svg {
+      width: 16px;
+      height: 16px;
+      fill: white;
+    }
 
-      .title {
-        font-size: 2.5rem;
-        color: var(--accent);
-        margin-bottom: 10px;
-        animation: slideDown 1.2s ease-in-out;
-      }
+    .theme-switch.active .switch-thumb {
+      transform: translateX(28px);
+    }
+  </style>
+</head>
+<body>
 
-      .description {
-        font-size: 1.1rem;
-        opacity: 0.8;
-        margin-bottom: 20px;
-        animation: fadeIn 2s ease-in-out;
-      }
+<div class="theme-switch" onclick="toggleTheme()" id="themeSwitch">
+  <div class="switch-thumb">
+    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+  </div>
+</div>
 
-      .material-button {
-        padding: 12px 28px;
-        font-size: 16px;
-        background-color: var(--accent);
-        color: white;
-        border: none;
-        border-radius: 14px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-      }
+<script>
+  function toggleTheme() {
+    const htmlTag = document.documentElement;
+    const switchBtn = document.getElementById('themeSwitch');
+    const currentTheme = htmlTag.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    htmlTag.setAttribute('data-theme', newTheme);
+    switchBtn.classList.toggle('active');
+  }
+</script>
 
-      .material-button:hover {
-        background-color: var(--button-hover);
-        transform: translateY(-2px);
-      }
-
-      img {
-        max-width: 150px;
-        border-radius: 16px;
-        margin-bottom: 20px;
-        filter: blur(5px);
-        transition: filter 0.4s ease;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      }
-
-      img:hover {
-        filter: blur(0);
-      }
-
-      .theme-toggle {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: transparent;
-        border: 2px solid var(--accent);
-        padding: 6px 12px;
-        border-radius: 10px;
-        color: var(--text-color);
-        cursor: pointer;
-        transition: background 0.3s ease;
-      }
-
-      .theme-toggle:hover {
-        background: var(--accent);
-        color: #fff;
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-
-      @keyframes slideDown {
-        from { transform: translateY(-40px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-      }
-
-      .fade-out {
-        animation: fadeOut 1s ease-in-out forwards;
-      }
-
-      @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-      }
-    </style>
-  </head>
-  <body>
-    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-
-    <div class="container" id="content">
-      <img src="android.png" alt="Android Logo" />
-      <h1 class="title">Welcome to ChikChok!</h1>
-      <p class="description">Click the button below to start your journey.</p>
-      <button class="material-button" onclick="goToNextPage()">Start Now</button>
-    </div>
-
-    <script>
-      function goToNextPage() {
-        const content = document.getElementById('content');
-        content.classList.add('fade-out');
-        setTimeout(() => {
-          window.location.href = 'tools.html';
-        }, 1000);
-      }
-
-      function toggleTheme() {
-        const htmlTag = document.documentElement;
-        const current = htmlTag.getAttribute('data-theme');
-        htmlTag.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-      }
-    </script>
-  </body>
+</body>
 </html>
