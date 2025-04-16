@@ -61,6 +61,12 @@
         border-radius: 12px;
         animation: fadeIn 3s ease-in-out;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        filter: blur(5px); /* Apply blur effect */
+        transition: filter 0.3s ease; /* Smooth transition for hover effect */
+      }
+
+      img:hover {
+        filter: blur(0px); /* Remove blur on hover */
       }
 
       /* Animations */
