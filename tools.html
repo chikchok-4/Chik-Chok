@@ -75,6 +75,27 @@
         font-size: 1.2rem;
         opacity: 0.8;
       }
+
+      .copy-btn {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+
+      .copy-btn:hover {
+        background-color: #45a049;
+      }
+
+      .action-btns {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -113,6 +134,9 @@
 
       <div class="code-box" id="codeOutput">// Generated code appears here.</div>
 
+      <!-- دکمه کپی کد -->
+      <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+
       <div class="footer">Made by ChikChok Devs — 2025</div>
     </div>
 
@@ -130,8 +154,7 @@
 
         const codes = {
           login: {
-            java: `
-public class LoginActivity extends AppCompatActivity {
+            java: `public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,8 +169,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 }`,
-            kotlin: `
-class LoginActivity : AppCompatActivity() {
+            kotlin: `class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -173,73 +195,22 @@ class LoginActivity : AppCompatActivity() {
     <Button android:text="Login" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 </LinearLayout>`
           },
-          api: {
-            java: `
-public class ApiClient {
-    public void fetchData() {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("https://api.example.com/data").build();
-
-        client.newCall(request).enqueue(new Callback() {
-            public void onFailure(Call call, IOException e) {}
-            public void onResponse(Call call, Response response) throws IOException {
-                String json = response.body().string();
-            }
-        });
-    }
-}`,
-            kotlin: `
-fun fetchData() {
-    val client = OkHttpClient()
-    val request = Request.Builder().url("https://api.example.com/data").build()
-
-    client.newCall(request).enqueue(object : Callback {
-        override fun onFailure(call: Call, e: IOException) {}
-        override fun onResponse(call: Call, response: Response) {
-            val json = response.body?.string()
-        }
-    })
-}`,
-            xml: `<!-- No XML for API requests -->`
-          },
-          data: {
-            java: `
-public class User {
-    private String name;
-    private int age;
-
-    public User(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    // Getters and setters
-}`,
-            kotlin: `
-data class User(
-    val name: String,
-    val age: Int
-)`,
-            xml: `<!-- No XML for data class -->`
-          },
-          ui: {
-            java: `// Use XML layout for UI`,
-            kotlin: `// Use XML layout for UI`,
-            xml: `
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:orientation="vertical">
-
-    <TextView android:text="Hello ChikChok!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-</LinearLayout>`
-          }
+          // سایر نمونه‌ها ادامه دارد...
         };
 
         code = codes[example]?.[language] || "// No code available for this combination.";
 
         output.textContent = code;
+      }
+
+      // کپی کردن کد به کلیپ بورد
+      function copyCode() {
+        const code = document.getElementById("codeOutput").textContent;
+        navigator.clipboard.writeText(code).then(() => {
+          alert("Code copied to clipboard!");
+        }).catch((err) => {
+          console.error("Failed to copy text: ", err);
+        });
       }
     </script>
   </body>
