@@ -12,19 +12,40 @@
         text-align: center;
         padding: 20px;
         overflow: hidden;
-        background-image: url('https://cdn.pixabay.com/photo/2017/08/06/01/27/code-2598806_960_720.jpg'); /* Background with coding theme */
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
+      }
+
+      /* افکت پس‌زمینه متنی کدنویسی */
+      body::before {
+        content: "public class HelloWorld { static void main(String[] args) { System.out.println('Hello'); } }";
+        position: absolute;
+        top: 20%;
+        left: 5%;
+        font-size: 14px;
+        color: rgba(0, 255, 0, 0.05);
+        white-space: pre-wrap;
+        font-family: 'Courier New', monospace;
+        animation: moveCode 20s linear infinite;
+        z-index: 0;
+      }
+
+      @keyframes moveCode {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-100%);
+        }
       }
 
       .container {
         margin-top: 50px;
         animation: fadeIn 1.5s ease-in-out;
-        background: rgba(0, 0, 0, 0.6); /* Semi-transparent background for content */
+        background: rgba(0, 0, 0, 0.6);
         padding: 20px;
         border-radius: 12px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        position: relative;
+        z-index: 1;
       }
 
       .title {
@@ -69,15 +90,14 @@
         border-radius: 12px;
         animation: fadeIn 3s ease-in-out;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        filter: blur(5px); /* Apply blur effect */
-        transition: filter 0.3s ease; /* Smooth transition for hover effect */
+        filter: blur(5px);
+        transition: filter 0.3s ease;
       }
 
       img:hover {
-        filter: blur(0px); /* Remove blur on hover */
+        filter: blur(0px);
       }
 
-      /* Animations */
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -98,7 +118,6 @@
         }
       }
 
-      /* Page Transition Animation */
       .fade-out {
         animation: fadeOut 1s ease-in-out forwards;
       }
@@ -115,13 +134,10 @@
   </head>
   <body>
     <div class="container" id="content">
-      <!-- Add image at the top -->
       <img src="android.png" alt="Android Image" />
-
       <h1 class="title">Welcome to ChikChok!</h1>
       <p class="description">Click the button below to start your journey.</p>
       <div class="action-button">
-        <!-- Material Design 3 Button -->
         <button class="material-button" onclick="goToNextPage()">Start Now</button>
       </div>
     </div>
@@ -129,10 +145,10 @@
     <script>
       function goToNextPage() {
         const content = document.getElementById('content');
-        content.classList.add('fade-out'); // Add fade-out animation
+        content.classList.add('fade-out');
         setTimeout(() => {
-          window.location.href = 'tools.html'; // Redirect after animation
-        }, 1000); // Wait for animation to finish
+          window.location.href = 'tools.html';
+        }, 1000);
       }
     </script>
   </body>
