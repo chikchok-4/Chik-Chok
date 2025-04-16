@@ -4,13 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chik Chok | Super Codegen & Tools</title>
-  <!-- Material Design 3 Styles -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@material/web@1.0.0/dist/mdc.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@material/web@1.0.0/dist/mdc.min.js"></script>
+  <!-- CodeMirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/xml/xml.min.js"></script>
   <style>
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f5f5f5;
@@ -24,110 +27,110 @@
     }
 
     .card {
-      border-radius: 12px;
-      background: #ffffff;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: 24px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
       padding: 16px;
+      background: #fff;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .CodeMirror {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      height: auto;
     }
 
     .button-group {
       display: flex;
-      flex-wrap: wrap;
       gap: 12px;
+      margin-top: 16px;
     }
 
-    .mdc-button {
-      margin-top: 12px;
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
     }
 
-    @media (max-width: 600px) {
-      .button-group {
-        flex-direction: column;
-      }
+    button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
-  <!-- App Bar -->
-  <header class="mdc-top-app-bar">
-    <div class="mdc-top-app-bar__row">
-      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-        <button class="mdc-icon-button material-icons" aria-label="Menu">menu</button>
-        <span class="mdc-top-app-bar__title">Chik Chok | Super Codegen & Tools</span>
-      </section>
-    </div>
-  </header>
-  
-  <main class="container">
+  <div class="container">
     <!-- Code Generator Section -->
     <div class="card">
       <h2>Code Generator</h2>
-      <label class="mdc-floating-label" for="codePrompt">Describe your code idea</label>
-      <input id="codePrompt" class="mdc-text-field__input" type="text">
-      <div class="mdc-select">
-        <select id="langSelect" class="mdc-select__native-control">
-          <option value="kotlin">Kotlin</option>
-          <option value="java">Java</option>
-          <option value="python">Python</option>
-          <option value="cpp">C++</option>
-        </select>
-        <label class="mdc-floating-label">Language</label>
-      </div>
-      <button class="mdc-button" onclick="generateCode()">
-        <span class="mdc-button__label">Generate Code</span>
-      </button>
-      <textarea id="generatedCode" class="mdc-text-field__input" rows="12" readonly></textarea>
+      <label for="codePrompt">Describe your code idea</label>
+      <input id="codePrompt" type="text" style="width: 100%; padding: 8px; margin: 8px 0;" placeholder="Enter your idea...">
+      <label for="langSelect">Select Language</label>
+      <select id="langSelect" style="width: 100%; padding: 8px; margin: 8px 0;">
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+        <option value="java">Java</option>
+        <option value="cpp">C++</option>
+      </select>
+      <button onclick="generateCode()">Generate Code</button>
     </div>
-    
-    <!-- Tools Section -->
+
+    <!-- Code Editor Section -->
     <div class="card">
-      <h2>Tools</h2>
+      <h2>Code Editor</h2>
+      <textarea id="generatedCode"></textarea>
       <div class="button-group">
-        <button class="mdc-button" onclick="convertToKotlin()">
-          <span class="mdc-button__label">Convert to Kotlin</span>
-        </button>
-        <button class="mdc-button" onclick="convertToJava()">
-          <span class="mdc-button__label">Convert to Java</span>
-        </button>
-        <button class="mdc-button" onclick="copyCode()">
-          <span class="mdc-button__label">Copy</span>
-        </button>
-        <button class="mdc-button" onclick="downloadCode()">
-          <span class="mdc-button__label">Download</span>
-        </button>
+        <button onclick="copyCode()">Copy Code</button>
+        <button onclick="downloadCode()">Download Code</button>
       </div>
     </div>
-  </main>
+  </div>
 
   <script>
+    // Initialize CodeMirror Editor
+    const editor = CodeMirror.fromTextArea(document.getElementById("generatedCode"), {
+      lineNumbers: true,
+      mode: "javascript", // Default mode
+      theme: "default",
+      matchBrackets: true,
+      autoCloseBrackets: true,
+    });
+
+    // Function to Generate Code
     async function generateCode() {
       const input = document.getElementById("codePrompt").value;
       const lang = document.getElementById("langSelect").value;
+      // Update CodeMirror mode based on selected language
+      const modes = {
+        javascript: "javascript",
+        python: "python",
+        java: "text/x-java",
+        cpp: "text/x-c++src",
+      };
+      editor.setOption("mode", modes[lang]);
+
+      // Simulated API call
       const response = await fetch("https://api.example.com/generate-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: input, language: lang })
+        body: JSON.stringify({ prompt: input, language: lang }),
       });
       const data = await response.json();
-      document.getElementById("generatedCode").value = data.generatedCode || "// No matching code found.";
+      editor.setValue(data.generatedCode || "// No matching code found.");
     }
 
-    function convertToKotlin() {
-      document.getElementById("generatedCode").value = "class Login(val user, val pass)";
-    }
-
-    function convertToJava() {
-      document.getElementById("generatedCode").value = "public class Login { String user, pass; }";
-    }
-
+    // Function to Copy Code
     function copyCode() {
-      navigator.clipboard.writeText(document.getElementById("generatedCode").value);
-      alert("Copied to clipboard!");
+      navigator.clipboard.writeText(editor.getValue());
+      alert("Code copied to clipboard!");
     }
 
+    // Function to Download Code
     function downloadCode() {
-      const blob = new Blob([document.getElementById("generatedCode").value], { type: "text/plain" });
+      const blob = new Blob([editor.getValue()], { type: "text/plain" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = "code.txt";
