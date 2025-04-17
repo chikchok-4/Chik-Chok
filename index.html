@@ -2,188 +2,195 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChikChok Start Page</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chik Chok IDE - Start</title>
+  
+  <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Fira+Code&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #845DF7;
-      --primary-hover: #6b4fd1;
-      --secondary-color: #FF6B6B;
-      --text-primary: #ffffff;
-      --text-secondary: rgba(255, 255, 255, 0.8);
-      --bg-primary: #141418;
-      --bg-secondary: rgba(0, 0, 0, 0.6);
-      --bg-code: rgba(0, 255, 0, 0.05);
-      --shadow-color: rgba(0, 0, 0, 0.5);
-      --card-bg: rgba(20, 20, 24, 0.8);
-      --toggle-bg: #3A3A3A;
-      --toggle-fg: #F5F5F5;
-      --toggle-thumb: #845DF7;
-      --toggle-track: #555;
-      --mdc-theme-primary: #845DF7;
-      --mdc-theme-secondary: #FF6B6B;
-      --mdc-theme-background: #141418;
-      --mdc-theme-surface: #1E1E24;
-      --mdc-theme-on-primary: #ffffff;
-      --mdc-theme-on-secondary: #ffffff;
-      --mdc-theme-on-surface: #ffffff;
+      --primary: #8e44ec;
+      --primary-light: #b47cff;
+      --primary-dark: #5e00b9;
+      --on-primary: #ffffff;
+
+      --dark-background: #0d0d0d;
+      --dark-surface: #1a1a1a;
+      --dark-text: #e0e0e0;
+
+      --light-background: #f5f5f5;
+      --light-surface: #ffffff;
+      --light-text: #1a1a1a;
+
+      --code-opacity: 0.07;
     }
 
-    [data-theme="light"] {
-      --primary-color: #6C5CE7;
-      --primary-hover: #5649c0;
-      --secondary-color: #FD79A8;
-      --text-primary: #2d3436;
-      --text-secondary: rgba(45, 52, 54, 0.8);
-      --bg-primary: #f5f6fa;
-      --bg-secondary: rgba(255, 255, 255, 0.8);
-      --bg-code: rgba(0, 0, 255, 0.05);
-      --shadow-color: rgba(0, 0, 0, 0.1);
-      --card-bg: rgba(245, 246, 250, 0.9);
-      --toggle-bg: #E0E0E0;
-      --toggle-fg: #212121;
-      --toggle-thumb: #6C5CE7;
-      --toggle-track: #BDBDBD;
-      --mdc-theme-primary: #6C5CE7;
-      --mdc-theme-secondary: #FD79A8;
-      --mdc-theme-background: #f5f6fa;
-      --mdc-theme-surface: #ffffff;
-      --mdc-theme-on-primary: #ffffff;
-      --mdc-theme-on-secondary: #ffffff;
-      --mdc-theme-on-surface: #2d3436;
+    body.dark {
+      background-color: var(--dark-background);
+      color: var(--dark-text);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    body.light {
+      background-color: var(--light-background);
+      color: var(--light-text);
     }
 
     body {
+      margin: 0;
       font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .mdc-card {
-      border-radius: 12px;
-      padding: 24px;
-      margin: 16px;
-      background-color: var(--mdc-theme-surface);
-      color: var(--mdc-theme-on-surface);
-      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-                  0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-                  0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-      transition: all 0.3s ease;
-    }
-
-    .mdc-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .material-button {
-      padding: 0 16px;
-      height: 36px;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .mdc-text-field {
-      width: 100%;
-      margin: 16px 0;
-      background-color: transparent;
-    }
-
-    .mdc-typography--headline4 {
-      font-size: 2.125rem;
-      font-weight: 400;
-      letter-spacing: 0.25px;
-    }
-
-    .mdc-typography--body1 {
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.5;
+      transition: background 0.5s ease, color 0.5s ease;
+      overflow: hidden;
     }
 
     .container {
-      background: var(--mdc-theme-surface);
-      color: var(--mdc-theme-on-surface);
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-                  0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-                  0px 1px 10px 0px rgba(0, 0, 0, 0.12);
       position: relative;
-      z-index: 1;
-      max-width: 600px;
-      width: 90%;
-      margin: 24px;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      padding: 20px;
+      animation: fadeInUp 1.3s ease-out;
     }
 
-    .logo {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary-color);
-      margin-bottom: 16px;
+    h1 {
+      font-size: 3rem;
+      animation: floatText 3s ease-in-out infinite;
+      margin-bottom: 1rem;
     }
 
-    .title {
-      margin-bottom: 16px;
+    .subtitle {
+      font-size: 1.2rem;
+      max-width: 700px;
+      opacity: 0.85;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
     }
 
-    .description {
-      margin-bottom: 24px;
-      color: var(--text-secondary);
-    }
-
-    .action-button {
-      margin-top: 16px;
-    }
-
-    .fab-container {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 100;
-    }
-
-    .mdc-snackbar {
-      z-index: 1000;
-    }
-
-    .theme-switch-wrapper {
-      position: fixed;
-      top: 24px;
-      right: 24px;
+    /* Material Design Button */
+    .start-button {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border: none;
+      border-radius: 50px;
+      padding: 16px 36px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(142, 68, 236, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       align-items: center;
-      z-index: 100;
+      justify-content: center;
+      min-width: 180px;
     }
 
-    .slider-icon {
-      color: var(--text-secondary);
-      margin: 0 8px;
-      transition: opacity 0.3s ease;
+    .start-button:hover {
+      background-color: var(--primary-light);
+      box-shadow: 0 4px 20px rgba(142, 68, 236, 0.4);
+      transform: translateY(-2px);
     }
 
+    .start-button:active {
+      background-color: var(--primary-dark);
+      box-shadow: 0 1px 5px rgba(142, 68, 236, 0.4);
+      transform: translateY(0);
+    }
+
+    /* Ripple Effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.7);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .start-button .material-icons {
+      margin-right: 8px;
+      font-size: 24px;
+      transition: transform 0.3s ease;
+    }
+
+    .start-button:hover .material-icons {
+      transform: translateX(3px);
+    }
+
+    .code-bg {
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      white-space: pre;
+      line-height: 1.6;
+      opacity: var(--code-opacity);
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+      animation: scrollLoop 60s linear infinite;
+      padding: 2rem;
+    }
+
+    @keyframes scrollLoop {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    .fade-out {
+      animation: fadeOutUp 1s ease-in forwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeOutUp {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-100vh); }
+    }
+
+    @keyframes floatText {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2rem; }
+      .subtitle { font-size: 1rem; }
+      .start-button {
+        padding: 14px 28px;
+        font-size: 1rem;
+        min-width: 160px;
+      }
+    }
+
+    /* Theme Toggle Switch */
     .theme-switch {
-      position: relative;
+      position: absolute;
+      top: 20px;
+      right: 20px;
       display: inline-block;
-      width: 60px;
-      height: 34px;
+      width: 52px;
+      height: 28px;
+      z-index: 10;
     }
 
     .theme-switch input {
@@ -195,254 +202,128 @@
     .slider {
       position: absolute;
       cursor: pointer;
+      background-color: #ccc;
+      border-radius: 34px;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: var(--toggle-track);
       transition: 0.4s;
-      border-radius: 34px;
     }
 
-    .slider:before {
+    .slider::before {
       position: absolute;
       content: "";
-      height: 26px;
-      width: 26px;
+      height: 20px;
+      width: 20px;
       left: 4px;
       bottom: 4px;
-      background-color: var(--toggle-thumb);
+      background-color: white;
       transition: 0.4s;
       border-radius: 50%;
     }
 
     input:checked + .slider {
-      background-color: var(--toggle-bg);
+      background-color: var(--primary);
     }
 
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
-
-    .particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .particle {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: var(--primary-color);
-      border-radius: 50%;
-      animation: float 5s infinite ease-in-out;
-    }
-
-    @keyframes float {
-      0% {
-        transform: translateY(0);
-        opacity: 0.5;
-      }
-      50% {
-        transform: translateY(-20px);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 0.5;
-      }
+    input:checked + .slider::before {
+      transform: translateX(24px);
     }
   </style>
 </head>
-<body class="mdc-typography">
-  <div class="theme-switch-wrapper">
-    <span class="slider-icon material-icons" id="darkIcon">brightness_3</span>
-    <label class="theme-switch">
-      <input type="checkbox" id="themeCheckbox">
-      <span class="slider round"></span>
-    </label>
-    <span class="slider-icon material-icons" id="lightIcon">wb_sunny</span>
+<body class="dark">
+
+  <!-- Theme Switch -->
+  <label class="theme-switch">
+    <input type="checkbox" id="themeToggle">
+    <span class="slider"></span>
+  </label>
+
+  <!-- Background Animated Code -->
+  <div class="code-bg">
+<code>
+fun main() {
+    println("Welcome to Chik Chok IDE")
+    val features = listOf("Live Coding", "Smart Completion", "Theme Customizer")
+    features.forEach { println("Feature: $it") }
+    launch()
+}
+
+fun launch() {
+    for (i in 1..3) {
+        println("Launching... Step $i")
+        Thread.sleep(500)
+    }
+    println("Ready to code!")
+}
+
+// Java sample
+public class ChikChok {
+    public static void main(String[] args) {
+        System.out.println("AI-powered IDE initialized.");
+        compile("Kotlin", "Java", "XML");
+    }
+
+    static void compile(String... langs) {
+        for (String lang : langs) {
+            System.out.println("Compiling " + lang + "...");
+        }
+    }
+}
+</code>
   </div>
 
-  <div class="particles" id="particles-container"></div>
-
-  <div class="container mdc-card mdc-elevation--z4">
-    <div class="logo">C4</div>
-    <h1 class="title mdc-typography--headline4">Welcome to ChikChok</h1>
-    <p class="description mdc-typography--body1">
-      Build Android apps with code generation, smart tools, and a powerful dark/light theme system.
-    </p>
-    <div class="action-button">
-      <button class="material-button mdc-button mdc-button--raised" onclick="location.href='about.html'">
-        <span class="mdc-button__label">Get Started</span>
-      </button>
-    </div>
-
-    <div class="mdc-text-field mdc-text-field--outlined">
-      <input type="text" id="username" class="mdc-text-field__input" required>
-      <div class="mdc-notched-outline">
-        <div class="mdc-notched-outline__leading"></div>
-        <div class="mdc-notched-outline__notch">
-          <label for="username" class="mdc-floating-label">Username</label>
-        </div>
-        <div class="mdc-notched-outline__trailing"></div>
-      </div>
-    </div>
-
-    <div class="mdc-chip-set" role="grid">
-      <div class="mdc-chip" role="row">
-        <div class="mdc-chip__ripple"></div>
-        <span role="gridcell">
-          <span role="button" tabindex="0" class="mdc-chip__primary-action">
-            <span class="mdc-chip__text">Android</span>
-          </span>
-        </span>
-      </div>
-      <div class="mdc-chip" role="row">
-        <div class="mdc-chip__ripple"></div>
-        <span role="gridcell">
-          <span role="button" tabindex="0" class="mdc-chip__primary-action">
-            <span class="mdc-chip__text">Kotlin</span>
-          </span>
-        </span>
-      </div>
-      <div class="mdc-chip" role="row">
-        <div class="mdc-chip__ripple"></div>
-        <span role="gridcell">
-          <span role="button" tabindex="0" class="mdc-chip__primary-action">
-            <span class="mdc-chip__text">Material Design</span>
-          </span>
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="fab-container">
-    <button class="mdc-fab mdc-fab--extended" aria-label="Create">
-      <div class="mdc-fab__ripple"></div>
-      <span class="material-icons mdc-fab__icon">add</span>
-      <span class="mdc-fab__label">New Project</span>
+  <!-- Main Container -->
+  <div class="container" id="mainContent">
+    <h1>Welcome to Chik Chok IDE</h1>
+    <p class="subtitle">The powerful modern IDE to turn your ideas into reality — with real-time coding, AI tools, and a beautiful dark interface.</p>
+    <button class="start-button" id="startBtn">
+      <span class="material-icons">rocket_launch</span> Start Coding
     </button>
   </div>
 
-  <div class="mdc-snackbar">
-    <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
-      <div class="mdc-snackbar__label" aria-atomic="false">
-        Welcome to ChikChok! Ready to build amazing apps?
-      </div>
-      <div class="mdc-snackbar__actions" aria-atomic="true">
-        <button type="button" class="mdc-button mdc-snackbar__action">
-          <div class="mdc-button__ripple"></div>
-          <span class="mdc-button__label">Dismiss</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <!-- Script -->
   <script>
-    // Initialize Material Components
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize Text Field
-      const textField = document.querySelector('.mdc-text-field');
-      if (textField) {
-        mdc.textField.MDCTextField.attachTo(textField);
-      }
+    const themeToggle = document.getElementById("themeToggle");
 
-      // Initialize Button
-      const buttons = document.querySelectorAll('.mdc-button');
-      buttons.forEach(button => {
-        mdc.ripple.MDCRipple.attachTo(button);
-      });
+    const applyTheme = (theme) => {
+      document.body.className = theme;
+      localStorage.setItem("theme", theme);
+      themeToggle.checked = theme === "light";
+    };
 
-      // Initialize Chip Set
-      const chipSet = document.querySelector('.mdc-chip-set');
-      if (chipSet) {
-        mdc.chips.MDCChipSet.attachTo(chipSet);
-      }
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    applyTheme(savedTheme);
 
-      // Initialize Floating Action Button
-      const fab = document.querySelector('.mdc-fab');
-      if (fab) {
-        mdc.ripple.MDCRipple.attachTo(fab);
-      }
-
-      // Initialize Snackbar
-      const snackbar = document.querySelector('.mdc-snackbar');
-      if (snackbar) {
-        const mdcSnackbar = new mdc.snackbar.MDCSnackbar(snackbar);
-        setTimeout(() => {
-          mdcSnackbar.open();
-        }, 1000);
-      }
+    themeToggle.addEventListener("change", () => {
+      applyTheme(themeToggle.checked ? "light" : "dark");
     });
 
-    // Theme Switcher
-    const themeCheckbox = document.getElementById('themeCheckbox');
-    const darkIcon = document.getElementById('darkIcon');
-    const lightIcon = document.getElementById('lightIcon');
-
-    if (localStorage.getItem('theme') === 'light') {
-      document.documentElement.setAttribute('data-theme', 'light');
-      themeCheckbox.checked = true;
-      darkIcon.style.opacity = '0.5';
-      lightIcon.style.opacity = '1';
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      darkIcon.style.opacity = '1';
-      lightIcon.style.opacity = '0.5';
-    }
-
-    themeCheckbox.addEventListener('change', () => {
-      if (themeCheckbox.checked) {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-        darkIcon.style.opacity = '0.5';
-        lightIcon.style.opacity = '1';
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        darkIcon.style.opacity = '1';
-        lightIcon.style.opacity = '0.5';
-      }
-    });
-
-    // Particles Animation
-    const particlesContainer = document.getElementById('particles-container');
-    function createParticle() {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
-      particle.style.left = `${Math.random() * 100}vw`;
-      particle.style.top = `${Math.random() * 100}vh`;
-      particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
-      particle.style.opacity = Math.random() * 0.5 + 0.2;
-      particlesContainer.appendChild(particle);
-
+    // Ripple effect for button
+    document.getElementById("startBtn").addEventListener("click", function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const ripple = document.createElement("span");
+      ripple.classList.add("ripple");
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      
+      this.appendChild(ripple);
+      
       setTimeout(() => {
-        particle.remove();
-      }, 10000);
-    }
-
-    setInterval(createParticle, 300);
-
-    // FAB Click Handler
-    const fabButton = document.querySelector('.mdc-fab');
-    fabButton.addEventListener('click', () => {
-      alert('Create a new project!');
+        ripple.remove();
+      }, 600);
     });
 
-    // Chip Click Handler
-    const chips = document.querySelectorAll('.mdc-chip');
-    chips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        const chipText = chip.querySelector('.mdc-chip__text').textContent;
-        alert(`Selected: ${chipText}`);
-      });
+    document.getElementById("startBtn").addEventListener("click", () => {
+      const container = document.getElementById("mainContent");
+      container.classList.add("fade-out");
+      setTimeout(() => {
+        window.location.href = "/tools";  // Change this path to your tools page
+      }, 1000);
     });
   </script>
 </body>
