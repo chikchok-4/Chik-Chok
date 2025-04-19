@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chik Chok IDE - Start</title>
-  
+
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Fonts -->
@@ -71,7 +71,6 @@
       margin-bottom: 2.5rem;
     }
 
-    /* Material Design Button */
     .start-button {
       background-color: var(--primary);
       color: var(--on-primary);
@@ -103,7 +102,6 @@
       transform: translateY(0);
     }
 
-    /* Ripple Effect */
     .ripple {
       position: absolute;
       border-radius: 50%;
@@ -182,7 +180,6 @@
       }
     }
 
-    /* Theme Toggle Switch */
     .theme-switch {
       position: absolute;
       top: 20px;
@@ -234,13 +231,11 @@
 </head>
 <body class="dark">
 
-  <!-- Theme Switch -->
   <label class="theme-switch">
     <input type="checkbox" id="themeToggle">
     <span class="slider"></span>
   </label>
 
-  <!-- Background Animated Code -->
   <div class="code-bg">
 <code>
 fun main() {
@@ -274,7 +269,6 @@ public class ChikChok {
 </code>
   </div>
 
-  <!-- Main Container -->
   <div class="container" id="mainContent">
     <h1>Welcome to Chik Chok IDE</h1>
     <p class="subtitle">The powerful modern IDE to turn your ideas into reality — with real-time coding, AI tools, and a beautiful dark interface.</p>
@@ -283,7 +277,6 @@ public class ChikChok {
     </button>
   </div>
 
-  <!-- Script -->
   <script>
     const themeToggle = document.getElementById("themeToggle");
 
@@ -300,29 +293,31 @@ public class ChikChok {
       applyTheme(themeToggle.checked ? "light" : "dark");
     });
 
-    // Ripple effect for button
+    // Ripple effect
     document.getElementById("startBtn").addEventListener("click", function(e) {
       const rect = this.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
+
       const ripple = document.createElement("span");
       ripple.classList.add("ripple");
       ripple.style.left = `${x}px`;
       ripple.style.top = `${y}px`;
-      
+
       this.appendChild(ripple);
-      
+
       setTimeout(() => {
         ripple.remove();
       }, 600);
     });
 
+    // Navigate to tools.html
     document.getElementById("startBtn").addEventListener("click", () => {
       const container = document.getElementById("mainContent");
       container.classList.add("fade-out");
       setTimeout(() => {
-        window.location.href = "/tools.html";  // Change this path to your tools page
+        const basePath = window.location.pathname.replace(/[^/]+$/, '');
+        window.location.href = basePath + "tools.html";
       }, 1000);
     });
   </script>
