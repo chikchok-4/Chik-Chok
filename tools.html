@@ -1,279 +1,246 @@
 <!DOCTYPE html>
 <html lang="en" class="mdui-theme-dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ChikChok IDE - Tools</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChikChok IDE - Tools</title>
 
-    <!-- MDUI 2 -->
-    <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
-    <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  <!-- MDUI 2 -->
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
+  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
 
-    <style>
-      html {
-        font-family: 'Space Grotesk', sans-serif;
-      }
+  <style>
+    html {
+      font-family: 'Space Grotesk', sans-serif;
+    }
 
-      html:root {
-        --mdui-color-primary: 132 94 247;
-        --mdui-color-background: 20 20 24;
-        --mdui-color-on-background: 255 255 255;
-      }
+    html:root {
+      --mdui-color-primary: 132 94 247;
+      --mdui-color-background: 20 20 24;
+      --mdui-color-on-background: 255 255 255;
+    }
 
-      body {
-        padding: 20px;
-        background-color: rgb(var(--mdui-color-background));
-        color: rgb(var(--mdui-color-on-background));
-      }
+    body {
+      padding: 20px;
+      background-color: rgb(var(--mdui-color-background));
+      color: rgb(var(--mdui-color-on-background));
+    }
 
-      .container {
-        max-width: 960px;
-        margin: auto;
-      }
+    .container {
+      max-width: 960px;
+      margin: auto;
+    }
 
-      .title {
-        text-align: center;
-        font-size: 3rem;
-        margin-top: 50px;
-        color: rgb(var(--mdui-color-primary));
-      }
+    .title {
+      text-align: center;
+      font-size: 3rem;
+      margin-top: 50px;
+      color: rgb(var(--mdui-color-primary));
+    }
 
-      .description {
-        text-align: center;
-        font-size: 1.2rem;
-        margin-top: 20px;
-        opacity: 0.8;
-      }
+    .description {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 20px;
+      opacity: 0.8;
+    }
 
-      .action-buttons {
-        text-align: center;
-        margin-top: 30px;
-      }
+    .action-buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
 
-      .mdui-btn {
-        margin: 10px;
-      }
+    .mdui-btn {
+      margin: 10px;
+    }
 
-      .code-box {
-        background-color: #1e1e1e;
-        color: #d4d4d4;
-        padding: 20px;
-        border-radius: 12px;
-        font-family: monospace;
-        min-height: 300px;
-        white-space: pre-wrap;
-        margin-top: 30px;
-        overflow-x: auto;
-      }
+    .code-box {
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      padding: 20px;
+      border-radius: 12px;
+      font-family: monospace;
+      min-height: 300px;
+      white-space: pre-wrap;
+      margin-top: 30px;
+      overflow-x: auto;
+    }
 
-      .footer {
-        text-align: center;
-        margin-top: 50px;
-        font-size: 0.85em;
-        opacity: 0.7;
-      }
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.85em;
+      opacity: 0.7;
+    }
 
-      .theme-toggle {
-        position: fixed;
-        right: 20px;
-        top: 20px;
-      }
+    .theme-toggle {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+    }
 
-      .mdui-select {
-        margin-top: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="theme-toggle">
-      <mdui-switch id="themeSwitch" checked>Dark Mode</mdui-switch>
+    .mdui-select {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle">
+    <mdui-switch id="themeSwitch" checked>Dark Mode</mdui-switch>
+  </div>
+
+  <div class="container">
+    <h1 class="title">ChikChok IDE - Tools</h1>
+    <p class="description">Generate Java, Kotlin, or XML code based on examples.</p>
+
+    <mdui-select id="exampleSelect" label="Select an Example" variant="outlined" style="width: 100%;">
+      <mdui-menu-item value="login">Login Form</mdui-menu-item>
+      <mdui-menu-item value="api">API Request</mdui-menu-item>
+      <mdui-menu-item value="data">Data Class</mdui-menu-item>
+      <mdui-menu-item value="ui">XML Layout</mdui-menu-item>
+      <mdui-menu-item value="toast">Toast Message</mdui-menu-item>
+      <mdui-menu-item value="dialog">Alert Dialog</mdui-menu-item>
+      <mdui-menu-item value="fragment">Fragment</mdui-menu-item>
+      <mdui-menu-item value="recycler">RecyclerView</mdui-menu-item>
+      <mdui-menu-item value="drawer">Navigation Drawer</mdui-menu-item>
+      <mdui-menu-item value="progress">ProgressBar</mdui-menu-item>
+    </mdui-select>
+
+    <mdui-select id="languageSelect" label="Select Language" variant="outlined" style="width: 100%; margin-top: 20px;">
+      <mdui-menu-item value="java">Java</mdui-menu-item>
+      <mdui-menu-item value="kotlin">Kotlin</mdui-menu-item>
+      <mdui-menu-item value="xml">XML</mdui-menu-item>
+    </mdui-select>
+
+    <div class="action-buttons">
+      <mdui-button icon="code" variant="filled" onclick="generateCode()">Generate Code</mdui-button>
+      <mdui-button icon="content_copy" variant="outlined" onclick="copyCode()">Copy</mdui-button>
+      <mdui-button icon="sync_alt" variant="outlined" onclick="convertCode()">Convert</mdui-button>
     </div>
 
-    <div class="container">
-      <h1 class="title">ChikChok IDE - Tools</h1>
-      <p class="description">Generate Java, Kotlin, or XML code based on examples.</p>
+    <div class="code-box" id="codeOutput">// Generated code appears here.</div>
 
-      <mdui-select id="exampleSelect" label="Select an Example" variant="outlined" style="width: 100%;">
-        <mdui-menu-item value="login">Login Form</mdui-menu-item>
-        <mdui-menu-item value="api">API Request</mdui-menu-item>
-        <mdui-menu-item value="data">Data Class</mdui-menu-item>
-        <mdui-menu-item value="ui">XML Layout</mdui-menu-item>
-        <mdui-menu-item value="toast">Toast Message</mdui-menu-item>
-        <mdui-menu-item value="dialog">Alert Dialog</mdui-menu-item>
-      </mdui-select>
+    <div class="footer">Made by ChikChok Devs — 2025</div>
+  </div>
 
-      <mdui-select id="languageSelect" label="Select Language" variant="outlined" style="width: 100%; margin-top: 20px;">
-        <mdui-menu-item value="java">Java</mdui-menu-item>
-        <mdui-menu-item value="kotlin">Kotlin</mdui-menu-item>
-        <mdui-menu-item value="xml">XML</mdui-menu-item>
-      </mdui-select>
-
-      <div class="action-buttons">
-        <mdui-button icon="code" variant="filled" onclick="generateCode()">Generate Code</mdui-button>
-        <mdui-button icon="content_copy" variant="outlined" onclick="copyCode()">Copy</mdui-button>
-        <mdui-button icon="sync_alt" variant="outlined" onclick="convertCode()">Convert</mdui-button>
-      </div>
-
-      <div class="code-box" id="codeOutput">// Generated code appears here.</div>
-
-      <div class="footer">Made by ChikChok Devs — 2025</div>
-    </div>
-
-    <script>
-      document.getElementById("themeSwitch").addEventListener("change", (e) => {
-        document.documentElement.classList.toggle("mdui-theme-dark", e.target.checked);
-      });
-
-      function generateCode() {
-        const language = document.getElementById("languageSelect").value;
-        const example = document.getElementById("exampleSelect").value;
-        const output = document.getElementById("codeOutput");
-
-        const codes = {
-          login: {
-            java: `public class LoginActivity extends AppCompatActivity {
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_login);
-  }
-
-  public void login(String username, String password) {
-    if (username.equals("admin") && password.equals("1234")) {
-      Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show();
-    } else {
-      Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
-    }
-  }
-}`,
-            kotlin: `class LoginActivity : AppCompatActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_login)
-  }
-
-  fun login(username: String, password: String) {
-    if (username == "admin" && password == "1234") {
-      Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show()
-    } else {
-      Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
-    }
-  }
-}`,
-            xml: `<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  android:padding="24dp">
-
-  <EditText android:hint="Username" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-  <EditText android:hint="Password" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textPassword"/>
-  <Button android:text="Login" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-</LinearLayout>`
-          },
-          api: {
-            java: `public class ApiClient {
-  public void fetchData() {
-    OkHttpClient client = new OkHttpClient();
-    Request request = new Request.Builder().url("https://api.example.com/data").build();
-
-    client.newCall(request).enqueue(new Callback() {
-      public void onFailure(Call call, IOException e) {}
-      public void onResponse(Call call, Response response) throws IOException {
-        String json = response.body().string();
-      }
+  <script>
+    document.getElementById("themeSwitch").addEventListener("change", (e) => {
+      document.documentElement.classList.toggle("mdui-theme-dark", e.target.checked);
     });
+
+    function generateCode() {
+      const language = document.getElementById("languageSelect").value;
+      const example = document.getElementById("exampleSelect").value;
+      const output = document.getElementById("codeOutput");
+
+      const codes = {
+        login: {
+          java: `// Java Login Code`,
+          kotlin: `// Kotlin Login Code`,
+          xml: `<!-- XML Login Layout -->`
+        },
+        api: {
+          java: `// Java API Code`,
+          kotlin: `// Kotlin API Code`,
+          xml: `<!-- No XML for API -->`
+        },
+        data: {
+          java: `// Java Data Class`,
+          kotlin: `// Kotlin Data Class`,
+          xml: `<!-- No XML for data class -->`
+        },
+        ui: {
+          java: `// Use XML layout`,
+          kotlin: `// Use XML layout`,
+          xml: `<TextView android:text="Hello World!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>`
+        },
+        toast: {
+          java: `Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();`,
+          kotlin: `Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show()`,
+          xml: `<!-- No XML for Toast -->`
+        },
+        dialog: {
+          java: `new AlertDialog.Builder(this).setTitle("Title").setMessage("Message").setPositiveButton("OK", null).show();`,
+          kotlin: `AlertDialog.Builder(this).setTitle("Title").setMessage("Message").setPositiveButton("OK", null).show()`,
+          xml: `<!-- No XML for Dialog -->`
+        },
+        fragment: {
+          java: `public class MyFragment extends Fragment {
+  @Nullable
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.fragment_my, container, false);
   }
 }`,
-            kotlin: `fun fetchData() {
-  val client = OkHttpClient()
-  val request = Request.Builder().url("https://api.example.com/data").build()
-
-  client.newCall(request).enqueue(object : Callback {
-    override fun onFailure(call: Call, e: IOException) {}
-    override fun onResponse(call: Call, response: Response) {
-      val json = response.body?.string()
-    }
-  })
-}`,
-            xml: `<!-- No XML for API requests -->`
-          },
-          data: {
-            java: `public class User {
-  private String name;
-  private int age;
-
-  public User(String name, int age) {
-    this.name = name;
-    this.age = age;
+          kotlin: `class MyFragment : Fragment() {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    return inflater.inflate(R.layout.fragment_my, container, false)
   }
-
-  // Getters and setters
 }`,
-            kotlin: `data class User(
-  val name: String,
-  val age: Int
-)`,
-            xml: `<!-- No XML for data class -->`
-          },
-          ui: {
-            java: `// Use XML layout for UI`,
-            kotlin: `// Use XML layout for UI`,
-            xml: `<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+          xml: `<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:padding="16dp"
-  android:orientation="vertical">
-
-  <TextView android:text="Hello ChikChok!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-</LinearLayout>`
-          },
-          toast: {
-            java: `Toast.makeText(this, "Hello from Java", Toast.LENGTH_SHORT).show();`,
-            kotlin: `Toast.makeText(this, "Hello from Kotlin", Toast.LENGTH_SHORT).show()`,
-            xml: `<!-- No XML for Toast -->`
-          },
-          dialog: {
-            java: `new AlertDialog.Builder(this)
-  .setTitle("Title")
-  .setMessage("This is a dialog.")
-  .setPositiveButton("OK", null)
-  .show();`,
-            kotlin: `AlertDialog.Builder(this)
-  .setTitle("Title")
-  .setMessage("This is a dialog.")
-  .setPositiveButton("OK", null)
-  .show()`,
-            xml: `<!-- No XML for Dialog -->`
-          }
-        };
-
-        const code = codes[example]?.[language] || "// No code available for this combination.";
-        output.textContent = code;
-      }
-
-      function copyCode() {
-        const code = document.getElementById("codeOutput").textContent;
-        navigator.clipboard.writeText(code).then(() => {
-          mdui.snackbar({ message: "Code copied!" });
-        });
-      }
-
-      function convertCode() {
-        const languageSelect = document.getElementById("languageSelect");
-        if (languageSelect.value === "java") {
-          languageSelect.value = "kotlin";
-        } else if (languageSelect.value === "kotlin") {
-          languageSelect.value = "java";
-        } else {
-          mdui.snackbar({ message: "Conversion not supported for XML." });
-          return;
+  android:layout_height="match_parent">
+  <TextView android:text="Fragment!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</FrameLayout>`
+        },
+        recycler: {
+          java: `public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+  // Adapter implementation
+}`,
+          kotlin: `class MyAdapter : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+  // Adapter implementation
+}`,
+          xml: `<androidx.recyclerview.widget.RecyclerView
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"/>`
+        },
+        drawer: {
+          java: `// Java Navigation Drawer setup`,
+          kotlin: `// Kotlin Navigation Drawer setup`,
+          xml: `<androidx.drawerlayout.widget.DrawerLayout
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  <!-- Content and NavigationView here -->
+</androidx.drawerlayout.widget.DrawerLayout>`
+        },
+        progress: {
+          java: `ProgressBar progressBar = findViewById(R.id.progressBar);
+progressBar.setVisibility(View.VISIBLE);`,
+          kotlin: `val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+progressBar.visibility = View.VISIBLE`,
+          xml: `<ProgressBar
+  android:id="@+id/progressBar"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"/>`
         }
-        generateCode();
+      };
+
+      const code = codes[example]?.[language] || "// No code available for this combination.";
+      output.textContent = code;
+    }
+
+    function copyCode() {
+      const code = document.getElementById("codeOutput").textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        mdui.snackbar({ message: "Code copied!" });
+      });
+    }
+
+    function convertCode() {
+      const languageSelect = document.getElementById("languageSelect");
+      if (languageSelect.value === "java") {
+        languageSelect.value = "kotlin";
+      } else if (languageSelect.value === "kotlin") {
+        languageSelect.value = "java";
+      } else {
+        mdui.snackbar({ message: "Conversion not supported for XML." });
+        return;
       }
-    </script>
-  </body>
+      generateCode();
+    }
+  </script>
+</body>
 </html>
