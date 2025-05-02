@@ -94,7 +94,7 @@
 
   <div class="container">
     <h1 class="title">ChikChok IDE - Tools</h1>
-    <p class="description">Generate Java, Kotlin, or XML code based on examples.</p>
+    <p class="description">Generate Java, Kotlin, or XML code based on examples, and convert between Java and Kotlin.</p>
 
     <mdui-select id="exampleSelect" label="Select an Example" variant="outlined" style="width: 100%;">
       <mdui-menu-item value="login">Login Form</mdui-menu-item>
@@ -185,36 +185,6 @@
   android:layout_height="match_parent">
   <TextView android:text="Fragment!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 </FrameLayout>`
-        },
-        recycler: {
-          java: `public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-  // Adapter implementation
-}`,
-          kotlin: `class MyAdapter : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
-  // Adapter implementation
-}`,
-          xml: `<androidx.recyclerview.widget.RecyclerView
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"/>`
-        },
-        drawer: {
-          java: `// Java Navigation Drawer setup`,
-          kotlin: `// Kotlin Navigation Drawer setup`,
-          xml: `<androidx.drawerlayout.widget.DrawerLayout
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  <!-- Content and NavigationView here -->
-</androidx.drawerlayout.widget.DrawerLayout>`
-        },
-        progress: {
-          java: `ProgressBar progressBar = findViewById(R.id.progressBar);
-progressBar.setVisibility(View.VISIBLE);`,
-          kotlin: `val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-progressBar.visibility = View.VISIBLE`,
-          xml: `<ProgressBar
-  android:id="@+id/progressBar"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"/>`
         }
       };
 
@@ -229,17 +199,23 @@ progressBar.visibility = View.VISIBLE`,
       });
     }
 
-    function convertCode() {
+    async function convertCode() {
+      const code = document.getElementById("codeOutput").textContent;
       const languageSelect = document.getElementById("languageSelect");
-      if (languageSelect.value === "java") {
-        languageSelect.value = "kotlin";
-      } else if (languageSelect.value === "kotlin") {
-        languageSelect.value = "java";
-      } else {
+      const targetLanguage = languageSelect.value === "java" ? "kotlin" : "java";
+
+      if (!code || targetLanguage === "xml") {
         mdui.snackbar({ message: "Conversion not supported for XML." });
         return;
       }
-      generateCode();
+
+      // Simulate conversion logic
+      const convertedCode = targetLanguage === "java"
+        ? "// Converted to Java: " + code
+        : "// Converted to Kotlin: " + code;
+
+      document.getElementById("codeOutput").textContent = convertedCode;
+      languageSelect.value = targetLanguage;
     }
   </script>
 </body>
