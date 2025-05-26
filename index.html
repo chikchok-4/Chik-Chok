@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chik Chok IDE - Start</title>
+  <title>Chik Chok IDE</title>
 
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -118,7 +118,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 180px;
+      min-width: 100px;
     }
 
     .start-button:hover {
@@ -170,23 +170,58 @@
       transform: translateX(3px);
     }
 
-    .code-bg {
-      font-family: 'Fira Code', monospace;
-      font-size: 13px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      white-space: pre;
-      line-height: 1.6;
-      opacity: var(--code-opacity);
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-      animation: scrollLoop 60s linear infinite;
-      padding: 2rem;
-    }
+.code-bg {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  white-space: pre;
+  line-height: 1.6;
+  opacity: var(--code-opacity, 0.08);
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  animation: scrollLoop 60s linear infinite;
+  padding: 2rem;
+  background: transparent;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
+}
+
+/* برای تم روشن: متن تیره */
+.code-bg.light {
+  color: rgba(0, 0, 0, 0.8);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
+}
+
+/* برای تم تیره: متن روشن */
+.code-bg.dark {
+  color: rgba(255, 255, 255, 0.7);
+  mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
+}
+
+/* پشتیبانی خودکار از دارک مود سیستم */
+@media (prefers-color-scheme: dark) {
+  .code-bg.auto {
+    color: rgba(255, 255, 255, 0.7);
+    mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
+  }
+}
+@media (prefers-color-scheme: light) {
+  .code-bg.auto {
+    color: rgba(0, 0, 0, 0.8);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
+  }
+}
+
+
 
     @keyframes scrollLoop {
       0% { transform: translateY(0); }
@@ -279,7 +314,7 @@
     <span class="slider"></span>
   </label>
 
-  <div class="code-bg">
+  <div class="code-bg auto">
 <code>
 fun main() {
     println("Welcome to Chik Chok IDE")
@@ -309,6 +344,9 @@ public class ChikChok {
         }
     }
 }
+ Chikchok ide 3
+
+ Welcome to Chik Chok IDE
 </code>
   </div>
 
