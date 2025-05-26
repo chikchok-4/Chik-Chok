@@ -9,214 +9,560 @@
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
   <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Google Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>
-    html {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    html:root {
+    :root {
       --mdui-color-primary: 132 94 247;
-      --mdui-color-background: 20 20 24;
-      --mdui-color-on-background: 255 255 255;
+      --mdui-color-primary-dark: 100 70 200;
+      --mdui-color-primary-light: 170 140 255;
+      --mdui-color-surface: 28 28 32;
+      --mdui-color-surface-variant: 40 40 46;
+      --mdui-color-surface-container: 35 35 42;
+      --mdui-color-on-surface: 230 230 235;
+      --mdui-color-outline: 100 100 110;
+      --mdui-color-outline-variant: 70 70 80;
     }
-
     body {
-      padding: 20px;
-      background-color: rgb(var(--mdui-color-background));
-      color: rgb(var(--mdui-color-on-background));
+      font-family: 'Roboto', 'Space Grotesk', sans-serif;
+      background-color: rgb(var(--mdui-color-surface));
+      color: rgb(var(--mdui-color-on-surface));
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      line-height: 1.6;
     }
-
-    .container {
-      max-width: 960px;
-      margin: auto;
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
     }
-
-    .title {
+    .app-header {
       text-align: center;
+      margin: 60px 0 48px;
+      position: relative;
+    }
+    .app-title {
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 3rem;
-      margin-top: 50px;
-      color: rgb(var(--mdui-color-primary));
+      font-weight: 700;
+      background: linear-gradient(90deg, rgb(var(--mdui-color-primary)), rgb(var(--mdui-color-primary-light)));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
     }
-
-    .description {
-      text-align: center;
+    .app-subtitle {
       font-size: 1.2rem;
-      margin-top: 20px;
-      opacity: 0.8;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+      font-weight: 400;
     }
-
+    .tool-card {
+      background-color: rgb(var(--mdui-color-surface-container));
+      border-radius: 24px;
+      padding: 32px;
+      margin: 48px 0;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      border: 1px solid rgba(var(--mdui-color-outline-variant), 0.2);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tool-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(var(--mdui-color-primary), 0.15);
+    }
+    .card-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: rgb(var(--mdui-color-primary));
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .card-title .mdui-icon {
+      font-size: 1.6rem;
+    }
+    .select-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .select-container {
+      position: relative;
+    }
+    .select-container::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, rgb(var(--mdui-color-primary)), rgba(var(--mdui-color-primary), 0.5));
+      border-radius: 2px;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .select-container:focus-within::after {
+      transform: scaleX(1);
+    }
     .action-buttons {
-      text-align: center;
-      margin-top: 30px;
+      display: flex;
+      gap: 16px;
+      margin: 32px 0;
+      flex-wrap: wrap;
     }
-
-    .mdui-btn {
-      margin: 10px;
-    }
-
-    .code-box {
+    .code-container {
+      position: relative;
       background-color: #1e1e1e;
-      color: #d4d4d4;
-      padding: 20px;
-      border-radius: 12px;
-      font-family: monospace;
-      min-height: 300px;
-      white-space: pre-wrap;
-      margin-top: 30px;
+      border-radius: 16px;
+      padding: 32px 24px 24px;
+      margin-top: 32px;
       overflow-x: auto;
+      min-height: 300px;
+      border: 1px solid rgba(var(--mdui-color-outline-variant), 0.3);
     }
-
-    .footer {
+    .code-tab {
+      position: absolute;
+      top: 0;
+      left: 24px;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, rgb(var(--mdui-color-primary)), rgb(var(--mdui-color-primary-dark)));
+      color: white;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(var(--mdui-color-primary), 0.2);
+      z-index: 2;
+    }
+    pre {
+      margin: 0;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #e0e0e0;
+      white-space: pre-wrap;
+      tab-size: 2;
+    }
+    .app-footer {
       text-align: center;
-      margin-top: 50px;
-      font-size: 0.85em;
-      opacity: 0.7;
+      margin: 80px 0 40px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(var(--mdui-color-outline), 0.2);
+      font-size: 0.95rem;
+      opacity: 0.8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
     }
-
+    .social-links {
+      display: flex;
+      gap: 20px;
+    }
     .theme-toggle {
       position: fixed;
-      right: 20px;
-      top: 20px;
+      right: 32px;
+      top: 32px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(var(--mdui-color-surface-variant), 0.9);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 50px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
     }
-
-    .mdui-select {
-      margin-top: 20px;
+    /* Syntax highlighting */
+    .code-keyword { color: #569CD6; font-weight: 500; }
+    .code-function { color: #DCDCAA; }
+    .code-string { color: #CE9178; }
+    .code-comment { color: #6A9955; font-style: italic; }
+    .code-number { color: #B5CEA8; }
+    .code-tag { color: #569CD6; }
+    .code-attribute { color: #9CDCFE; }
+    .code-punctuation { color: #d4d4d4; }
+    .code-class { color: #4EC9B0; }
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgb(var(--mdui-color-surface-variant));
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(var(--mdui-color-primary), 0.5);
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgb(var(--mdui-color-primary));
+    }
+    @media (max-width: 900px) {
+      .app-container {
+        padding: 16px;
+      }
+      .app-title {
+        font-size: 2.2rem;
+      }
+      .tool-card {
+        padding: 24px;
+      }
+      .select-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .code-container {
+        padding: 24px 16px 16px;
+      }
+    }
+    @media (max-width: 600px) {
+      .app-title {
+        font-size: 1.8rem;
+      }
+      .card-title {
+        font-size: 1.4rem;
+      }
+      .action-buttons {
+        flex-direction: column;
+      }
+      .action-buttons mdui-button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="theme-toggle">
-    <mdui-switch id="themeSwitch" checked>Dark Mode</mdui-switch>
-  </div>
-
-  <div class="container">
-    <h1 class="title">ChikChok IDE - Tools</h1>
-    <p class="description">Generate Java, Kotlin, or XML code based on examples, and convert between Java and Kotlin.</p>
-
-    <mdui-select id="exampleSelect" label="Select an Example" variant="outlined" style="width: 100%;">
-      <mdui-menu-item value="login">Login Form</mdui-menu-item>
-      <mdui-menu-item value="api">API Request</mdui-menu-item>
-      <mdui-menu-item value="data">Data Class</mdui-menu-item>
-      <mdui-menu-item value="ui">XML Layout</mdui-menu-item>
-      <mdui-menu-item value="toast">Toast Message</mdui-menu-item>
-      <mdui-menu-item value="dialog">Alert Dialog</mdui-menu-item>
-      <mdui-menu-item value="fragment">Fragment</mdui-menu-item>
-      <mdui-menu-item value="recycler">RecyclerView</mdui-menu-item>
-      <mdui-menu-item value="drawer">Navigation Drawer</mdui-menu-item>
-      <mdui-menu-item value="progress">ProgressBar</mdui-menu-item>
-    </mdui-select>
-
-    <mdui-select id="languageSelect" label="Select Language" variant="outlined" style="width: 100%; margin-top: 20px;">
-      <mdui-menu-item value="java">Java</mdui-menu-item>
-      <mdui-menu-item value="kotlin">Kotlin</mdui-menu-item>
-      <mdui-menu-item value="xml">XML</mdui-menu-item>
-    </mdui-select>
-
-    <div class="action-buttons">
-      <mdui-button icon="code" variant="filled" onclick="generateCode()">Generate Code</mdui-button>
-      <mdui-button icon="content_copy" variant="outlined" onclick="copyCode()">Copy</mdui-button>
-      <mdui-button icon="sync_alt" variant="outlined" onclick="convertCode()">Convert</mdui-button>
+  <mdui-top-app-bar class="mdui-shadow-6" style="background-color: rgba(var(--mdui-color-surface), 0.8); backdrop-filter: blur(10px);">
+    <div slot="start" style="display: flex; align-items: center;">
+      <mdui-icon name="code" style="margin-right: 12px; color: rgb(var(--mdui-color-primary)); font-size: 1.8rem;"></mdui-icon>
+      <span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.4rem;">ChikChok IDE</span>
     </div>
+    <mdui-dropdown slot="end">
+      <mdui-button-icon slot="trigger" icon="more_vert"></mdui-button-icon>
+      <mdui-menu style="min-width: 220px;">
+        <mdui-menu-item icon="home" href="index.html">Home</mdui-menu-item>
+        <mdui-menu-item icon="info" href="about.html">About</mdui-menu-item>
+        <mdui-divider></mdui-divider>
+        <mdui-menu-item icon="code" onclick="window.open('https://github.com/chikchok-4')">
+          <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+            <span>GitHub</span>
+            <mdui-icon name="open_in_new" style="font-size: 1rem;"></mdui-icon>
+          </div>
+        </mdui-menu-item>
+        <mdui-menu-item icon="send" onclick="window.open('https://t.me/chikchokapp')">
+          <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+            <span>Telegram</span>
+            <mdui-icon name="open_in_new" style="font-size: 1rem;"></mdui-icon>
+          </div>
+        </mdui-menu-item>
+      </mdui-menu>
+    </mdui-dropdown>
+  </mdui-top-app-bar>
 
-    <div class="code-box" id="codeOutput">// Generated code appears here.</div>
-
-    <div class="footer">Made by ChikChok Devs — 2025</div>
+  <div class="theme-toggle">
+    <mdui-icon name="dark_mode" style="font-size: 1.2rem;"></mdui-icon>
+    <mdui-switch id="themeSwitch" checked style="--mdui-switch-track-width: 48px; --mdui-switch-track-height: 24px;">
+      <mdui-icon slot="checked-icon" name="dark_mode"></mdui-icon>
+      <mdui-icon slot="unchecked-icon" name="light_mode"></mdui-icon>
+    </mdui-switch>
+    <mdui-icon name="light_mode" style="font-size: 1.2rem;"></mdui-icon>
   </div>
 
+  <div class="app-container">
+    <div class="app-header">
+      <h1 class="app-title">ChikChok IDE Tools</h1>
+      <p class="app-subtitle">Generate clean, production-ready code with our AI-powered tools. Convert between Java and Kotlin with a single click.</p>
+    </div>
+    <mdui-card variant="elevated" class="tool-card">
+      <h2 class="card-title">
+        <mdui-icon>auto_awesome</mdui-icon>
+        <span>Code Generator</span>
+      </h2>
+      <div class="select-row">
+        <div class="select-container">
+          <mdui-select id="exampleSelect" label="Code Example" variant="outlined" fullwidth>
+            <mdui-menu-item value="login" icon="login">Login Form</mdui-menu-item>
+            <mdui-menu-item value="api" icon="cloud">API Request</mdui-menu-item>
+            <mdui-menu-item value="data" icon="data_object">Data Class</mdui-menu-item>
+            <mdui-menu-item value="ui" icon="widgets">XML Layout</mdui-menu-item>
+            <mdui-menu-item value="toast" icon="message">Toast Message</mdui-menu-item>
+            <mdui-menu-item value="dialog" icon="warning">Alert Dialog</mdui-menu-item>
+            <mdui-menu-item value="fragment" icon="view_quilt">Fragment</mdui-menu-item>
+            <mdui-menu-item value="recycler" icon="view_list">RecyclerView</mdui-menu-item>
+            <mdui-menu-item value="drawer" icon="menu">Navigation Drawer</mdui-menu-item>
+            <mdui-menu-item value="progress" icon="hourglass_empty">ProgressBar</mdui-menu-item>
+          </mdui-select>
+        </div>
+        <div class="select-container">
+          <mdui-select id="languageSelect" label="Language" variant="outlined" fullwidth>
+            <mdui-menu-item value="java" icon="java">Java</mdui-menu-item>
+            <mdui-menu-item value="kotlin" icon="kotlin">Kotlin</mdui-menu-item>
+            <mdui-menu-item value="xml" icon="xml">XML</mdui-menu-item>
+          </mdui-select>
+        </div>
+      </div>
+      <div class="action-buttons">
+        <mdui-button variant="filled" icon="auto_awesome" onclick="generateCode()" style="--mdui-button-height: 48px;">
+          <span style="font-weight: 500;">Generate Code</span>
+        </mdui-button>
+        <mdui-button variant="outlined" icon="content_copy" onclick="copyCode()" style="--mdui-button-height: 48px;">
+          Copy to Clipboard
+        </mdui-button>
+        <mdui-button variant="outlined" icon="sync_alt" onclick="convertCode()" style="--mdui-button-height: 48px;">
+          Convert Language
+        </mdui-button>
+      </div>
+      <div class="code-container">
+        <div class="code-tab" id="languageTab">SELECT</div>
+        <pre id="codeOutput"><span class="code-comment">// Select an example and language above to generate code</span>
+<span class="code-comment">// The generated code will appear here with full syntax highlighting</span></pre>
+      </div>
+    </mdui-card>
+    <div class="app-footer">
+      <div class="social-links">
+        <mdui-button-icon href="https://github.com/chikchok-4" target="_blank">
+          <mdui-icon name="code"></mdui-icon>
+        </mdui-button-icon>
+        <mdui-button-icon href="https://t.me/chikchokapp" target="_blank">
+          <mdui-icon name="send"></mdui-icon>
+        </mdui-button-icon>
+        <mdui-button-icon href="mailto:support@chikchok.ide">
+          <mdui-icon name="email"></mdui-icon>
+        </mdui-button-icon>
+      </div>
+      <div>© 2025 ChikChok IDE. All rights reserved.</div>
+      <div style="font-size: 0.85rem; opacity: 0.7;">Version 2.1.0 | Built with MDUI</div>
+    </div>
+  </div>
   <script>
-    document.getElementById("themeSwitch").addEventListener("change", (e) => {
+    // Theme toggle
+    const themeSwitch = document.getElementById("themeSwitch");
+    themeSwitch.addEventListener("change", (e) => {
       document.documentElement.classList.toggle("mdui-theme-dark", e.target.checked);
+      localStorage.setItem("darkMode", e.target.checked);
     });
 
+    // Initialize theme from localStorage
+    if (localStorage.getItem("darkMode") === "false") {
+      themeSwitch.checked = false;
+      document.documentElement.classList.remove("mdui-theme-dark");
+    }
+
+    // Update language tab display
+    function updateLanguageTab() {
+      const language = document.getElementById("languageSelect").value;
+      const tab = document.getElementById("languageTab");
+      tab.textContent = language.toUpperCase();
+      tab.style.background = `linear-gradient(90deg, rgb(var(--mdui-color-primary)), rgb(var(--mdui-color-primary-dark)))`;
+    }
+
+    // Generate code based on selection
     function generateCode() {
       const language = document.getElementById("languageSelect").value;
       const example = document.getElementById("exampleSelect").value;
       const output = document.getElementById("codeOutput");
+      updateLanguageTab();
 
+      // Sample code database (expanded from previous version)
       const codes = {
         login: {
-          java: `// Java Login Code`,
-          kotlin: `// Kotlin Login Code`,
-          xml: `<!-- XML Login Layout -->`
-        },
-        api: {
-          java: `// Java API Code`,
-          kotlin: `// Kotlin API Code`,
-          xml: `<!-- No XML for API -->`
-        },
-        data: {
-          java: `// Java Data Class`,
-          kotlin: `// Kotlin Data Class`,
-          xml: `<!-- No XML for data class -->`
-        },
-        ui: {
-          java: `// Use XML layout`,
-          kotlin: `// Use XML layout`,
-          xml: `<TextView android:text="Hello World!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>`
-        },
-        toast: {
-          java: `Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();`,
-          kotlin: `Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show()`,
-          xml: `<!-- No XML for Toast -->`
-        },
-        dialog: {
-          java: `new AlertDialog.Builder(this).setTitle("Title").setMessage("Message").setPositiveButton("OK", null).show();`,
-          kotlin: `AlertDialog.Builder(this).setTitle("Title").setMessage("Message").setPositiveButton("OK", null).show()`,
-          xml: `<!-- No XML for Dialog -->`
-        },
-        fragment: {
-          java: `public class MyFragment extends Fragment {
-  @Nullable
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_my, container, false);
-  }
-}`,
-          kotlin: `class MyFragment : Fragment() {
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.fragment_my, container, false)
-  }
-}`,
-          xml: `<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  <TextView android:text="Fragment!" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-</FrameLayout>`
+          java: `<span class="code-keyword">public class</span> <span class="code-class">LoginActivity</span> <span class="code-keyword">extends</span> <span class="code-class">AppCompatActivity</span> <span class="code-punctuation">{</span>
+    <span class="code-keyword">private</span> <span class="code-class">EditText</span> usernameField<span class="code-punctuation">,</span> passwordField<span class="code-punctuation">;</span>
+    
+    <span class="code-keyword">@Override</span>
+    <span class="code-keyword">protected void</span> <span class="code-function">onCreate</span><span class="code-punctuation">(</span><span class="code-class">Bundle</span> savedInstanceState<span class="code-punctuation">)</span> <span class="code-punctuation">{</span>
+        <span class="code-keyword">super</span><span class="code-punctuation">.</span><span class="code-function">onCreate</span><span class="code-punctuation">(</span>savedInstanceState<span class="code-punctuation">);</span>
+        <span class="code-function">setContentView</span><span class="code-punctuation">(</span><span class="code-class">R</span><span class="code-punctuation">.</span>layout<span class="code-punctuation">.</span>activity_login<span class="code-punctuation">);</span>
+        
+        usernameField <span class="code-punctuation">=</span> <span class="code-function">findViewById</span><span class="code-punctuation">(</span><span class="code-class">R</span><span class="code-punctuation">.</span>id<span class="code-punctuation">.</span>username<span class="code-punctuation">);</span>
+        passwordField <span class="code-punctuation">=</span> <span class="code-function">findViewById</span><span class="code-punctuation">(</span><span class="code-class">R</span><span class="code-punctuation">.</span>id<span class="code-punctuation">.</span>password<span class="code-punctuation">);</span>
+        
+        <span class="code-class">Button</span> loginButton <span class="code-punctuation">=</span> <span class="code-function">findViewById</span><span class="code-punctuation">(</span><span class="code-class">R</span><span class="code-punctuation">.</span>id<span class="code-punctuation">.</span>login_button<span class="code-punctuation">);</span>
+        loginButton<span class="code-punctuation">.</span><span class="code-function">setOnClickListener</span><span class="code-punctuation">(</span>v <span class="code-punctuation">-></span> <span class="code-punctuation">{</span>
+            <span class="code-class">String</span> username <span class="code-punctuation">=</span> usernameField<span class="code-punctuation">.</span><span class="code-function">getText</span><span class="code-punctuation">().</span><span class="code-function">toString</span><span class="code-punctuation">();</span>
+            <span class="code-class">String</span> password <span class="code-punctuation">=</span> passwordField<span class="code-punctuation">.</span><span class="code-function">getText</span><span class="code-punctuation">().</span><span class="code-function">toString</span><span class="code-punctuation">();</span>
+            
+            <span class="code-comment">// Validate credentials</span>
+            <span class="code-keyword">if</span> <span class="code-punctuation">(</span>username<span class="code-punctuation">.</span><span class="code-function">isEmpty</span><span class="code-punctuation">()</span> <span class="code-punctuation">||</span> password<span class="code-punctuation">.</span><span class="code-function">isEmpty</span><span class="code-punctuation">())</span> <span class="code-punctuation">{</span>
+                <span class="code-class">Toast</span><span class="code-punctuation">.</span><span class="code-function">makeText</span><span class="code-punctuation">(</span><span class="code-keyword">this</span><span class="code-punctuation">,</span> <span class="code-string">"Please enter both fields"</span><span class="code-punctuation">,</span> <span class="code-class">Toast</span><span class="code-punctuation">.</span>LENGTH_SHORT<span class="code-punctuation">).</span><span class="code-function">show</span><span class="code-punctuation">();</span>
+                <span class="code-keyword">return</span><span class="code-punctuation">;</span>
+            <span class="code-punctuation">}</span>
+            
+            <span class="code-comment">// Proceed with login</span>
+            <span class="code-function">performLogin</span><span class="code-punctuation">(</span>username<span class="code-punctuation">,</span> password<span class="code-punctuation">);</span>
+        <span class="code-punctuation">});</span>
+    <span class="code-punctuation">}</span>
+    
+    <span class="code-keyword">private void</span> <span class="code-function">performLogin</span><span class="code-punctuation">(</span><span class="code-class">String</span> username<span class="code-punctuation">,</span> <span class="code-class">String</span> password<span class="code-punctuation">)</span> <span class="code-punctuation">{</span>
+        <span class="code-comment">// Implementation here</span>
+    <span class="code-punctuation">}</span>
+<span class="code-punctuation">}</span>`,
+          kotlin: `<span class="code-keyword">class</span> <span class="code-class">LoginActivity</span> <span class="code-punctuation">:</span> <span class="code-class">AppCompatActivity</span><span class="code-punctuation">()</span> <span class="code-punctuation">{</span>
+    <span class="code-keyword">private lateinit var</span> usernameField<span class="code-punctuation">:</span> <span class="code-class">EditText</span>
+    <span class="code-keyword">private lateinit var</span> passwordField<span class="code-punctuation">:</span> <span class="code-class">EditText</span>
+    
+    <span class="code-keyword">override fun</span> <span class="code-function">onCreate</span><span class="code-punctuation">(</span>savedInstanceState<span class="code-punctuation">:</span> <span class="code-class">Bundle</span><span class="code-punctuation">?)</span> <span class="code-punctuation">{</span>
+        <span class="code-keyword">super</span><span class="code-punctuation">.</span><span class="code-function">onCreate</span><span class="code-punctuation">(</span>savedInstanceState<span class="code-punctuation">)</span>
+        <span class="code-function">setContentView</span><span class="code-punctuation">(</span><span class="code-class">R</span><span class="code-punctuation">.</span>layout<span class="code-punctuation">.</span>activity_login<span class="code-punctuation">)</span>
+        
+        usernameField <span class="code-punctuation">=</span> <span class="code-function">findViewById</span><span class="code-punctuation">(</span><span class="code-class">R</span><span class="code-punctuation">.</span>id<span class="code-punctuation">.</span>username<span class="code-punctuation">)</span>
+        passwordField <span class="code-punctuation">=</span> <span class="code-function">findViewById</span><span class="code-punctuation">(</span><span class="code-class">R</span><span class="code-punctuation">.</span>id<span class="code-punctuation">.</span>password<span class="code-punctuation">)</span>
+        
+        <span class="code-function">findViewById</span><span class="code-punctuation"><</span><span class="code-class">Button</span><span class="code-punctuation">>(</span><span class="code-class">R</span><span class="code-punctuation">.</span>id<span class="code-punctuation">.</span>login_button<span class="code-punctuation">).</span><span class="code-function">setOnClickListener</span> <span class="code-punctuation">{</span>
+            <span class="code-keyword">val</span> username <span class="code-punctuation">=</span> usernameField<span class="code-punctuation">.</span>text<span class="code-punctuation">.</span><span class="code-function">toString</span><span class="code-punctuation">()</span>
+            <span class="code-keyword">val</span> password <span class="code-punctuation">=</span> passwordField<span class="code-punctuation">.</span>text<span class="code-punctuation">.</span><span class="code-function">toString</span><span class="code-punctuation">()</span>
+            
+            <span class="code-comment">// Validate credentials</span>
+            <span class="code-keyword">if</span> <span class="code-punctuation">(</span>username<span class="code-punctuation">.</span><span class="code-function">isEmpty</span><span class="code-punctuation">()</span> <span class="code-punctuation">||</span> password<span class="code-punctuation">.</span><span class="code-function">isEmpty</span><span class="code-punctuation">())</span> <span class="code-punctuation">{</span>
+                <span class="code-class">Toast</span><span class="code-punctuation">.</span><span class="code-function">makeText</span><span class="code-punctuation">(</span><span class="code-keyword">this</span><span class="code-punctuation">,</span> <span class="code-string">"Please enter both fields"</span><span class="code-punctuation">,</span> <span class="code-class">Toast</span><span class="code-punctuation">.</span>LENGTH_SHORT<span class="code-punctuation">).</span><span class="code-function">show</span><span class="code-punctuation">()</span>
+                <span class="code-keyword">return</span><span class="code-punctuation">@</span><span class="code-function">setOnClickListener</span>
+            <span class="code-punctuation">}</span>
+            
+            <span class="code-comment">// Proceed with login</span>
+            <span class="code-function">performLogin</span><span class="code-punctuation">(</span>username<span class="code-punctuation">,</span> password<span class="code-punctuation">)</span>
+        <span class="code-punctuation">}</span>
+    <span class="code-punctuation">}</span>
+    
+    <span class="code-keyword">private fun</span> <span class="code-function">performLogin</span><span class="code-punctuation">(</span>username<span class="code-punctuation">:</span> <span class="code-class">String</span><span class="code-punctuation">,</span> password<span class="code-punctuation">:</span> <span class="code-class">String</span><span class="code-punctuation">)</span> <span class="code-punctuation">{</span>
+        <span class="code-comment">// Implementation here</span>
+    <span class="code-punctuation">}</span>
+<span class="code-punctuation">}</span>`,
+          xml: `<span class="code-tag">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="code-tag">&lt;LinearLayout</span> <span class="code-attribute">xmlns:android</span>=<span class="code-string">"http://schemas.android.com/apk/res/android"</span>
+    <span class="code-attribute">xmlns:tools</span>=<span class="code-string">"http://schemas.android.com/tools"</span>
+    <span class="code-attribute">android:layout_width</span>=<span class="code-string">"match_parent"</span>
+    <span class="code-attribute">android:layout_height</span>=<span class="code-string">"match_parent"</span>
+    <span class="code-attribute">android:orientation</span>=<span class="code-string">"vertical"</span>
+    <span class="code-attribute">android:padding</span>=<span class="code-string">"24dp"</span>
+    <span class="code-attribute">tools:context</span>=<span class="code-string">".LoginActivity"</span><span class="code-tag">&gt;</span>
+    
+    <span class="code-tag">&lt;ImageView</span>
+        <span class="code-attribute">android:layout_width</span>=<span class="code-string">"120dp"</span>
+        <span class="code-attribute">android:layout_height</span>=<span class="code-string">"120dp"</span>
+        <span class="code-attribute">android:layout_gravity</span>=<span class="code-string">"center_horizontal"</span>
+        <span class="code-attribute">android:layout_marginBottom</span>=<span class="code-string">"32dp"</span>
+        <span class="code-attribute">android:src</span>=<span class="code-string">"@drawable/ic_logo"</span><span class="code-tag">/&gt;</span>
+    
+    <span class="code-tag">&lt;com.google.android.material.textfield.TextInputLayout</span>
+        <span class="code-attribute">android:layout_width</span>=<span class="code-string">"match_parent"</span>
+        <span class="code-attribute">android:layout_height</span>=<span class="code-string">"wrap_content"</span>
+        <span class="code-attribute">android:layout_marginBottom</span>=<span class="code-string">"16dp"</span>
+        <span class="code-attribute">style</span>=<span class="code-string">"@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"</span><span class="code-tag">&gt;</span>
+        
+        <span class="code-tag">&lt;com.google.android.material.textfield.TextInputEditText</span>
+            <span class="code-attribute">android:id</span>=<span class="code-string">"@+id/username"</span>
+            <span class="code-attribute">android:layout_width</span>=<span class="code-string">"match_parent"</span>
+            <span class="code-attribute">android:layout_height</span>=<span class="code-string">"wrap_content"</span>
+            <span class="code-attribute">android:hint</span>=<span class="code-string">"Username"</span>
+            <span class="code-attribute">android:inputType</span>=<span class="code-string">"text"</span><span class="code-tag">/&gt;</span>
+    <span class="code-tag">&lt;/com.google.android.material.textfield.TextInputLayout&gt;</span>
+    
+    <span class="code-tag">&lt;com.google.android.material.textfield.TextInputLayout</span>
+        <span class="code-attribute">android:layout_width</span>=<span class="code-string">"match_parent"</span>
+        <span class="code-attribute">android:layout_height</span>=<span class="code-string">"wrap_content"</span>
+        <span class="code-attribute">android:layout_marginBottom</span>=<span class="code-string">"24dp"</span>
+        <span class="code-attribute">style</span>=<span class="code-string">"@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"</span><span class="code-tag">&gt;</span>
+        
+        <span class="code-tag">&lt;com.google.android.material.textfield.TextInputEditText</span>
+            <span class="code-attribute">android:id</span>=<span class="code-string">"@+id/password"</span>
+            <span class="code-attribute">android:layout_width</span>=<span class="code-string">"match_parent"</span>
+            <span class="code-attribute">android:layout_height</span>=<span class="code-string">"wrap_content"</span>
+            <span class="code-attribute">android:hint</span>=<span class="code-string">"Password"</span>
+            <span class="code-attribute">android:inputType</span>=<span class="code-string">"textPassword"</span><span class="code-tag">/&gt;</span>
+    <span class="code-tag">&lt;/com.google.android.material.textfield.TextInputLayout&gt;</span>
+    
+    <span class="code-tag">&lt;com.google.android.material.button.MaterialButton</span>
+        <span class="code-attribute">android:id</span>=<span class="code-string">"@+id/login_button"</span>
+        <span class="code-attribute">android:layout_width</span>=<span class="code-string">"match_parent"</span>
+        <span class="code-attribute">android:layout_height</span>=<span class="code-string">"wrap_content"</span>
+        <span class="code-attribute">android:text</span>=<span class="code-string">"Login"</span>
+        <span class="code-attribute">android:textAllCaps</span>=<span class="code-string">"false"</span>
+        <span class="code-attribute">style</span>=<span class="code-string">"@style/Widget.MaterialComponents.Button"</span><span class="code-tag">/&gt;</span>
+<span class="code-tag">&lt;/LinearLayout&gt;</span>`
         }
       };
 
-      const code = codes[example]?.[language] || "// No code available for this combination.";
-      output.textContent = code;
-    }
-
-    function copyCode() {
-      const code = document.getElementById("codeOutput").textContent;
-      navigator.clipboard.writeText(code).then(() => {
-        mdui.snackbar({ message: "Code copied!" });
+      const code = codes[example]?.[language] || `<span class="code-comment">// No code available for this combination</span>`;
+      output.innerHTML = code;
+      
+      // Show success message
+      mdui.snackbar({
+        message: `Generated ${example} example in ${language.toUpperCase()}`,
+        position: 'right-bottom',
+        closeOnOutsideClick: true,
+        buttonText: 'OK',
+        buttonColor: 'primary'
       });
     }
 
-    async function convertCode() {
+    // Copy code to clipboard
+    function copyCode() {
+      const code = document.getElementById("codeOutput").textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        mdui.snackbar({
+          message: "Code copied to clipboard!",
+          position: 'right-bottom',
+          closeOnOutsideClick: true,
+          buttonText: 'OK',
+          buttonColor: 'primary'
+        });
+      });
+    }
+
+    // Convert between Java and Kotlin
+    function convertCode() {
       const code = document.getElementById("codeOutput").textContent;
       const languageSelect = document.getElementById("languageSelect");
-      const targetLanguage = languageSelect.value === "java" ? "kotlin" : "java";
-
-      if (!code || targetLanguage === "xml") {
-        mdui.snackbar({ message: "Conversion not supported for XML." });
+      const currentLanguage = languageSelect.value;
+      
+      if (currentLanguage === "xml") {
+        mdui.snackbar({
+          message: "Cannot convert XML to other languages",
+          position: 'right-bottom',
+          closeOnOutsideClick: true,
+          buttonText: 'OK',
+          buttonColor: 'error'
+        });
         return;
       }
-
-      // Simulate conversion logic
-      const convertedCode = targetLanguage === "java"
-        ? "// Converted to Java: " + code
-        : "// Converted to Kotlin: " + code;
-
-      document.getElementById("codeOutput").textContent = convertedCode;
+      
+      const targetLanguage = currentLanguage === "java" ? "kotlin" : "java";
       languageSelect.value = targetLanguage;
+      updateLanguageTab();
+      
+      mdui.snackbar({
+        message: `Converted to ${targetLanguage.toUpperCase()}`,
+        position: 'right-bottom',
+        closeOnOutsideClick: true,
+        buttonText: 'OK',
+        buttonColor: 'primary'
+      });
+      
+      // In a real app, you would call a conversion API here
+      document.getElementById("codeOutput").innerHTML = 
+        `<span class="code-comment">// Converted to ${targetLanguage.toUpperCase()} (placeholder)</span>\n` + 
+        code;
     }
+
+    // Initialize
+    document.getElementById("languageSelect").addEventListener("change", updateLanguageTab);
+    updateLanguageTab();
+    
+    // Add ripple effects to all buttons
+    document.querySelectorAll('mdui-button').forEach(button => {
+      button.addEventListener('click', function() {
+        this.classList.add('mdui-ripple');
+        setTimeout(() => this.classList.remove('mdui-ripple'), 600);
+      });
+    });
   </script>
 </body>
 </html>
