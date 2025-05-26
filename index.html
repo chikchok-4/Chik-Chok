@@ -1,60 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="mdui-theme-dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Chik Chok IDE</title>
-
+  
+  <!-- MDUI CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
+  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Fira+Code&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --primary: #8e44ec;
-      --primary-light: #b47cff;
-      --primary-dark: #5e00b9;
-      --on-primary: #ffffff;
-
-      --dark-background: #0d0d0d;
-      --dark-surface: #1a1a1a;
-      --dark-text: #e0e0e0;
-
-      --light-background: #f5f5f5;
-      --light-surface: #ffffff;
-      --light-text: #1a1a1a;
-
-      --code-opacity: 0.07;
+      --mdui-color-primary: 219 198 111;
+      --mdui-color-primary-dark: 180 160 80;
+      --mdui-color-surface-tint: 219 198 111;
+      --mdui-color-on-primary: 57 48 0;
+      --mdui-color-primary-container: 83 70 0;
+      --mdui-color-on-primary-container: 248 226 135;
+      --mdui-color-secondary: 209 198 161;
+      --mdui-color-on-secondary: 54 48 22;
+      --mdui-color-secondary-container: 78 71 42;
+      --mdui-color-on-secondary-container: 238 226 188;
+      --mdui-color-background: 21 19 11;
+      --mdui-color-on-background: 232 226 212;
+      --mdui-color-surface: 21 19 11;
+      --mdui-color-surface-variant: 40 38 28;
+      --mdui-color-on-surface: 232 226 212;
+      --mdui-color-outline: 150 144 128;
+      
+      --code-opacity: 0.15;
     }
-
-    body.dark {
-      background-color: var(--dark-background);
-      color: var(--dark-text);
-    }
-
-    body.light {
-      background-color: var(--light-background);
-      color: var(--light-text);
-    }
-
+    
     body {
-      margin: 0;
       font-family: 'Space Grotesk', sans-serif;
-      transition: background 0.5s ease, color 0.5s ease;
+      margin: 0;
       overflow: hidden;
     }
-.top-left-logo {
+    
+    .top-left-logo {
       position: absolute;
       top: 20px;
       left: 20px;
       width: 48px;
       height: 48px;
       z-index: 11;
-      border-radius: 45px;
+      border-radius: 12px;
       object-fit: cover;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      padding: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
     }
+    
+    .top-left-logo:hover {
+      transform: scale(1.05);
+    }
+    
     .container {
       position: relative;
       z-index: 2;
@@ -67,24 +71,26 @@
       padding: 20px;
       animation: fadeInUp 1.3s ease-out;
     }
-
+    
     h1 {
       font-size: 3rem;
       animation: floatText 3s ease-in-out infinite;
       margin-bottom: 1rem;
+      color: rgb(var(--mdui-color-on-background));
     }
-
+    
     .subtitle {
       font-size: 1.2rem;
       max-width: 700px;
       opacity: 0.85;
       line-height: 1.6;
       margin-bottom: 2.5rem;
+      color: rgba(var(--mdui-color-on-background), 0.8);
     }
-
+    
     .start-button {
-      background-color: var(--primary);
-      color: var(--on-primary);
+      background-color: rgb(var(--mdui-color-primary));
+      color: rgb(var(--mdui-color-on-primary));
       border: none;
       border-radius: 50px;
       padding: 16px 36px;
@@ -93,57 +99,58 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 2px 10px rgba(142, 68, 236, 0.3);
+      box-shadow: 0 2px 10px rgba(var(--mdui-color-primary), 0.3);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       align-items: center;
       justify-content: center;
       min-width: 180px;
     }
+    
     .about-button {
-      background-color: var(--primary);
-      color: var(--on-primary);
+      background-color: rgb(var(--mdui-color-secondary-container));
+      color: rgb(var(--mdui-color-on-secondary-container));
       border: none;
       border-radius: 50px;
       padding: 14px 36px;
       font-size: 1.2rem;
-      top: 10px;
-      bottom: 10px;
+      margin-top: 16px;
       font-weight: 500;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 2px 10px rgba(142, 68, 236, 0.3);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 100px;
+      min-width: 180px;
     }
-
+    
     .start-button:hover {
-      background-color: var(--primary-light);
-      box-shadow: 0 4px 20px rgba(142, 68, 236, 0.4);
+      background-color: rgba(var(--mdui-color-primary), 0.9);
+      box-shadow: 0 4px 20px rgba(var(--mdui-color-primary), 0.4);
       transform: translateY(-2px);
     }
-
+    
     .start-button:active {
-      background-color: var(--primary-dark);
-      box-shadow: 0 1px 5px rgba(142, 68, 236, 0.4);
+      background-color: rgb(var(--mdui-color-primary-dark));
+      box-shadow: 0 1px 5px rgba(var(--mdui-color-primary), 0.4);
       transform: translateY(0);
     }
-.about-button:hover {
-      background-color: var(--primary-light);
-      box-shadow: 0 4px 20px rgba(142, 68, 236, 0.4);
+    
+    .about-button:hover {
+      background-color: rgba(var(--mdui-color-secondary-container), 0.9);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       transform: translateY(-2px);
     }
-
+    
     .about-button:active {
-      background-color: var(--primary-dark);
-      box-shadow: 0 1px 5px rgba(142, 68, 236, 0.4);
+      background-color: rgba(var(--mdui-color-secondary-container), 0.8);
+      box-shadow: 0 1px 5px rgba(0,0,0,0.2);
       transform: translateY(0);
     }
-
+    
     .ripple {
       position: absolute;
       border-radius: 50%;
@@ -152,101 +159,70 @@
       animation: ripple 0.6s linear;
       pointer-events: none;
     }
-
+    
     @keyframes ripple {
       to {
         transform: scale(4);
         opacity: 0;
       }
     }
-
+    
     .start-button .material-icons {
       margin-right: 8px;
       font-size: 24px;
       transition: transform 0.3s ease;
     }
-
+    
     .start-button:hover .material-icons {
       transform: translateX(3px);
     }
-
-.code-bg {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.95rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  white-space: pre;
-  line-height: 1.6;
-  opacity: var(--code-opacity, 0.08);
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-  animation: scrollLoop 60s linear infinite;
-  padding: 2rem;
-  background: transparent;
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
-}
-
-/* برای تم روشن: متن تیره */
-.code-bg.light {
-  color: rgba(0, 0, 0, 0.8);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
-}
-
-/* برای تم تیره: متن روشن */
-.code-bg.dark {
-  color: rgba(255, 255, 255, 0.7);
-  mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
-}
-
-/* پشتیبانی خودکار از دارک مود سیستم */
-@media (prefers-color-scheme: dark) {
-  .code-bg.auto {
-    color: rgba(255, 255, 255, 0.7);
-    mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
-    -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
-  }
-}
-@media (prefers-color-scheme: light) {
-  .code-bg.auto {
-    color: rgba(0, 0, 0, 0.8);
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0.2) 100%);
-  }
-}
-
-
-
+    
+    .code-bg {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.95rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      white-space: pre;
+      line-height: 1.6;
+      opacity: var(--code-opacity, 0.15);
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+      animation: scrollLoop 60s linear infinite;
+      padding: 2rem;
+      background: transparent;
+      color: rgba(var(--mdui-color-on-background), 0.7);
+      mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
+    }
+    
     @keyframes scrollLoop {
       0% { transform: translateY(0); }
       100% { transform: translateY(-50%); }
     }
-
+    
     .fade-out {
       animation: fadeOutUp 1s ease-in forwards;
     }
-
+    
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
+    
     @keyframes fadeOutUp {
       from { opacity: 1; transform: translateY(0); }
       to { opacity: 0; transform: translateY(-100vh); }
     }
-
+    
     @keyframes floatText {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-5px); }
     }
-
+    
     @media (max-width: 768px) {
       h1 { font-size: 2.2rem; }
       .subtitle { font-size: 1rem; }
@@ -255,66 +231,27 @@
         font-size: 1rem;
         min-width: 160px;
       }
+      .about-button {
+        padding: 12px 28px;
+        font-size: 1rem;
+        min-width: 160px;
+      }
     }
-
+    
     .theme-switch {
       position: absolute;
       top: 20px;
       right: 20px;
-      display: inline-block;
-      width: 52px;
-      height: 28px;
       z-index: 10;
-    }
-
-    .theme-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      background-color: #ccc;
-      border-radius: 34px;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      transition: 0.4s;
-    }
-
-    .slider::before {
-      position: absolute;
-      content: "";
-      height: 20px;
-      width: 20px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
-    }
-
-    input:checked + .slider {
-      background-color: var(--primary);
-    }
-
-    input:checked + .slider::before {
-      transform: translateX(24px);
     }
   </style>
 </head>
-<body class="dark">
- <img src="logo.jpg" alt="Logo" id="myImage" class="top-left-logo" />
+<body>
+  <img src="logo.jpg" alt="Logo" id="myImage" class="top-left-logo" />
 
-  <label class="theme-switch">
-    <input type="checkbox" id="themeToggle">
-    <span class="slider"></span>
-  </label>
+  <mdui-button-icon class="theme-switch" id="themeToggle" icon="light_mode"></mdui-button-icon>
 
-  <div class="code-bg auto">
+  <div class="code-bg">
 <code>
 fun main() {
     println("Welcome to Chik Chok IDE")
@@ -352,7 +289,7 @@ public class ChikChok {
 
   <div class="container" id="mainContent">
     <h1>Welcome to Chik Chok IDE</h1>
-    <p class="subtitle">The powerful modern IDE to turn your ideas into reality — with real-time coding, AI tools, and a beautiful dark interface.</p>
+    <p class="subtitle">The powerful modern IDE to turn your ideas into reality — with real-time coding, AI tools, and a beautiful interface.</p>
     <button class="start-button" id="startBtn">
       <span class="material-icons">rocket_launch</span> Start Coding
     </button>
@@ -360,44 +297,54 @@ public class ChikChok {
     <button class="about-button" id="about">
       <span class="material-icons">info</span> About 
     </button>
-    
   </div>
      
   <script>
     const themeToggle = document.getElementById("themeToggle");
+    let isDark = true;
 
-    const applyTheme = (theme) => {
-      document.body.className = theme;
-      localStorage.setItem("theme", theme);
-      themeToggle.checked = theme === "light";
-    };
-
-    const savedTheme = localStorage.getItem("theme") || "dark";
-    applyTheme(savedTheme);
-
-    themeToggle.addEventListener("change", () => {
-      applyTheme(themeToggle.checked ? "light" : "dark");
+    themeToggle.addEventListener("click", () => {
+      isDark = !isDark;
+      document.documentElement.classList.toggle("mdui-theme-dark", isDark);
+      themeToggle.setAttribute("icon", isDark ? "light_mode" : "dark_mode");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
     });
 
+    // Check saved theme preference
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    if (savedTheme === "light") {
+      isDark = false;
+      document.documentElement.classList.remove("mdui-theme-dark");
+      themeToggle.setAttribute("icon", "dark_mode");
+    }
+
     // Ripple effect
-    document.getElementById("startBtn").addEventListener("click", function(e) {
-      const rect = this.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+    function createRipple(event, button) {
+      const rect = button.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
 
       const ripple = document.createElement("span");
       ripple.classList.add("ripple");
       ripple.style.left = `${x}px`;
       ripple.style.top = `${y}px`;
 
-      this.appendChild(ripple);
+      button.appendChild(ripple);
 
       setTimeout(() => {
         ripple.remove();
       }, 600);
+    }
+
+    document.getElementById("startBtn").addEventListener("click", function(e) {
+      createRipple(e, this);
     });
 
-    // Navigate to tools.html
+    document.getElementById("about").addEventListener("click", function(e) {
+      createRipple(e, this);
+    });
+
+    // Navigation
     document.getElementById("startBtn").addEventListener("click", () => {
       const container = document.getElementById("mainContent");
       container.classList.add("fade-out");
@@ -406,24 +353,8 @@ public class ChikChok {
         window.location.href = basePath + "tools.html";
       }, 1000);
     });
-document.getElementById("about").addEventListener("click", function(e) {
-      const rect = this.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
 
-      const ripple = document.createElement("span");
-      ripple.classList.add("ripple");
-      ripple.style.left = `${x}px`;
-      ripple.style.top = `${y}px`;
-
-      this.appendChild(ripple);
-
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-    });
-
-document.getElementById("myImage").addEventListener("click", () => {
+    document.getElementById("myImage").addEventListener("click", () => {
       const container = document.getElementById("mainContent");
       container.classList.add("animate");
       setTimeout(() => {
@@ -431,7 +362,8 @@ document.getElementById("myImage").addEventListener("click", () => {
         window.location.href = basePath + "about.html";
       }, 1000);
     });
-     document.getElementById("about").addEventListener("click", () => {
+    
+    document.getElementById("about").addEventListener("click", () => {
       const container = document.getElementById("mainContent");
       container.classList.add("fade-out");
       setTimeout(() => {
@@ -439,7 +371,6 @@ document.getElementById("myImage").addEventListener("click", () => {
         window.location.href = basePath + "about.html";
       }, 1000);
     });
-
   </script>
 </body>
 </html>
