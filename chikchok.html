@@ -1,70 +1,123 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>مکعب سه‌بعدی</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تمدن ایران باستان</title>
+
+  <!-- فونت فارسی Vazirmatn -->
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <!-- آیکون‌های Material -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      overflow: hidden;
-      background: #111;
+      padding: 0;
     }
 
-    .cube-container {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 100px;
-      height: 100px;
-      perspective: 800px;
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      color: #fff;
+      background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
+                  url('https://upload.wikimedia.org/wikipedia/commons/3/3b/Takht-e_Jamshid.jpg') no-repeat center center fixed;
+      background-size: cover;
+      background-attachment: fixed;
     }
 
-    .cube {
-      width: 100px;
-      height: 100px;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: rotateCube 8s infinite linear;
+    header {
+      text-align: center;
+      padding: 80px 20px 40px;
     }
 
-    .face {
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid #0ff;
-      box-shadow: 0 0 20px #0ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: sans-serif;
-      color: #0ff;
-      font-size: 20px;
+    header h1 {
+      font-size: 3em;
+      color: #ffd700;
+      text-shadow: 2px 2px 10px #000;
     }
 
-    .face.front  { transform: rotateY(  0deg) translateZ(50px); }
-    .face.back   { transform: rotateY(180deg) translateZ(50px); }
-    .face.right  { transform: rotateY( 90deg) translateZ(50px); }
-    .face.left   { transform: rotateY(-90deg) translateZ(50px); }
-    .face.top    { transform: rotateX( 90deg) translateZ(50px); }
-    .face.bottom { transform: rotateX(-90deg) translateZ(50px); }
+    header p {
+      font-size: 1.2em;
+      color: #ccc;
+      margin-top: 10px;
+    }
 
-    @keyframes rotateCube {
-      0%   { transform: rotateX(0deg) rotateY(0deg); }
-      100% { transform: rotateX(360deg) rotateY(360deg); }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 40px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card h2 {
+      font-size: 1.6em;
+      color: #ffd700;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #eee;
+      line-height: 1.8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      font-size: 1em;
+      color: #ccc;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2em;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="cube-container">
-    <div class="cube">
-      <div class="face front">جلو</div>
-      <div class="face back">پشت</div>
-      <div class="face right">راست</div>
-      <div class="face left">چپ</div>
-      <div class="face top">بالا</div>
-      <div class="face bottom">پایین</div>
+
+  <header>
+    <h1><span class="material-icons" style="vertical-align: middle;">account_balance</span> تمدن ایران باستان</h1>
+    <p>شکوه جاویدان تخت جمشید، کوروش و میراث ایرانی</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>تخت جمشید</h2>
+      <p>پایتخت باشکوه هخامنشیان، ساخته شده توسط داریوش بزرگ. نمادی از هنر و اقتدار ایرانی.</p>
+    </div>
+    <div class="card">
+      <h2>کوروش بزرگ</h2>
+      <p>پادشاهی روشن‌ضمیر، پایه‌گذار منشور حقوق بشر و بنیان‌گذار امپراتوری هخامنشی.</p>
+    </div>
+    <div class="card">
+      <h2>بیستون</h2>
+      <p>کتیبه عظیم داریوش بر دل کوه، یکی از ارزشمندترین اسناد تاریخی جهان.</p>
+    </div>
+    <div class="card">
+      <h2>نقش رستم</h2>
+      <p>آرامگاه پادشاهان هخامنشی با نقش‌برجسته‌هایی از پیروزی‌های ایران باستان.</p>
     </div>
   </div>
+
+  <footer>
+    © طراحی شده با عشق به ایران | ۱۴۰۴ 🇮🇷
+  </footer>
+
 </body>
 </html>
