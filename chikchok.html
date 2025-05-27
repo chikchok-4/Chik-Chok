@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>chikchok 3D Text</title>
+    <style>
+        body {
+            background: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .three-d-text {
+            font-family: 'Arial Black', Arial, sans-serif;
+            font-size: 5rem;
+            color: #fff;
+            position: relative;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow:
+                1px 1px 0 #bbb,
+                2px 2px 0 #aaa,
+                3px 3px 0 #999,
+                4px 4px 0 #888,
+                5px 5px 0 #777,
+                6px 6px 0 #666,
+                7px 7px 10px #000;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <div class="three-d-text">ChikChok</div>
+        <button class="material-btn">Material 3D Button</button>
+    </div>
+    <style>
+    .material-btn {
+        margin-top: 40px;
+        padding: 18px 48px;
+        font-size: 1.3rem;
+        font-family: inherit;
+        color: #fff;
+        background: linear-gradient(145deg, #4e54c8 0%, #8f94fb 100%);
+        border: none;
+        border-radius: 12px;
+        box-shadow:
+            0 4px 12px 0 rgba(78,84,200,0.3),
+            0 1.5px 0 #444,
+            0 8px 24px 0 rgba(0,0,0,0.25);
+        cursor: pointer;
+        transition: transform 0.1s, box-shadow 0.1s;
+        position: relative;
+        outline: none;
+    }
+    .material-btn:active {
+        transform: translateY(2px) scale(0.98);
+        box-shadow:
+            0 2px 6px 0 rgba(78,84,200,0.2),
+            0 0.5px 0 #222;
+    }
+    </style>
+</body>
+</html>
