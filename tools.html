@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ChikChok IDE</title>
-
-  <!-- Fonts & MDUI -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
@@ -13,7 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-
   <style>
     :root {
       --mdui-color-primary: 219 198 111;
@@ -59,6 +56,8 @@
       padding: 32px;
       margin: 48px 0;
       box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      position: relative;
+      min-height: 400px;
     }
     .card-title {
       font-size: 1.8rem;
@@ -115,70 +114,189 @@
       font-size: 0.95rem;
       opacity: 0.8;
     }
+    /* Modern Material 3D Robot */
+    .robot-container {
+      position: absolute;
+      top: 40px;
+      left: -170px;
+      width: 170px;
+      height: 260px;
+      z-index: 2;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      animation: robotEnter 1.2s cubic-bezier(.4,2,.6,1);
+      filter: drop-shadow(0 8px 32px rgba(0,0,0,0.18));
+    }
+    @keyframes robotEnter {
+      0% { left: -300px; opacity: 0; }
+      100% { left: -170px; opacity: 1; }
+    }
+    @media (max-width: 900px) {
+      .robot-container { display: none; }
+    }
   </style>
 </head>
 <body>
-
-  <!-- App Header -->
   <div class="app-container">
     <div class="app-header">
-      <h1 class="app-title">ChikChok IDE Tools</h1>
+      <h1 class="app-title">ChikChok IDE</h1>
       <p class="app-subtitle">Clean code generator for real-world projects. Supports Java, Kotlin, and Python.</p>
     </div>
-
-    <!-- Tool Card -->
     <div class="tool-card">
+      <!-- Modern Material 3D Robot SVG -->
+      <div class="robot-container" id="robotCoder">
+        <svg id="robotSVG" width="170" height="260" viewBox="0 0 170 260" style="overflow:visible;">
+          <defs>
+            <radialGradient id="bodyGrad" cx="50%" cy="40%" r="80%">
+              <stop offset="0%" stop-color="#f5f5f5"/>
+              <stop offset="100%" stop-color="#bdbdbd"/>
+            </radialGradient>
+            <radialGradient id="headGrad" cx="50%" cy="30%" r="80%">
+              <stop offset="0%" stop-color="#fff"/>
+              <stop offset="100%" stop-color="#bdbdbd"/>
+            </radialGradient>
+            <linearGradient id="armGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#e0e0e0"/>
+              <stop offset="100%" stop-color="#bdbdbd"/>
+            </linearGradient>
+            <radialGradient id="faceGrad" cx="50%" cy="50%" r="80%">
+              <stop offset="0%" stop-color="#fff"/>
+              <stop offset="100%" stop-color="#e0e0e0"/>
+            </radialGradient>
+            <radialGradient id="eyeGrad" cx="50%" cy="50%" r="80%">
+              <stop offset="0%" stop-color="#2196f3"/>
+              <stop offset="100%" stop-color="#222"/>
+            </radialGradient>
+            <linearGradient id="laptopGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#e0e0e0"/>
+              <stop offset="100%" stop-color="#bdbdbd"/>
+            </linearGradient>
+          </defs>
+          <!-- Shadow -->
+          <ellipse cx="85" cy="240" rx="45" ry="15" fill="#222" opacity="0.15"/>
+          <!-- Arms -->
+          <ellipse cx="35" cy="140" rx="15" ry="38" fill="url(#armGrad)" transform="rotate(-18 35 140)"/>
+          <ellipse cx="135" cy="140" rx="15" ry="38" fill="url(#armGrad)" transform="rotate(18 135 140)"/>
+          <!-- Body -->
+          <ellipse cx="85" cy="160" rx="48" ry="65" fill="url(#bodyGrad)" stroke="#bbb" stroke-width="2"/>
+          <!-- Laptop -->
+          <rect x="61" y="210" width="48" height="22" rx="7" fill="url(#laptopGrad)" stroke="#888" stroke-width="1"/>
+          <rect x="68" y="222" width="34" height="4" rx="2" fill="#888"/>
+          <!-- Head group for rotation -->
+          <g id="robotHeadGroup">
+            <!-- Antennas -->
+            <rect x="75" y="32" width="8" height="36" rx="4" fill="#bdbdbd" transform="rotate(-18 79 50)"/>
+            <rect x="87" y="32" width="8" height="36" rx="4" fill="#bdbdbd" transform="rotate(18 91 50)"/>
+            <!-- Head -->
+            <ellipse cx="85" cy="80" rx="48" ry="48" fill="url(#headGrad)" stroke="#bbb" stroke-width="2"/>
+            <!-- Face -->
+            <ellipse cx="85" cy="80" rx="28" ry="28" fill="url(#faceGrad)" stroke="#ccc" stroke-width="2"/>
+            <!-- Eyes -->
+            <ellipse cx="73" cy="78" rx="7" ry="10" fill="url(#eyeGrad)" filter="url(#eyeShadow)"/>
+            <ellipse cx="97" cy="78" rx="7" ry="10" fill="url(#eyeGrad)" filter="url(#eyeShadow)"/>
+            <ellipse cx="73" cy="78" rx="3" ry="4" fill="#fff" opacity="0.7"/>
+            <ellipse cx="97" cy="78" rx="3" ry="4" fill="#fff" opacity="0.7"/>
+            <!-- Mouth -->
+            <ellipse cx="85" cy="98" rx="12" ry="4" fill="#222" opacity="0.7"/>
+          </g>
+          <filter id="eyeShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#2196f3" flood-opacity="0.18"/>
+          </filter>
+        </svg>
+      </div>
       <h2 class="card-title"><span class="material-icons">auto_awesome</span> Code Generator</h2>
-
       <div class="select-row">
         <mdui-select id="exampleSelect" label="Example" variant="outlined" fullwidth>
           <mdui-menu-item value="hello">Hello World</mdui-menu-item>
           <mdui-menu-item value="sort">Bubble Sort</mdui-menu-item>
+          <mdui-menu-item value="fibonacci">Fibonacci</mdui-menu-item>
+          <mdui-menu-item value="factorial">Factorial</mdui-menu-item>
+          <mdui-menu-item value="cube3d">3D Cube (Python)</mdui-menu-item>
+          <mdui-menu-item value="palindrome">Palindrome Check</mdui-menu-item>
+          <mdui-menu-item value="reverse">Reverse String</mdui-menu-item>
+          <mdui-menu-item value="prime">Prime Numbers</mdui-menu-item>
+          <mdui-menu-item value="sum">Sum of Array</mdui-menu-item>
+          <mdui-menu-item value="max">Find Maximum</mdui-menu-item>
+          <mdui-menu-item value="evenodd">Even or Odd</mdui-menu-item>
         </mdui-select>
-
         <mdui-select id="languageSelect" label="Language" variant="outlined" fullwidth>
           <mdui-menu-item value="java">Java</mdui-menu-item>
           <mdui-menu-item value="kotlin">Kotlin</mdui-menu-item>
           <mdui-menu-item value="python">Python</mdui-menu-item>
         </mdui-select>
       </div>
-
       <div class="action-buttons">
         <mdui-button variant="filled" color="primary" icon="auto_awesome" onclick="generateCode()">Generate</mdui-button>
         <mdui-button variant="outlined" icon="content_copy" onclick="copyCode()">Copy</mdui-button>
+        <mdui-button variant="outlined" icon="file_download" onclick="downloadCode()">Download</mdui-button>
         <mdui-button variant="outlined" icon="sync_alt" onclick="convertCode()">Convert</mdui-button>
+        <mdui-button variant="outlined" icon="play_arrow" onclick="runCode()">Run</mdui-button>
       </div>
-
       <div class="code-container">
         <div class="code-tab" id="languageTab">Not Selected</div>
         <pre id="codeOutput">// Select an example and language to generate code</pre>
+        <div id="runResult" style="margin-top:18px;color:#b2ff59;font-family:monospace;"></div>
       </div>
     </div>
-
     <div class="app-footer">
       © 2025 ChikChok IDE. All rights reserved.
     </div>
   </div>
-
   <script>
-    const themeToggle = document.getElementById("themeToggle");
-    let isDark = true;
-
+    // Modern 3D Robot head follows mouse inside tool-card
+    const robotHeadGroup = document.getElementById('robotHeadGroup');
+    const robotCoder = document.getElementById('robotCoder');
+    const toolCard = document.querySelector('.tool-card');
+    toolCard.addEventListener('mousemove', function(e) {
+      const robotRect = robotCoder.getBoundingClientRect();
+      // Head center (cx=85, cy=80 in SVG, offset by robotRect)
+      const headCenterX = robotRect.left + 85;
+      const headCenterY = robotRect.top + 80;
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      const dx = mouseX - headCenterX;
+      const dy = mouseY - headCenterY;
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      robotHeadGroup.setAttribute('transform', `rotate(${angle/2} 85 80)`);
+    });
+    toolCard.addEventListener('mouseleave', function() {
+      robotHeadGroup.setAttribute('transform', 'rotate(0 85 80)');
+    });
+    // Robot nods when generating code
+    function robotLookAtUser() {
+      robotHeadGroup.setAttribute('transform', 'rotate(-25 85 80) scale(1.08 1.08)');
+      setTimeout(() => {
+        robotHeadGroup.setAttribute('transform', 'rotate(0 85 80) scale(1 1)');
+      }, 900);
+    }
     function copyCode() {
       const code = document.getElementById("codeOutput").innerText;
       navigator.clipboard.writeText(code).then(() => {
         mdui.snackbar({ message: "Code copied!" });
       });
     }
-
+    function downloadCode() {
+      const code = document.getElementById("codeOutput").innerText;
+      const lang = document.getElementById("languageSelect").value;
+      const blob = new Blob([code], { type: "text/plain" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "code." + (lang === "python" ? "py" : lang === "java" ? "java" : "kt");
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
     function generateCode() {
+      robotLookAtUser();
+      document.getElementById("runResult").innerText = "";
       const lang = document.getElementById("languageSelect").value;
       const example = document.getElementById("exampleSelect").value;
       const codeOutput = document.getElementById("codeOutput");
       const langTab = document.getElementById("languageTab");
-
       langTab.innerText = lang.toUpperCase();
-
       const codeMap = {
         hello: {
           java: `public class HelloWorld {
@@ -228,15 +346,275 @@ for i in range(len(arr) - 1):
         if arr[j] > arr[j + 1]:
             arr[j], arr[j + 1] = arr[j + 1], arr[j]
 print(arr)`
+        },
+        fibonacci: {
+          java: `public class Fibonacci {
+  public static void main(String[] args) {
+    int n = 10, a = 0, b = 1;
+    System.out.print(a + " " + b + " ");
+    for (int i = 2; i < n; i++) {
+      int c = a + b;
+      System.out.print(c + " ");
+      a = b;
+      b = c;
+    }
+  }
+}`,
+          kotlin: `fun main() {
+    var a = 0
+    var b = 1
+    print("$a $b ")
+    for (i in 2 until 10) {
+        val c = a + b
+        print("$c ")
+        a = b
+        b = c
+    }
+}`,
+          python: `a, b = 0, 1
+print(a, b, end=" ")
+for _ in range(2, 10):
+    c = a + b
+    print(c, end=" ")
+    a, b = b, c`
+        },
+        factorial: {
+          java: `public class Factorial {
+  public static void main(String[] args) {
+    int n = 5, fact = 1;
+    for (int i = 1; i <= n; i++) {
+      fact *= i;
+    }
+    System.out.println(fact);
+  }
+}`,
+          kotlin: `fun main() {
+    var fact = 1
+    val n = 5
+    for (i in 1..n) {
+        fact *= i
+    }
+    println(fact)
+}`,
+          python: `fact = 1
+n = 5
+for i in range(1, n+1):
+    fact *= i
+print(fact)`
+        },
+        cube3d: {
+          java: "// 3D Cube drawing is not available in Java example.",
+          kotlin: "// 3D Cube drawing is not available in Kotlin example.",
+          python: `import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+# Define the vertices of a cube
+vertices = [
+    [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
+    [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]
+]
+
+# Define the 6 faces of the cube
+faces = [
+    [vertices[0], vertices[1], vertices[2], vertices[3]],
+    [vertices[4], vertices[5], vertices[6], vertices[7]],
+    [vertices[0], vertices[1], vertices[5], vertices[4]],
+    [vertices[2], vertices[3], vertices[7], vertices[6]],
+    [vertices[1], vertices[2], vertices[6], vertices[5]],
+    [vertices[4], vertices[7], vertices[3], vertices[0]]
+]
+
+ax.add_collection3d(Poly3DCollection(faces, facecolors='cyan', linewidths=1, edgecolors='r', alpha=.25))
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+plt.show()`
+        },
+        palindrome: {
+          java: `import java.util.Scanner;
+public class PalindromeCheck {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    String str = sc.nextLine();
+    String rev = new StringBuilder(str).reverse().toString();
+    if(str.equals(rev))
+      System.out.println("Palindrome");
+    else
+      System.out.println("Not Palindrome");
+  }
+}`,
+          kotlin: `fun main() {
+    val str = readLine()!!
+    val rev = str.reversed()
+    if (str == rev)
+        println("Palindrome")
+    else
+        println("Not Palindrome")
+}`,
+          python: `s = input()
+if s == s[::-1]:
+    print("Palindrome")
+else:
+    print("Not Palindrome")`
+        },
+        reverse: {
+          java: `import java.util.Scanner;
+public class ReverseString {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    String str = sc.nextLine();
+    String rev = new StringBuilder(str).reverse().toString();
+    System.out.println(rev);
+  }
+}`,
+          kotlin: `fun main() {
+    val str = readLine()!!
+    println(str.reversed())
+}`,
+          python: `s = input()
+print(s[::-1])`
+        },
+        prime: {
+          java: `public class PrimeNumbers {
+  public static void main(String[] args) {
+    for (int i = 2; i <= 20; i++) {
+      boolean isPrime = true;
+      for (int j = 2; j <= Math.sqrt(i); j++) {
+        if (i % j == 0) {
+          isPrime = false;
+          break;
+        }
+      }
+      if (isPrime)
+        System.out.print(i + " ");
+    }
+  }
+}`,
+          kotlin: `fun main() {
+    for (i in 2..20) {
+        var isPrime = true
+        for (j in 2..Math.sqrt(i.toDouble()).toInt()) {
+            if (i % j == 0) {
+                isPrime = false
+                break
+            }
+        }
+        if (isPrime) print("$i ")
+    }
+}`,
+          python: `for i in range(2, 21):
+    for j in range(2, int(i ** 0.5) + 1):
+        if i % j == 0:
+            break
+    else:
+        print(i, end=" ")`
+        },
+        sum: {
+          java: `public class SumArray {
+  public static void main(String[] args) {
+    int[] arr = {1, 2, 3, 4, 5};
+    int sum = 0;
+    for (int num : arr) {
+      sum += num;
+    }
+    System.out.println(sum);
+  }
+}`,
+          kotlin: `fun main() {
+    val arr = arrayOf(1, 2, 3, 4, 5)
+    println(arr.sum())
+}`,
+          python: `arr = [1, 2, 3, 4, 5]
+print(sum(arr))`
+        },
+        max: {
+          java: `public class MaxArray {
+  public static void main(String[] args) {
+    int[] arr = {1, 7, 3, 9, 2};
+    int max = arr[0];
+    for (int num : arr) {
+      if (num > max) max = num;
+    }
+    System.out.println(max);
+  }
+}`,
+          kotlin: `fun main() {
+    val arr = arrayOf(1, 7, 3, 9, 2)
+    println(arr.maxOrNull())
+}`,
+          python: `arr = [1, 7, 3, 9, 2]
+print(max(arr))`
+        },
+        evenodd: {
+          java: `import java.util.Scanner;
+public class EvenOdd {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int n = sc.nextInt();
+    if(n % 2 == 0)
+      System.out.println("Even");
+    else
+      System.out.println("Odd");
+  }
+}`,
+          kotlin: `fun main() {
+    val n = readLine()!!.toInt()
+    if (n % 2 == 0)
+        println("Even")
+    else
+        println("Odd")
+}`,
+          python: `n = int(input())
+print("Even" if n % 2 == 0 else "Odd")`
         }
       };
-
       const generatedCode = codeMap[example]?.[lang];
       codeOutput.innerText = generatedCode || "// Code not available for this selection.";
     }
-
     function convertCode() {
       mdui.snackbar({ message: "Language conversion coming soon." });
+    }
+    // Run code (Python only, in browser using Skulpt)
+    function runCode() {
+      const lang = document.getElementById("languageSelect").value;
+      const code = document.getElementById("codeOutput").innerText;
+      const runResult = document.getElementById("runResult");
+      runResult.innerText = "";
+      if (lang !== "python") {
+        runResult.innerText = "Run is only supported for Python code in browser.";
+        return;
+      }
+      if (!window.Sk) {
+        runResult.innerText = "Loading Python engine...";
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js";
+        script.onload = () => {
+          const script2 = document.createElement("script");
+          script2.src = "https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js";
+          script2.onload = () => runCode();
+          document.body.appendChild(script2);
+        };
+        document.body.appendChild(script);
+        return;
+      }
+      Sk.configure({
+        output: function(text) {
+          runResult.innerText += text;
+        },
+        read: function(x) {
+          if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+            throw "File not found: '" + x + "'";
+          return Sk.builtinFiles["files"][x];
+        }
+      });
+      Sk.misceval.asyncToPromise(function() {
+        return Sk.importMainWithBody("<stdin>", false, code, true);
+      }).catch(function(e) {
+        runResult.innerText += "\n" + e.toString();
+      });
     }
   </script>
 </body>
