@@ -1,186 +1,281 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>شکوه ایران باستان</title>
-    
-    <!-- فونت و آیکون‌ها -->
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <style>
-        :root {
-            --gold: #FFD700;
-            --dark-bg: #1a1a1a;
-        }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            background: var(--dark-bg);
-            color: #fff;
-            scroll-behavior: smooth;
-        }
-
-        /* بخش قهرمان */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-                        url('https://upload.wikimedia.org/wikipedia/commons/5/58/%DA%A9%D8%AA%DB%8C%D8%A8%D9%87_%D8%AF%D8%A7%D8%B1%DB%8C%D9%88%D8%B4_%D8%A8%DB%8C%D8%B3%D8%AA%D9%88%D9%86.jpg') center/cover fixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            color: var(--gold);
-            text-shadow: 2px 2px 10px #000;
-            margin-bottom: 20px;
-            animation: fadeIn 1.5s ease;
-        }
-
-        /* کارت‌های تصویری */
-        .historical-cards {
-            padding: 50px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .history-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .history-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .card-image {
-            height: 250px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .history-card:hover .card-image img {
-            transform: scale(1.05);
-        }
-
-        .card-content {
-            padding: 20px;
-        }
-
-        .card-content h3 {
-            color: var(--gold);
-            margin: 0 0 10px 0;
-            font-size: 1.4em;
-        }
-
-        footer {
-            background: #000;
-            text-align: center;
-            padding: 30px;
-            margin-top: 50px;
-            color: #666;
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(20px);}
-            to {opacity: 1; transform: translateY(0);}
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>شکوه ایران باستان</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #FFD700;
+      --dark-bg: #1a1a1a;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--dark-bg);
+      color: #fff;
+      scroll-behavior: smooth;
+      perspective: 1000px; /* برای انیمیشن 3D */
+    }
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+        url('https://upload.wikimedia.org/wikipedia/commons/5/58/%DA%A9%D8%AA%DB%8C%D8%A8%D9%87_%D8%AF%D8%A7%D8%B1%DB%8C%D9%88%D8%B4_%D8%A8%DB%8C%D8%B3%D8%AA%D9%88%D9%86.jpg') center/cover fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
+    .hero-content {
+      z-index: 2;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      color: var(--gold);
+      text-shadow: 2px 2px 10px #914545;
+      margin-bottom: 20px;
+      animation: fadeIn 1.5s ease;
+    }
+    .hero blockquote {
+      color: #fff;
+      font-size: 1.2em;
+      margin: 25px auto 0;
+      background: rgba(0,0,0,0.4);
+      border-right: 4px solid var(--gold);
+      padding: 15px 25px;
+      display: inline-block;
+      font-style: italic;
+    }
+    .hero p {
+      margin-top: 15px;
+      font-size: 1.1em;
+      color: #ddd;
+    }
+    .historical-cards {
+      padding: 50px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      perspective: 1000px; /* برای انیمیشن چرخش */
+    }
+    .history-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      user-select: none;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .history-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 16px 30px rgba(208, 179, 11, 0.818);
+    }
+    .card-image {
+      height: 250px;
+      position: relative;
+      overflow: hidden;
+      backface-visibility: hidden;
+    }
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      backface-visibility: hidden;
+      display: block;
+    }
+    .history-card:hover .card-image img {
+      transform: scale(1.05);
+    }
+    .card-content {
+      padding: 20px;
+      backface-visibility: hidden;
+    }
+    .card-content h3 {
+      color: var(--gold);
+      margin: 0 0 10px 0;
+      font-size: 1.4em;
+    }
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 30px;
+      margin-top: 50px;
+      color: #666;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    /* انیمیشن کلیک چرخش 3D */
+    .history-card.clicked {
+      animation: click3DRotate 0.7s forwards;
+      box-shadow: 0 30px 60px rgba(2, 77, 199, 0.9);
+      z-index: 10;
+      position: relative;
+    }
+    @keyframes click3DRotate {
+      0% {
+        transform: translateY(0) scale(1) rotateY(0deg);
+      }
+      40% {
+        transform: translateY(-25px) scale(1.15) rotateY(180deg);
+      }
+      70% {
+        transform: translateY(-15px) scale(1.05) rotateY(360deg);
+      }
+      100% {
+        transform: translateY(0) scale(1) rotateY(0deg);
+      }
+    }
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>تمدن جاودان ایران</h1>
-            <p>از کوروش تا امروز، همیشه ماندگار</p>
-        </div>
-    </section>
-
-    <div class="historical-cards">
-        <div class="cards-grid">
-            <!-- کارت تخت جمشید -->
-            <div class="history-card">
-                <div class="card-image">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/The_Milky_Way_over_the_Hall_of_Mirrors%28Tachar_Palace%29.jpg" alt="تخت جمشید">
-                </div>
-                <div class="card-content">
-                    <h3>تالار تچر</h3>
-                    <p>شاهکار معماری هخامنشی با ستون‌های بلند و نقوش برجسته</p>
-                </div>
-            </div>
-
-            <!-- کارت کوروش بزرگ -->
-            <div class="history-card">
-                <div class="card-image">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Iran_-_Pasargad_-_The_great_Cyrus_Tomb_-_%D8%A2%D8%B1%D8%A7%D9%85%DA%AF%D8%A7%D9%87_%DA%A9%D9%88%D8%B1%D9%88%D8%B4_%DA%A9%D8%A8%DB%8C%D8%B1_-_panoramio.jpg" alt="کوروش بزرگ">
-                </div>
-                <div class="card-content">
-                    <h3>کوروش کبیر</h3>
-                    <p>بنیانگذار نخستین امپراتوری جهانی و صادرکننده منشور حقوق بشر</p>
-                </div>
-            </div>
-
-            <!-- کارت پاسارگاد -->
-            <div class="history-card">
-                <div class="card-image">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/%D8%BA%D8%B1%D9%88%D8%A8_%D8%AA%D8%AE%D8%AA_%D8%AC%D9%85%D8%B4%DB%8C%D8%AF_%D8%B9%DA%A9%D8%B3.jpg" alt="پاسارگاد">
-                </div>
-                <div class="card-content">
-                    <h3>آرامگاه کوروش</h3>
-                    <p>نماد سادگی و عظمت در پاسارگاد، اولین پایتخت هخامنشیان</p>
-                </div>
-            </div>
-
-            <!-- کارت بیستون -->
-            <div class="history-card">
-                <div class="card-image">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/%DA%A9%D8%AA%DB%8C%D8%A8%D9%87_%D8%AF%D8%A7%D8%B1%DB%8C%D9%88%D8%B4_%D8%A8%DB%8C%D8%B3%D8%AA%D9%88%D9%86.jpg" alt="کتیبه بیستون">
-                </div>
-                <div class="card-content">
-                    <h3>کتیبه بیستون</h3>
-                    <p>سنگ‌نوشته سه زبانه داریوش بزرگ به خط میخی</p>
-                </div>
-            </div>
-        </div>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>تمدن جاودان ایران</h1>
+      <blockquote>
+        «به نام خداوند جان و خرد<br />
+        کزین برتر اندیشه برنگذرد»<br />
+        <span style="font-size:0.9em;color:var(--gold);">فردوسی، شاهنامه</span>
+      </blockquote>
+      
     </div>
+  </section>
 
-    <footer>
-        <p>طراحی شده با افتخار برای فرهنگ ایرانی | ۱۴۰۳</p>
-        <p>منابع تصاویر: ویکی‌مدیا کامنز</p>
-    </footer>
+  <div class="historical-cards">
+    <div class="cards-grid">
+      <div class="history-card" tabindex="0" aria-label="تالار تچر">
+        <div class="card-image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/The_Milky_Way_over_the_Hall_of_Mirrors%28Tachar_Palace%29.jpg" alt="تالار تچر" />
+        </div>
+        <div class="card-content">
+          <h3>تالار تچر</h3>
+          <p>شاهکار معماری هخامنشی با ستون‌های بلند و نقوش برجسته</p>
+        </div>
+      </div>
+      <div class="history-card" tabindex="0" aria-label="کوروش کبیر">
+        <div class="card-image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Iran_-_Pasargad_-_The_great_Cyrus_Tomb_-_%D8%A2%D8%B1%D8%A7%D9%85%DA%AF%D8%A7%D9%87_%DA%A9%D9%88%D8%B1%D9%88%D8%B4_%DA%A9%D8%A8%DB%8C%D8%B1_-_panoramio.jpg" alt="کوروش کبیر" />
+        </div>
+        <div class="card-content">
+          <h3>کوروش کبیر</h3>
+          <p>بنیانگذار نخستین امپراتوری جهانی و صادرکننده منشور حقوق بشر</p>
+        </div>
+      </div>
+      <div class="history-card" tabindex="0" aria-label="آرامگاه کوروش">
+        <div class="card-image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/%D8%BA%D8%B1%D9%88%D8%A8_%D8%AA%D8%AE%D8%AA_%D8%AC%D9%85%D8%B4%DB%8C%D8%AF_%D8%B9%DA%A9%D8%B3.jpg" alt="آرامگاه کوروش" />
+        </div>
+        <div class="card-content">
+          <h3>آرامگاه کوروش</h3>
+          <p>نماد سادگی و عظمت در پاسارگاد، اولین پایتخت هخامنشیان</p>
+        </div>
+      </div>
+      <div class="history-card" tabindex="0" aria-label="کتیبه بیستون">
+        <div class="card-image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/%DA%A9%D8%AA%DB%8C%D8%A8%D9%87_%D8%AF%D8%A7%D8%B1%DB%8C%D9%88%D8%B4_%D8%A8%DB%8C%D8%B3%D8%AA%D9%88%D9%86.jpg" alt="کتیبه بیستون" />
+        </div>
+        <div class="card-content">
+          <h3>کتیبه بیستون</h3>
+          <p>سنگ‌نوشته سه زبانه داریوش بزرگ به خط میخی</p>
+        </div>
+      </div>
+      <div class="history-card" tabindex="0" aria-label="شاهنامه فردوسی">
+        <div class="card-image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Tomb_of_Ferdowsi_%28WLM_2015%29.jpg" alt="شاهنامه فردوسی" />
+        </div>
+        <div class="card-content">
+          <h3>شاهنامه فردوسی</h3>
+          <p>حماسه ملی ایران و گنجینه‌ای از اسطوره‌ها، تاریخ و فرهنگ ایرانی</p>
+        </div>
+      </div>
+      <div class="history-card" tabindex="0" aria-label="ابوریحان بیرونی">
+        <div class="card-image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Persian_Scholar_pavilion_in_Viena_UN_%28Biruni%29.jpg" alt="ابوریحان بیرونی" />
+        </div>
+        <div class="card-content">
+          <h3>ابوریحان بیرونی</h3>
+          <p>دانشمند بزرگ ایرانی، ستاره‌شناس، ریاضی‌دان و جغرافی‌دان عصر طلایی اسلام</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <footer>
+    <p>طراحی شده با افتخار برای فرهنگ ایرانی | ۱۴۰۳</p>
+
+    <div style="margin-top:15px;font-size:1.1em;">
+      <span style="color:var(--gold);font-weight:bold;">یادگار ایران زمین</span>
+      <span style="margin:0 8px;">|</span>
+
+      <span style="color:#fff;opacity:0.7;margin:0 8px;">
+        <i class="material-icons" style="vertical-align:middle;color:var(--gold);font-size:1.2em;">visibility</i>
+        بازدید امروز: <span id="visit-count" style="font-weight:bold;">...</span>
+      </span>
+      <script>
+        let count = localStorage.getItem('visitCount') || 0;
+        count++;
+        localStorage.setItem('visitCount', count);
+        document.getElementById('visit-count').textContent = count;
+      </script>
+      <span style="margin:0 8px;">|</span>
+      <span style="color:#fff;opacity:0.7;margin:0 8px;">
+        <i class="material-icons" style="vertical-align:middle;color:var(--gold);font-size:1.2em;">schedule</i>
+        <span id="live-clock"></span>
+      </span>
+      <script>
+        function updateClock() {
+          const now = new Date();
+          document.getElementById('live-clock').textContent =
+            now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+      </script>
+    </div>
+  </footer>
+
+  <script>
+    // وقتی روی کارت کلیک میشه، کلاس clicked اضافه میشه و بعد از انیمیشن حذف میشه تا مجدد فعال شه
+    document.querySelectorAll('.history-card').forEach(card => {
+      card.addEventListener('click', () => {
+        if (card.classList.contains('clicked')) return; // جلوگیری از اجرای همزمان چندبار
+
+        card.classList.add('clicked');
+        setTimeout(() => {
+          card.classList.remove('clicked');
+        }, 700);
+      });
+
+      // قابل فعال شدن با کیبورد (انتر یا اسپیس)
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+    });
+  </script>
 </body>
 </html>

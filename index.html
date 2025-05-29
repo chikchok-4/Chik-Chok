@@ -49,14 +49,15 @@
       width: 48px;
       height: 48px;
       z-index: 11;
-      border-radius: 12px;
+      border-radius: 360px;
       object-fit: cover;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       transition: transform 0.3s ease;
     }
     
     .top-left-logo:hover {
-      transform: scale(1.05);
+      
+      transform: scale(1.1);
     }
     
     .container {
@@ -78,7 +79,12 @@
       margin-bottom: 1rem;
       color: rgb(var(--mdui-color-on-background));
     }
-    
+    .circle-img{
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
     .subtitle {
       font-size: 1.2rem;
       max-width: 700px;
@@ -179,7 +185,7 @@
     
     .code-bg {
       font-family: 'Fira Code', monospace;
-      font-size: 0.95rem;
+      font-size: 0.99rem;
       position: absolute;
       top: 0;
       left: 0;
@@ -189,13 +195,13 @@
       line-height: 1.6;
       opacity: var(--code-opacity, 0.15);
       pointer-events: none;
-      z-index: 1;
+      z-index: 2;
       overflow: hidden;
       animation: scrollLoop 60s linear infinite;
       padding: 2rem;
       background: transparent;
       color: rgba(var(--mdui-color-on-background), 0.7);
-      mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
+      mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.084) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
       -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.2) 100%);
     }
     
@@ -284,6 +290,23 @@ public class ChikChok {
  Chikchok ide 3
 
  Welcome to Chik Chok IDE
+
+
+I am ChikChok a Coding 
+
+
+|----------------------|##################|
+
+|----------------------|##################|
+
+
+
+
+
+
+
+
+
 </code>
   </div>
 
